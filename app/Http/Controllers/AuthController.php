@@ -3,9 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 class AuthController extends Controller
 {
+
+    public function login()
+    {
+        return redirect('auth.login');
+    }
+
+    public function showLogin()
+    {
+        return view('auth.login');
+    }
+
+    public function register()
+    {
+        return redirect('auth.register');
+    }
+
+    public function showRegister()
+    {
+        return view('auth.register');
+    }
+
     /**
      * Display a listing of the resource.
      */
