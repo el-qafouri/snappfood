@@ -26,6 +26,12 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
+    public function logout()
+    {
+        auth()->logout();
+        return redirect('/');
+    }
+
     /**
      * Display a listing of the resource.
      */
