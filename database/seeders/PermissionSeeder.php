@@ -53,7 +53,7 @@ class PermissionSeeder extends Seeder
             ['name' => 'delete-food'],
         ]);
         Role::query()->first()->syncPermissions(Permission::all());
-//        Role::query()->find(2)->syncPermissions([1 , 2]);
+        Role::query()->find(2)->syncPermissions([1 , 2]);
 
     }
 }

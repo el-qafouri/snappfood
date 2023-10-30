@@ -1,0 +1,1 @@
+show restaurant categories

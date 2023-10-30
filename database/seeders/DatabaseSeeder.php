@@ -29,5 +29,6 @@ class DatabaseSeeder extends Seeder
             'password' => 'password'
         ]);
         $user->assignRole(Role::query()->first());
+        $user1->assignRole(Role::query()->find(2));
     }
 }
