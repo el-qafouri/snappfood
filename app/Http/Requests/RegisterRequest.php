@@ -38,7 +38,7 @@ class RegisterRequest extends FormRequest
             'phone.unique' => 'شماره همراه قبلا ثبت شده است',
             'phone.required' => 'لطفا شماره همراه خود را وارد کنید',
             'password.required' => 'لطفا رمز عبور خود را وارد کنید',
-            'password.confirmed' => 'پسوردها مطابقت ندارند',
+//            'password.confirmed' => 'پسوردها مطابقت ندارند',
             'password.min' => 'پسورد نباید کمتر از 4 کاراکتر باشد',
             'password.max' => 'پسورد نباید بیشتر از 14 کاراکتر باشد',
         ];

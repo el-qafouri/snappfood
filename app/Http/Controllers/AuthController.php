@@ -18,7 +18,7 @@ class AuthController extends Controller
             'email' => $request->post('email'),
             'password' => $request->post('password')
         ])) {
-            return redirect()->route('');
+            return redirect()->route('main');
         } else {
             return redirect()->route('login.show');
         }
@@ -32,14 +32,16 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        return User::store($request->validated());
-////        dd('hiiiiiiiiiiiiii');
-//        $user = User::query()->create([
-//            'name' => $request->post('name'),
-//            'email' => $request->post('email'),
-//            'phone' => $request->post('phone'),
-//            'password' => $request->post('password')
-//        ]);
+//        return redirect('dashboard');
+
+//        dd('hiiiiiiiiiiiiii');
+        $user = User::query()->create([
+            'name' => $request->post('name'),
+            'email' => $request->post('email'),
+            'phone' => $request->post('phone'),
+            'password' => $request->post('password')
+        ]);
+        dd($user);
 //        Auth::login($user , true);
 //        return redirect()->route('login.show');
     }
