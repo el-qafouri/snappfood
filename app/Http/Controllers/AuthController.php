@@ -2,13 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 class AuthController extends Controller
 {
 
-    public function login()
+    public function login(LoginRequest $request)
     {
-        return redirect('auth.login');
+
+        if (Auth::attempt([
+            'email' => $request->post('email'),
+            'password' => $request->post('password')
+        ])) {
+            return redirect()->route('');
+        } else {
+            return redirect()->route('login.show');
+        }
+//        return redirect('auth.login');
     }
 
     public function showLogin()
@@ -16,20 +30,32 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function register()
+    public function register(RegisterRequest $request)
     {
-        return redirect('auth.register');
+        return User::store($request->validated());
+////        dd('hiiiiiiiiiiiiii');
+//        $user = User::query()->create([
+//            'name' => $request->post('name'),
+//            'email' => $request->post('email'),
+//            'phone' => $request->post('phone'),
+//            'password' => $request->post('password')
+//        ]);
+//        Auth::login($user , true);
+//        return redirect()->route('login.show');
     }
 
     public function showRegister()
     {
-        return view('auth.register');
+//        dd('hi');
+//        return redirect()->route('register.show');
+                return view('auth.register');
+
     }
 
     public function logout()
     {
-        auth()->logout();
-        return redirect('/');
+        Auth::logout();
+        return redirect()->route('login.show');
     }
 
     /**

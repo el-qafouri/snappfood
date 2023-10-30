@@ -20,5 +20,6 @@ Route::get('/', function () {
 
 Route::get('login', [\App\Http\Controllers\AuthController::class, 'showLogin'])->name('login.show');
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
+
 Route::get('register', [\App\Http\Controllers\AuthController::class, 'showRegister'])->name('register.show');
 Route::post('register', [\App\Http\Controllers\AuthController::class, 'register'])->name('register');

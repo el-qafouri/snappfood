@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             'email'=>'admin@gmail.com',
             'password'=>'password'
         ]);
-
+            $this->call([PermissionSeeder::class]);
 
     }
 }

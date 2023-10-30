@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PermissionSeeder extends Seeder
 {
@@ -18,7 +20,7 @@ class PermissionSeeder extends Seeder
                 'name'=>'admin'
             ],
             [
-                'name'=>'customer'
+                'name'=>'user'
             ],
             [
                 'name'=>'seller'
@@ -51,5 +53,6 @@ class PermissionSeeder extends Seeder
             ['name' => 'delete-food'],
 
         ]);
+        Role::query()->first()->syncPermissions(Permission::all());
     }
 }
