@@ -22,7 +22,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'bail|required|exists:user',
+            'email' => 'bail|required|exists:users',
             'password' => 'required'
         ];
     }
@@ -32,7 +32,7 @@ class LoginRequest extends FormRequest
         return [
             'email.required' => 'لطفا ایمیل خود را وارد کنید',
             'email.exists'=>'ایمیل ثبت نشده است؛ لطفا ثبت نام کنید',
-            'password'=>'لطفا رمز عبور خود را وارد کنید'
+            'password.required'=>'لطفا رمز عبور خود را وارد کنید'
         ];
     }
 }

@@ -13,16 +13,19 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
-
-        if (Auth::attempt([
-            'email' => $request->post('email'),
-            'password' => $request->post('password')
-        ])) {
-            return redirect()->route('main');
-        } else {
-            return redirect()->route('login.show');
-        }
+        if ($request->validated()) {
+            if (Auth::attempt([
+                'email' => $request->post('email'),
+                'password' => $request->post('password')
+            ])) {
+                return redirect()->route('main');
+            } else {
+                return redirect()->route('login.show')->withErrors([
+                    'email' => ['نام کاربری یا رمز عبور اشتباه است.'],
+                ]);
+            }
 //        return redirect('auth.login');
+        }
     }
 
     public function showLogin()
@@ -32,6 +35,7 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request)
     {
+
 //        return redirect('dashboard');
 
 //        dd('hiiiiiiiiiiiiii');
@@ -41,16 +45,16 @@ class AuthController extends Controller
             'phone' => $request->post('phone'),
             'password' => $request->post('password')
         ]);
-        dd($user);
+            dd($user);
 //        Auth::login($user , true);
 //        return redirect()->route('login.show');
-    }
+        }
 
     public function showRegister()
     {
 //        dd('hi');
 //        return redirect()->route('register.show');
-                return view('auth.register');
+        return view('auth.register');
 
     }
 

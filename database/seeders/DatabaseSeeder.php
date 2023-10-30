@@ -13,13 +13,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call([PermissionSeeder::class]);
 
-       $user = User::query()->create([
-            'name'=>'admin',
-            'email'=>'admin@gmail.com',
-            'password'=>'password'
+        $user = User::query()->create([
+            'name' => 'admin',
+            'email' => 'admin@gmail.com',
+            'phone' => '09981928271',
+            'password' => 'password'
         ]);
-            $this->call([PermissionSeeder::class]);
 
     }
 }

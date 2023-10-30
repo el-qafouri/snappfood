@@ -22,7 +22,7 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required',
+            'name'=>'bail|required|min:2',
             'email'=>'bail|required|unique:users',
             'phone'=>'bail|required|unique:users',
             'password'=>'bail|required|confirmed|min:4|max:14',
@@ -33,12 +33,13 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name.required' => 'لطفا نام خود را وارد کنید',
+            'name.min' => 'لطفا نام خود را به طور کنید',
             'email.unique' => 'ایمیل قبلا ثبت شده است',
             'email.required' => 'لطفا ایمیل خود را وارد کنید',
             'phone.unique' => 'شماره همراه قبلا ثبت شده است',
             'phone.required' => 'لطفا شماره همراه خود را وارد کنید',
             'password.required' => 'لطفا رمز عبور خود را وارد کنید',
-//            'password.confirmed' => 'پسوردها مطابقت ندارند',
+            'password.confirmed' => 'پسوردها مطابقت ندارند',
             'password.min' => 'پسورد نباید کمتر از 4 کاراکتر باشد',
             'password.max' => 'پسورد نباید بیشتر از 14 کاراکتر باشد',
         ];

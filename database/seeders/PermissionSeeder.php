@@ -17,13 +17,13 @@ class PermissionSeeder extends Seeder
     {
         DB::table('roles')->insert([
             [
-                'name'=>'admin'
+                'name' => 'admin'
             ],
             [
-                'name'=>'user'
+                'name' => 'user'
             ],
             [
-                'name'=>'seller'
+                'name' => 'seller'
             ]
         ]);
 
@@ -51,8 +51,9 @@ class PermissionSeeder extends Seeder
             ['name' => 'add-food'],
             ['name' => 'edit-food'],
             ['name' => 'delete-food'],
-
         ]);
         Role::query()->first()->syncPermissions(Permission::all());
+//        Role::query()->find(2)->syncPermissions([1 , 2]);
+
     }
 }
