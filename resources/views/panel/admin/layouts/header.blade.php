@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand" href="">
                     <img
-                        src="{{ asset('images/bolbol.jpg') }}"
+                        src="{{ asset('images/snappfood.JPG') }}"
                         alt="logo"
                         width="100"
                         height="100"
