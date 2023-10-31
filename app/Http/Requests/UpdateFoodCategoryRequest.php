@@ -11,7 +11,7 @@ class UpdateFoodCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdateFoodCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "name" => ['bail',"required", "string",'min:3','max:25','unique:food_categories'],
+            "description" => ['bail',"required", "string", "min:7", "max:255"],
         ];
     }
 }

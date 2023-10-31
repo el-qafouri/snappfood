@@ -1,10 +1,11 @@
 @extends('panel.admin.layouts.main')
 @section('title', 'create')
 @section('content')
+
     <div class="container">
-        <form action="{{ route('category.update', $category->id) }}" method="POST" class="d-flex flex-column gap-3 mt-4">
+        <form action="{{ route('category.update' , $foodCategory->id) }}" method="POST" class="d-flex flex-column gap-3 mt-4">
             @csrf
-            @method('put')
+            @method('PUT')
             <div class="form-group">
 
                 <label for="name">Category Name</label>

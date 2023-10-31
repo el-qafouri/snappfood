@@ -30,7 +30,7 @@
                         style="font-size: 20px;"
                     >
                         <li class="nav-item">
-                            <a class="nav-link" href="#"
+                            <a class="nav-link" href="{{ route('category.index') }}"
                             ><i class="fas fa-home"></i>Categories</a>
                         </li>
                         <li class="nav-item">

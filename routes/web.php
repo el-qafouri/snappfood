@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
 Route::get('/', function () {
     return view('layouts.main');
 })->name('main');
@@ -29,14 +28,13 @@ Route::get('register', [AuthController::class, 'showRegister'])->name('register.
 Route::post('register', [AuthController::class, 'register'])->name('register');
 
 
-Route::get('category' , [FoodCategoryController::class, 'index'])->name('category.index');
-Route::get('category/show' , [FoodCategoryController::class, 'show'])->name('category.show');
-Route::get('category/edit' , [FoodCategoryController::class, 'edit'])->name('category.edit');
-Route::get('category/delete' , [FoodCategoryController::class, 'edit'])->name('category.delete');
-Route::get('category/create' , [FoodCategoryController::class, 'create'])->name('category.create');
-Route::post('category/create' , [FoodCategoryController::class, 'create'])->name('category.create');
-Route::get('category/store' , [FoodCategoryController::class, 'store'])->name('category.store');
-Route::post('category/store' , [FoodCategoryController::class, 'store'])->name('category.store');
-Route::get('category/update' , [FoodCategoryController::class, 'update'])->name('category.update');
-//Route::post('category/update' , [FoodCategoryController::class, 'update'])->name('category.update');
-Route::put('category/update', [FoodCategoryController::class, 'update'])->name('category.update');
+Route::get('category', [FoodCategoryController::class, 'index'])->name('category.index');
+Route::get('category/show', [FoodCategoryController::class, 'show'])->name('category.show');
+Route::delete('category/{id}', [FoodCategoryController::class, 'destroy'])->name('category.delete');
+Route::get('category/create', [FoodCategoryController::class, 'create'])->name('category.create');
+Route::post('category/create', [FoodCategoryController::class, 'create'])->name('category.create');
+Route::get('category/store', [FoodCategoryController::class, 'store'])->name('category.store');
+Route::post('category/store', [FoodCategoryController::class, 'store'])->name('category.store');
+Route::get('category/{id}/edit', [FoodCategoryController::class, 'edit'])->name('category.edit');
+Route::put('category/update/{id}', [FoodCategoryController::class, 'update'])->name('category.update');
+

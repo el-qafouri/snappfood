@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreFoodeCategoryRequest;
+use App\Http\Requests\UpdateFoodCategoryRequest;
 use App\Models\FoodCategory;
 use Illuminate\Http\Request;
 
 class FoodCategoryController extends Controller
 {
+
+//    public function __construct()
+//    {
+//        $this->authorizeResource(FoodCategory::class , 'foodCategory');
+//    }
     /**
      * Display a listing of the resource.
      */
@@ -56,40 +62,56 @@ class FoodCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(FoodCategory $foodCategory)
+    public function edit($id)
     {
-//        dd('edit category');
+        $foodCategory = FoodCategory::find($id);
 //        return view("panel.admin.foodCategories.edit",compact('foodCategory'));
-
-        $category = $foodCategory;
-//        $category = FoodCategory::find($foodCategory->id);
-        return view('panel.admin.foodCategories.edit', ['category' => $category]);
+//        $category = $foodCategory;
+//        $category = FoodCategory::query()->find($foodCategory->id);
+//        return view('panel.admin.foodCategories.edit', ['category' => $category]);
+        return view('panel.admin.foodCategories.edit', compact('foodCategory'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreFoodeCategoryRequest $request, FoodCategory $foodCategory)
+    public function update(UpdateFoodCategoryRequest $request, $id)
     {
         try {
-            $category = FoodCategory::query()->findOrFail($foodCategory->id);
-            $category->update($request->validated());
-            return redirect(status: 200)->route("category.index")->with('success', $request->name . "category updated successfully");
-        }catch (Exception $e){
+            $foodCategory = FoodCategory::find($id);
+            $foodCategory->update($request->validated());
+            return redirect()->route('category.index')->with('success', 'update successfully');
+        } catch (Exception $e) {
             Log::error($e->getMessage());
-            return redirect(status: 500)->route('category.edit', $category)->with('fail', 'category didnt update!');
+            return redirect()->route('category.edit', $foodCategory)->with('fail', 'update failed');
         }
+//        $foodCategory->update($request->all());
+//        return redirect()->route('category.index')->with('update','update successfully');
+//        dd($foodCategory);
+//        $id = $request->input('id');
+//        try {
+//            $category = FoodCategory::query()->findOrFail($id);
+//            $category->update($request->validated());
+////            $category->update($request->validated());
+////            dd($category);
+//            return redirect(status: 200)->route('category.index')->with('success', $request->name . "category updated successfully");
+//        }catch (Exception $e){
+//            Log::error($e->getMessage());
+//            return redirect(status: 500)->route('category.edit', $category)->with('fail', 'category didnt update!');
+//        }
 
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(FoodCategory $foodCategory)
+    public function destroy($id)
     {
         try {
-            FoodCategory::query()->findOrFail($id)->delete();
-
+            $foodCategory = FoodCategory::find($id);
+//            FoodCategory::query()->findOrFail($id)->delete();
+            $foodCategory->delete();
             return redirect(status: 200)->route("category.index")->with('success', "category deleted successfully");
         } catch (Exception $e) {
             Log::error($e->getMessage());
