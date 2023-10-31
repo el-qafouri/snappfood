@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FoodCategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,11 +22,21 @@ Route::get('/', function () {
 })->name('main');
 
 
-Route::get('login', [\App\Http\Controllers\AuthController::class, 'showLogin'])->name('login.show');
-Route::post('login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
+Route::get('login', [AuthController::class, 'showLogin'])->name('login.show');
+Route::post('login', [AuthController::class, 'login'])->name('login');
 
-Route::get('register', [\App\Http\Controllers\AuthController::class, 'showRegister'])->name('register.show');
-Route::post('register', [\App\Http\Controllers\AuthController::class, 'register'])->name('register');
+Route::get('register', [AuthController::class, 'showRegister'])->name('register.show');
+Route::post('register', [AuthController::class, 'register'])->name('register');
 
 
-Route::get('')
+Route::get('category' , [FoodCategoryController::class, 'index'])->name('category.index');
+Route::get('category/show' , [FoodCategoryController::class, 'show'])->name('category.show');
+Route::get('category/edit' , [FoodCategoryController::class, 'edit'])->name('category.edit');
+Route::get('category/delete' , [FoodCategoryController::class, 'edit'])->name('category.delete');
+Route::get('category/create' , [FoodCategoryController::class, 'create'])->name('category.create');
+Route::post('category/create' , [FoodCategoryController::class, 'create'])->name('category.create');
+Route::get('category/store' , [FoodCategoryController::class, 'store'])->name('category.store');
+Route::post('category/store' , [FoodCategoryController::class, 'store'])->name('category.store');
+Route::get('category/update' , [FoodCategoryController::class, 'update'])->name('category.update');
+//Route::post('category/update' , [FoodCategoryController::class, 'update'])->name('category.update');
+Route::put('category/update', [FoodCategoryController::class, 'update'])->name('category.update');

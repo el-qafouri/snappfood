@@ -27,13 +27,13 @@
 <body>
 <header>
     {{-- import--}}
-    @include('layouts.header')
+    @include('panel.admin.layouts.header')
 </header>
 <main>
     @yield('content')
 </main>
 <footer>
-    @include('layouts.footer')
+    @include('panel.admin.layouts.footer')
 </footer>
 <!-- MDB -->
 <script

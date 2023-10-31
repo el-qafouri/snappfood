@@ -7,7 +7,7 @@
                     industry's standard dummy text ever since the</p>
                 <p><i class="fa fa-map-pin"></i> #1234 Lorem Ipsum Dolor Sit, #1234 Lorem Ipsum Dolor Sit </p>
                 <p><i class="fa fa-phone"></i> Phone (India) : +91 9999 878 398</p>
-                <p><i class="fa fa-envelope"></i> E-mail :kianejad@techpark.ir</p>
+                <p><i class="fa fa-envelope"></i> E-mail </p>
             </div>
             <div class="col-md-2 col-sm-6 paddingtop-bottom">
                 <h6 class="heading7">GENERAL LINKS</h6>
