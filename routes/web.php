@@ -27,5 +27,4 @@ Route::get('register', [\App\Http\Controllers\AuthController::class, 'showRegist
 Route::post('register', [\App\Http\Controllers\AuthController::class, 'register'])->name('register');
 
 
-
-
+Route::get('')
