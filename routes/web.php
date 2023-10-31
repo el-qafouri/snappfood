@@ -25,3 +25,7 @@ Route::post('login', [\App\Http\Controllers\AuthController::class, 'login'])->na
 
 Route::get('register', [\App\Http\Controllers\AuthController::class, 'showRegister'])->name('register.show');
 Route::post('register', [\App\Http\Controllers\AuthController::class, 'register'])->name('register');
+
+
+
+
