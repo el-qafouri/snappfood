@@ -24,8 +24,6 @@ class FoodCategoryController extends Controller
         return view("panel.admin.foodCategories.index", [
             "foodCategories" => $foodCategories,
         ]);
-
-
     }
 
     /**
@@ -34,7 +32,8 @@ class FoodCategoryController extends Controller
     public function create()
     {
 //        dd('hi');
-        return view("panel.admin.foodCategories.create");
+        return view('panel.admin.foodCategories.create');
+//        return redirect()->route('category.create');
     }
 
     /**
@@ -42,6 +41,7 @@ class FoodCategoryController extends Controller
      */
     public function store(StoreFoodeCategoryRequest $request)
     {
+//        dd('ddddd');
         try {
             FoodCategory::query()->create($request->validated());
             return redirect()->route("category.index")->with('success', $request->foodCategories . "Category added successfully");
@@ -54,9 +54,12 @@ class FoodCategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(FoodCategory $foodCategory)
+    public function show($id)
     {
-        dd('show category');
+//        return view("panel.admin.foodCategories.show");
+        $category = FoodCategory::find($id);
+        return view('panel.admin.foodCategories.show')->with('category', $category);
+//        dd('show category');
     }
 
     /**
@@ -65,10 +68,6 @@ class FoodCategoryController extends Controller
     public function edit($id)
     {
         $foodCategory = FoodCategory::find($id);
-//        return view("panel.admin.foodCategories.edit",compact('foodCategory'));
-//        $category = $foodCategory;
-//        $category = FoodCategory::query()->find($foodCategory->id);
-//        return view('panel.admin.foodCategories.edit', ['category' => $category]);
         return view('panel.admin.foodCategories.edit', compact('foodCategory'));
     }
 
@@ -85,21 +84,6 @@ class FoodCategoryController extends Controller
             Log::error($e->getMessage());
             return redirect()->route('category.edit', $foodCategory)->with('fail', 'update failed');
         }
-//        $foodCategory->update($request->all());
-//        return redirect()->route('category.index')->with('update','update successfully');
-//        dd($foodCategory);
-//        $id = $request->input('id');
-//        try {
-//            $category = FoodCategory::query()->findOrFail($id);
-//            $category->update($request->validated());
-////            $category->update($request->validated());
-////            dd($category);
-//            return redirect(status: 200)->route('category.index')->with('success', $request->name . "category updated successfully");
-//        }catch (Exception $e){
-//            Log::error($e->getMessage());
-//            return redirect(status: 500)->route('category.edit', $category)->with('fail', 'category didnt update!');
-//        }
-
     }
 
 
@@ -110,7 +94,6 @@ class FoodCategoryController extends Controller
     {
         try {
             $foodCategory = FoodCategory::find($id);
-//            FoodCategory::query()->findOrFail($id)->delete();
             $foodCategory->delete();
             return redirect(status: 200)->route("category.index")->with('success', "category deleted successfully");
         } catch (Exception $e) {

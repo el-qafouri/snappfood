@@ -10,7 +10,7 @@
 
                 <label for="name">Category Name</label>
                 <input
-                    value="{{ old('name') }}"
+                    value="{{ old('name', $foodCategory->name) }}"
 {{--                    value="{{ $category->name }}"--}}
                     type="text"
                     class="form-control @error('name') is-invalid @enderror"
@@ -28,7 +28,7 @@
                 <label for="description">Description</label>
                 <input
 {{--                    value="{{  $category->description  }}"--}}
-                    value="{{ old('description') }}"
+                    value="{{ old('description' , $foodCategory->description) }}"
                     type="text"
                     class="form-control @error('description') is-invalid @enderror"
                     id="description"
