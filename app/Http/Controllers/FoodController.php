@@ -12,7 +12,11 @@ class FoodController extends Controller
      */
     public function index()
     {
-        //
+        $foods = Food::all();
+        return view('panel.seller.foods.index', [
+            'foods' => $foods
+        ]);
+
     }
 
     /**
@@ -20,6 +24,7 @@ class FoodController extends Controller
      */
     public function create()
     {
+        dd('create foodddd');
         //
     }
 
@@ -28,38 +33,42 @@ class FoodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd('store foodddd');
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Food $food)
+    public function show(Food $foods)
     {
-        //
+        dd('show foodddd');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Food $food)
+    public function edit(Food $foods)
     {
-        //
+        dd('edit foodddd');
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Food $food)
+    public function update(Request $request, Food $foods)
     {
-        //
+        dd('update foodddd');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Food $food)
+    public function destroy(Food $foods)
     {
-        //
+        dd('destroy foodddd');
+
     }
 }

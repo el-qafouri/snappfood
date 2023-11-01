@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FoodCategoryController;
+use App\Http\Controllers\FoodController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,4 +49,17 @@ Route::prefix('category')->group(function () {
 
     Route::get('{id}/edit', [FoodCategoryController::class, 'edit'])->name('category.edit');
     Route::put('update/{id}', [FoodCategoryController::class, 'update'])->name('category.update');
+});
+
+
+Route::prefix('foods')->group(function () {
+    Route::get('/', [FoodController::class, 'index'])->name('food.index');
+    Route::get('{id}', [FoodController::class, 'show'])->name('food.show');
+    Route::delete('{id}', [FoodController::class, 'destroy'])->name('food.delete');
+
+    Route::get('food/create', [FoodController::class, 'create'])->name('food.create');
+    Route::post('create', [FoodController::class, 'store'])->name('food.store');
+
+    Route::get('{id}/edit', [FoodController::class, 'edit'])->name('food.edit');
+    Route::put('update/{id}', [FoodController::class, 'update'])->name('food.update');
 });
