@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\FoodCategoryController;
 use App\Http\Controllers\FoodController;
+use App\Http\Controllers\FoodPartyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,4 +54,37 @@ Route::prefix('foods')->group(function () {
 
     Route::get('{id}/edit', [FoodController::class, 'edit'])->name('food.edit');
     Route::put('update/{id}', [FoodController::class, 'update'])->name('food.update');
+});
+
+
+//Route::get('foodParty' , [FoodPartyController::class , 'index'])->name('foodParty');
+//Route::get('foodParty/edit' , [FoodPartyController::class , 'edit'])->name('foodParty.edit');
+//Route::get('foodParty/delete' , [FoodPartyController::class , 'destroy'])->name('foodParty.delete');
+//Route::post('foodParty/create' , [FoodPartyController::class , 'store'])->name('foodParty.store');
+//Route::get('foodParty/create' , [FoodPartyController::class , 'create'])->name('foodParty.create');
+//
+
+Route::prefix('foodParty')->group(function () {
+    Route::get('/', [FoodPartyController::class, 'index'])->name('foodParty.index');
+    Route::get('{id}', [FoodPartyController::class, 'show'])->name('foodParty.show');
+    Route::delete('{id}', [FoodPartyController::class, 'destroy'])->name('foodParty.delete');
+
+    Route::get('food/create', [FoodPartyController::class, 'create'])->name('foodParty.create');
+    Route::post('create', [FoodPartyController::class, 'store'])->name('foodParty.store');
+
+    Route::get('{id}/edit', [FoodPartyController::class, 'edit'])->name('foodParty.edit');
+    Route::put('update/{id}', [FoodPartyController::class, 'update'])->name('foodParty.update');
+});
+
+
+Route::prefix('discount')->group(function () {
+    Route::get('/', [DiscountController::class, 'index'])->name('discount.index');
+    Route::get('{id}', [DiscountController::class, 'show'])->name('discount.show');
+    Route::delete('{id}', [DiscountController::class, 'destroy'])->name('discount.delete');
+
+    Route::get('food/create', [DiscountController::class, 'create'])->name('discount.create');
+    Route::post('create', [DiscountController::class, 'store'])->name('discount.store');
+
+    Route::get('{id}/edit', [DiscountController::class, 'edit'])->name('discount.edit');
+    Route::put('update/{id}', [DiscountController::class, 'update'])->name('discount.update');
 });

@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('food_parties', function (Blueprint $table) {
+            $table->id();
+            $table->string('discount');
+            $table->unsignedBigInteger('food_id')->default(1);
+            $table->dateTime('start_time');
+            $table->dateTime('end_time');
+            $table->unsignedBigInteger('restaurant_id')->default(1);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('food_parties');
+    }
+};
