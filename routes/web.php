@@ -24,10 +24,18 @@ Route::get('/', function () {
 })->name('main');
 
 
-Route::get('login', [AuthController::class, 'showLogin'])->name('login.show');
-Route::post('login', [AuthController::class, 'login'])->name('login');
-Route::get('register', [AuthController::class, 'showRegister'])->name('register.show');
-Route::post('register', [AuthController::class, 'register'])->name('register');
+//Route::get('login', [AuthController::class, 'showLogin'])->name('login.show');
+//Route::post('login', [AuthController::class, 'login'])->name('login');
+//Route::get('register', [AuthController::class, 'showRegister'])->name('register.show');
+//Route::post('register', [AuthController::class, 'register'])->name('register');
+
+Route::prefix('auth')->group(function () {
+    Route::get('login', [AuthController::class, 'showLogin'])->name('login.show');
+    Route::post('login', [AuthController::class, 'login'])->name('login');
+    Route::get('register', [AuthController::class, 'showRegister'])->name('register.show');
+    Route::post('register', [AuthController::class, 'register'])->name('register');
+});
+
 
 
 
@@ -56,14 +64,6 @@ Route::prefix('foods')->group(function () {
     Route::put('update/{id}', [FoodController::class, 'update'])->name('food.update');
 });
 
-
-//Route::get('foodParty' , [FoodPartyController::class , 'index'])->name('foodParty');
-//Route::get('foodParty/edit' , [FoodPartyController::class , 'edit'])->name('foodParty.edit');
-//Route::get('foodParty/delete' , [FoodPartyController::class , 'destroy'])->name('foodParty.delete');
-//Route::post('foodParty/create' , [FoodPartyController::class , 'store'])->name('foodParty.store');
-//Route::get('foodParty/create' , [FoodPartyController::class , 'create'])->name('foodParty.create');
-//
-
 Route::prefix('foodParty')->group(function () {
     Route::get('/', [FoodPartyController::class, 'index'])->name('foodParty.index');
     Route::get('{id}', [FoodPartyController::class, 'show'])->name('foodParty.show');
@@ -75,7 +75,6 @@ Route::prefix('foodParty')->group(function () {
     Route::get('{id}/edit', [FoodPartyController::class, 'edit'])->name('foodParty.edit');
     Route::put('update/{id}', [FoodPartyController::class, 'update'])->name('foodParty.update');
 });
-
 
 Route::prefix('discount')->group(function () {
     Route::get('/', [DiscountController::class, 'index'])->name('discount.index');

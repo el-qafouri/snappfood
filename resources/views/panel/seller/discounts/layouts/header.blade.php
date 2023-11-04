@@ -30,7 +30,7 @@
                         style="font-size: 20px;"
                     >
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('foodParty.index') }}"
+                            <a class="nav-link" href="{{ route('discount.index') }}"
                             ><i class="fas fa-home"></i>discounts</a>
                         </li>
                         <li class="nav-item">
