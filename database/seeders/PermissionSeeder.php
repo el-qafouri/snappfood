@@ -49,7 +49,7 @@ class PermissionSeeder extends Seeder
             ['name' => 'add-restaurant'],
             ['name' => 'remove-restaurant'],
             ['name' => 'add-food'],
-            ['name' => 'edit-food'],
+             ['name' => 'edit-food'],
             ['name' => 'delete-food'],
         ]);
         Role::query()->first()->syncPermissions(Permission::all());

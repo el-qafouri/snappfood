@@ -15,14 +15,15 @@
                 }, 2000);
             </script>
         @endif
+
         <table class="table table-striped mt-5">
             <thead class="table-dark">
             <tr>
                 <th scope="col">Food Category Name</th>
                 <th scope="col">Description</th>
-                                <th scope="col">Create Time</th>
+                <th scope="col">Create Time</th>
                 {{--                <th scope="col">Price</th>--}}
-                                <th scope="col">Actions</th>
+                <th scope="col">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -50,4 +51,9 @@
             </tbody>
         </table>
     </div>
+
+    <div class="table-responsive">
+        {{ $foodCategories->links() }}
+    </div>
+
 @endsection

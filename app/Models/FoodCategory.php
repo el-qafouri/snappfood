@@ -21,4 +21,9 @@ class FoodCategory extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    public function food() {
+        return $this->hasMany('food', 'food_category_id' , 'id');
+    }
+
 }

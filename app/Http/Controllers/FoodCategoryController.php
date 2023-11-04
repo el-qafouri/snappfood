@@ -6,6 +6,8 @@ use App\Http\Requests\StoreFoodeCategoryRequest;
 use App\Http\Requests\UpdateFoodCategoryRequest;
 use App\Models\FoodCategory;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+
 
 class FoodCategoryController extends Controller
 {
@@ -20,11 +22,15 @@ class FoodCategoryController extends Controller
     public function index()
     {
 //        return view('panel.admin.foodCategories.index');
-        $foodCategories = FoodCategory::all();
+//        $foodCategories = FoodCategory::all();
+        $foodCategories = FoodCategory::paginate(3);
         return view("panel.admin.foodCategories.index", [
             "foodCategories" => $foodCategories,
         ]);
     }
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -98,7 +104,7 @@ class FoodCategoryController extends Controller
             return redirect(status: 200)->route("category.index")->with('success', "category deleted successfully");
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            return redirect(status: 500)->route('category.index')->with('fail', 'book category delete!');
+            return redirect(status: 500)->route('category.index')->with('fail', 'category delete!');
         }
 
     }

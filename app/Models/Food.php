@@ -12,12 +12,18 @@ class Food extends Model
     protected $fillable = [
         'name',
         'price',
-        'material'
+        'material',
+        'food_category_id'
     ];
 
     protected $guarded = [
         'id',
         'deleted_at',
     ];
+
+
+    public function foodCategories() {
+        return $this->belongsTo('foodCategories', 'food_category_id' , 'id');
+    }
 
 }

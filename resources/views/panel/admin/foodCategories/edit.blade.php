@@ -1,5 +1,5 @@
 @extends('panel.admin.layouts.main')
-@section('title', 'create')
+@section('title', 'edit')
 @section('content')
 
     <div class="container">

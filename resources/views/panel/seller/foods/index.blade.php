@@ -1,4 +1,4 @@
-@extends('panel.admin.layouts.main')
+@extends('panel.seller.layouts.main')
 @section('title', 'foods')
 @section('content')
     <div class="container">
@@ -19,8 +19,8 @@
             <thead class="table-dark">
             <tr>
                 <th scope="col">Food Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Create Time</th>
+                <th scope="col">Material</th>
+                <th scope="col">Food category</th>
                 {{--                <th scope="col">Price</th>--}}
                 <th scope="col">Actions</th>
             </tr>
@@ -30,8 +30,8 @@
                 <tr>
                     {{-- max length of title is 20 characters --}}
                     <td>{{ Str::limit($food->name, 20) }}</td>
-                    <td>{{ $food->description }}</td>
-                    <td>{{ $food->created_at }}</td>
+                    <td>{{ $food->material }}</td>
+                    <td>{{ $food->food_category_id }}</td>
                     <td>
                         <a href="{{ route('food.show', $food->id) }}" class="btn btn-success"><i
                                 class="fas fa-eye"></i> Show</a>

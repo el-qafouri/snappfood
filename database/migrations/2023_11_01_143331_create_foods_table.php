@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('price');
             $table->string('material');
-            $table->foreignId('food_category_id');
+            $table->foreignId('food_category_id')->nullable();
             $table->foreign('food_category_id')->references('id')
                 ->on('food_categories')->cascadeOnDelete();
             $table->softDeletes();
