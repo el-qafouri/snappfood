@@ -2,58 +2,66 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Enums\Role as enum;
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class PermissionSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        DB::table('roles')->insert([
-            [
-                'name' => 'admin'
-            ],
-            [
-                'name' => 'user'
-            ],
-            [
-                'name' => 'seller'
-            ]
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
+
+// Create and assign permissions
+        $permissions = [
+            'accept admin', 'add food category', 'delete food category',
+            'add restaurant category', 'delete restaurant category', 'delete seller',
+            'delete food', 'define coupon', 'add coupon', 'define banner',
+            'add banner', 'view user', 'view users', 'view sellers', 'add restaurant', 'define food',
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::create(['name' => $permission]);
+        }
+
+// Create roles
+        $roles = enum::getValues();
+        foreach ($roles as $role) {
+            Role::create(['name' => $role]);
+        }
+
+// Assign permissions to roles
+        $admin = Role::findByName('admin');
+        $admin->givePermissionTo(Permission::all()->except('delete food'));
+
+        $seller = Role::findByName('seller');
+        $seller->givePermissionTo([
+            'add coupon', 'delete food', 'add banner', 'add restaurant', 'define food',
+        ]);
+
+// Create sample users and assign roles
+        $this->createUser('مهدیار', 'mahdiyar@gmail.com', '123456', $admin);
+        $this->createUser('فروشنده 1', 'test@gmail.com', '1234567', $seller);
+        $this->createUser('فروشنده2', 'test2@gmail.com', '12345678', $seller);
+        $this->createUser('فروشنده3', 'test3@gmail.com', '123456789', $seller);
+    }
+
+    private function createUser($name, $email, $password, $role): void
+    {
+        $user = User::factory()->create([
+            'name' => $name,
+            'email' => $email,
+            'password' => Hash::make($password),
         ]);
 
 
-        DB::table('permissions')->insert([
-            ['name' => 'create-food-category'],
-            ['name' => 'delete-food-category'],
-            ['name' => 'edit-food-category'],
-            ['name' => 'create-restaurant-category'],
-            ['name' => 'delete-restaurant-category'],
-            ['name' => 'edit-restaurant-category'],
-            ['name' => 'accept-seller'],
-            ['name' => 'delete-seller'],
-            ['name' => 'edit-seller'],
-            ['name' => 'add-coupon'],
-            ['name' => 'remove-coupon'],
-            ['name' => 'edit-coupon'],
-            ['name' => 'add-banner'],
-            ['name' => 'remove-banner'],
-            ['name' => 'view-user'],
-            ['name' => 'view-users'],
-            ['name' => 'view-sellers'],
-            ['name' => 'add-restaurant'],
-            ['name' => 'remove-restaurant'],
-            ['name' => 'add-food'],
-             ['name' => 'edit-food'],
-            ['name' => 'delete-food'],
-        ]);
-        Role::query()->first()->syncPermissions(Permission::all());
-        Role::query()->find(2)->syncPermissions([1 , 2]);
+        $user->assignRole($role);
+//        $user->syncRoles($role);
+//        $user->syncRoles($role->pluck('name'));
 
     }
 }

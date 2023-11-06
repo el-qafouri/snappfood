@@ -87,22 +87,7 @@ class FoodController extends Controller
             Log::error($e->getMessage());
             return redirect()->route('food.edit', $id)->with('fail', 'Update failed');
         }
-
-
-//        try {
-//            $food = Food::find($id);
-//            $food->update($request->validated());
-//            return redirect()->route('food.index')->with('success', 'update successfully');
-//        } catch (Exception $e) {
-//            Log::error($e->getMessage());
-//            return redirect()->route('food.edit', $food)->with('fail', 'update failed');
-//        }
     }
-
-
-
-
-
 
 
     /**

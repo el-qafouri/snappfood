@@ -11,22 +11,52 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
 
+//    public function login(LoginRequest $request)
+//    {
+//        if ($request->validated()) {
+//            if (Auth::attempt([
+//                'email' => $request->post('email'),
+//                'password' => $request->post('password')
+//            ])) {
+//                return view('dashboard');
+//            } else {
+//                return redirect()->route('login.show')->withErrors([
+//                    'email' => ['نام کاربری یا رمز عبور اشتباه است.'],
+//                ]);
+//            }
+////        return redirect('auth.login');
+//        }
+//    }
+
+
     public function login(LoginRequest $request)
     {
-        if ($request->validated()) {
-            if (Auth::attempt([
-                'email' => $request->post('email'),
-                'password' => $request->post('password')
-            ])) {
-                return redirect()->route('main');
-            } else {
-                return redirect()->route('login.show')->withErrors([
-                    'email' => ['نام کاربری یا رمز عبور اشتباه است.'],
-                ]);
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $redirectRoute = $this->getRedirectRouteForUser($user);
+//
+            if ($redirectRoute) {
+//                session()->regenerate();
+                return redirect()->route($redirectRoute);
             }
-//        return redirect('auth.login');
         }
+        return back()->with('error', 'ایمیل یا پسووردت اشتباهه!');
     }
+
+    private function getRedirectRouteForUser($user)
+    {
+        if ($user->hasRole('admin')) {
+            return 'admin.dashboard';
+        } elseif ($user->hasRole('seller')) {
+            return 'main';
+        }
+        return null;
+    }
+
+
+
 
     public function showLogin()
     {
@@ -45,7 +75,8 @@ class AuthController extends Controller
             'phone' => $request->post('phone'),
             'password' => $request->post('password')
         ]);
-            dd($user);
+        return view('auth.login');
+//            dd($user);
 //        Auth::login($user , true);
 //        return redirect()->route('login.show');
         }
@@ -61,17 +92,16 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('login.show');
+        return redirect()->route('main');
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-
-    }
-
+//    public function showSellerRegister()
+//    {
+//        return view('auth.sellerRegister');
+//    }
     /**
      * Show the form for creating a new resource.
      */
