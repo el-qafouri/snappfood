@@ -50,18 +50,16 @@ class PermissionSeeder extends Seeder
         $this->createUser('فروشنده3', 'test3@gmail.com', '123456789', $seller);
     }
 
-    private function createUser($name, $email, $password, $role): void
+    private function createUser($name, $email, $password, $role)
     {
         $user = User::factory()->create([
             'name' => $name,
             'email' => $email,
             'password' => Hash::make($password),
         ]);
-
-
         $user->assignRole($role);
+
 //        $user->syncRoles($role);
 //        $user->syncRoles($role->pluck('name'));
-
     }
 }

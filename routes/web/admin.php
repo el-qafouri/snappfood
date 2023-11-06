@@ -6,7 +6,7 @@ use App\Http\Controllers\RestaurantCategoryController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::prefix('restaurantCategory')->middleware(['role:admin'])->group(function () {
+Route::prefix('restaurantCategory')->middleware(['auth','role:admin'])->group(function () {
 Route::get('/', [RestaurantCategoryController::class, 'index'])->name('restaurantCategory.index');
 Route::get('{id}', [RestaurantCategoryController::class, 'show'])->name('restaurantCategory.show');
 Route::delete('{id}', [RestaurantCategoryController::class, 'destroy'])->name('restaurantCategory.delete');
@@ -20,7 +20,7 @@ Route::put('update/{id}', [RestaurantCategoryController::class, 'update'])->name
 
 
 
-Route::middleware(['role:admin'])->group(function () {
+Route::middleware(['auth','role:admin'])->group(function () {
     Route::prefix('category')->group(function () {
         Route::get('/', [FoodCategoryController::class, 'index'])->name('category.index');
         Route::get('{id}', [FoodCategoryController::class, 'show'])->name('category.show');
@@ -35,7 +35,7 @@ Route::middleware(['role:admin'])->group(function () {
 });
 
 
-Route::prefix('foodParty')->group(function () {
+Route::prefix('foodParty')->middleware(['auth'])->group(function () {
     Route::get('/', [FoodPartyController::class, 'index'])->name('foodParty.index');
     Route::get('{id}', [FoodPartyController::class, 'show'])->name('foodParty.show');
     Route::delete('{id}', [FoodPartyController::class, 'destroy'])->name('foodParty.delete');
@@ -44,9 +44,9 @@ Route::prefix('foodParty')->group(function () {
     Route::post('create', [FoodPartyController::class, 'store'])->name('foodParty.store');
 
     Route::get('{id}/edit', [FoodPartyController::class, 'edit'])->name('foodParty.edit');
-    Route::put('update/{id}', [FoodPartyController::class, 'update'])->name('foodParty.update');
+    Route::put('update/{id}', [FoodPartyController::class, 'update'])->name('foodParty.update')->middleware('can:seller,admin');
 });
 
 
 //Route::get('dashboard' , [\App\Http\Controllers\TestController::class , 'index'])->middleware(['role:admin'])->name('admin.dashboard');
-Route::get('dashboard' , [\App\Http\Controllers\TestController::class , 'index'])->name('admin.dashboard');
+Route::get('dashboard' , [\App\Http\Controllers\UserController::class , 'adminIndex'])->middleware(['role:admin'])->name('admin.dashboard');

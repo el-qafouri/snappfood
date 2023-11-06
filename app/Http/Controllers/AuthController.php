@@ -32,8 +32,10 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $credentials = $request->only('email', 'password');
-
-        if (Auth::attempt($credentials)) {
+        $result = Auth::attempt($credentials);
+//        dd($result);
+        if ($result) {
+//            return redirect()->route('dashboard');
             $user = Auth::user();
             $redirectRoute = $this->getRedirectRouteForUser($user);
 //
@@ -42,15 +44,14 @@ class AuthController extends Controller
                 return redirect()->route($redirectRoute);
             }
         }
-        return back()->with('error', 'ایمیل یا پسووردت اشتباهه!');
+        return back()->with('error', 'ایمیل یا پسوورد است!');
     }
-
     private function getRedirectRouteForUser($user)
     {
         if ($user->hasRole('admin')) {
             return 'admin.dashboard';
         } elseif ($user->hasRole('seller')) {
-            return 'main';
+            return 'seller.dashboard';
         }
         return null;
     }
@@ -67,7 +68,6 @@ class AuthController extends Controller
     {
 
 //        return redirect('dashboard');
-
 //        dd('hiiiiiiiiiiiiii');
         $user = User::query()->create([
             'name' => $request->post('name'),

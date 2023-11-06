@@ -1,11 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DiscountController;
-use App\Http\Controllers\FoodCategoryController;
-use App\Http\Controllers\FoodController;
-use App\Http\Controllers\FoodPartyController;
-use App\Http\Controllers\RestaurantCategoryController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,12 +36,12 @@ Route::prefix('auth')->group(function () {
 
 require __DIR__ . '/web/admin.php';
 require __DIR__ . '/web/seller.php';
-//require __DIR__ . '/web/food.php';
-//require __DIR__ . '/web/user.php';
+require __DIR__ . '/web/food.php';
+require __DIR__ . '/web/user.php';
 
 
 
 
 
-Route::get('test' , \App\Http\Controllers\TestController::class);
+//Route::get('test' , \App\Http\Controllers\TestController::class);
 

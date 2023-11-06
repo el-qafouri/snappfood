@@ -30,6 +30,6 @@ class DatabaseSeeder extends Seeder
 //        ]);
 //        $user->assignRole(Role::query()->first());
 //        $user1->assignRole(Role::query()->find(2));
-        
+
     }
 }

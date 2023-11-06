@@ -1,4 +1,4 @@
-@extends('panel.admin.panel.layouts.main')
+@extends('panel.seller.panel.layouts.main')
 @section('title', 'admin dashboard')
 @section('content')
     <div class="container">
@@ -33,37 +33,20 @@
                 {{--                    <td>{{ Str::limit($foodParty->discount, 20) }}</td>--}}
                 {{--                    <td>{{ $foodParty->start_time }}</td>--}}
                 {{--                    <td>{{ $foodParty->end_time }}</td>--}}
-                <td>food category</td>
+                <td>foods</td>
 
                 <td>
                     {{--                        <a href="{{ route('foodParty.show', $foodParty->id) }}" class="btn btn-success"><i--}}
                     {{--                                class="fas fa-eye"></i> Show</a>--}}
                     {{--                    <a href="{{ route('foodParty.edit', $foodParty->id) }}" class="btn btn-primary"><i--}}
                     {{--                            class="fas fa-edit">--}}
-                    <a href="{{ route('category.index') }}" class="btn btn-primary"><i
+                    <a href="{{ route('food.index') }}" class="btn btn-primary"><i
                             class="fas fa-edit"></i>show</a>
                 </td>
             </tr>
 
             <tr>
-                <td>restaurant category</td>
-                <td>
-                    <a href="{{ route('restaurantCategory.index') }}" class="btn btn-primary"><i
-                            class="fas fa-edit"></i>show</a>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td>sellers</td>
-                <td>
-                    <a href="#" class="btn btn-primary"><i
-                            class="fas fa-edit"></i>show</a>
-                </td>
-            </tr>
-
-            <tr>
-                <td>users</td>
+                <td>discounts</td>
                 <td>
                     <a href="#" class="btn btn-primary"><i
                             class="fas fa-edit"></i>show</a>
@@ -71,17 +54,9 @@
             </tr>
 
 
-            <tr>
-                <td>food party</td>
-                <td>
-                    <a href="{{ route('foodParty.index') }}" class="btn btn-primary"><i
-                            class="fas fa-edit"></i>show</a>
-                </td>
-            </tr>
-
 
             <tr>
-                <td>discount</td>
+                <td>orders</td>
                 <td>
                     <a href="#" class="btn btn-primary"><i
                             class="fas fa-edit"></i>show</a>
