@@ -66,19 +66,15 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request)
     {
-
-//        return redirect('dashboard');
-//        dd('hiiiiiiiiiiiiii');
         $user = User::query()->create([
             'name' => $request->post('name'),
             'email' => $request->post('email'),
             'phone' => $request->post('phone'),
             'password' => $request->post('password')
         ]);
+        $user->assignRole('seller');
+//        $user->update(['role_id' => 2]);
         return view('auth.login');
-//            dd($user);
-//        Auth::login($user , true);
-//        return redirect()->route('login.show');
         }
 
     public function showRegister()

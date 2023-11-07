@@ -10,11 +10,18 @@ class RestaurantCategory extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name' ,
+        'name',
         'description',
     ];
     protected $guarded = [
         'id',
         'deleted_at',
     ];
+
+    public function restaurant()
+    {
+        $this->hasMany('restaurant', 'restaurant_category_id', 'id');
+    }
+
+
 }

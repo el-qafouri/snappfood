@@ -20,7 +20,7 @@ class PermissionSeeder extends Seeder
         $permissions = [
             'accept admin', 'add food category', 'delete food category',
             'add restaurant category', 'delete restaurant category', 'delete seller',
-            'delete food', 'define coupon', 'add coupon', 'define banner',
+            'delete food', 'define discount', 'add discount', 'define banner',
             'add banner', 'view user', 'view users', 'view sellers', 'add restaurant', 'define food',
         ];
 
@@ -40,14 +40,14 @@ class PermissionSeeder extends Seeder
 
         $seller = Role::findByName('seller');
         $seller->givePermissionTo([
-            'add coupon', 'delete food', 'add banner', 'add restaurant', 'define food',
+            'add discount', 'delete food', 'add banner', 'add restaurant', 'define food',
         ]);
 
 // Create sample users and assign roles
-        $this->createUser('مهدیار', 'mahdiyar@gmail.com', '123456', $admin);
+        $this->createUser('الهام', 'elham@gmail.com', '123456', $admin);
         $this->createUser('فروشنده 1', 'test@gmail.com', '1234567', $seller);
-        $this->createUser('فروشنده2', 'test2@gmail.com', '12345678', $seller);
-        $this->createUser('فروشنده3', 'test3@gmail.com', '123456789', $seller);
+        $this->createUser('فروشنده 2', 'test2@gmail.com', '12345678', $seller);
+        $this->createUser('فروشنده 3', 'test3@gmail.com', '123456789', $seller);
     }
 
     private function createUser($name, $email, $password, $role)
