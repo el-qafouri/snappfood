@@ -35,7 +35,7 @@ Route::middleware(['auth','role:admin'])->group(function () {
 });
 
 
-Route::prefix('foodParty')->middleware(['auth'])->group(function () {
+Route::prefix('foodParty')->middleware(['auth' , 'role:admin'])->group(function () {
     Route::get('/', [FoodPartyController::class, 'index'])->name('foodParty.index');
     Route::get('{id}', [FoodPartyController::class, 'show'])->name('foodParty.show');
     Route::delete('{id}', [FoodPartyController::class, 'destroy'])->name('foodParty.delete');
@@ -44,7 +44,7 @@ Route::prefix('foodParty')->middleware(['auth'])->group(function () {
     Route::post('create', [FoodPartyController::class, 'store'])->name('foodParty.store');
 
     Route::get('{id}/edit', [FoodPartyController::class, 'edit'])->name('foodParty.edit');
-    Route::put('update/{id}', [FoodPartyController::class, 'update'])->name('foodParty.update')->middleware('can:seller,admin');
+    Route::put('update/{id}', [FoodPartyController::class, 'update'])->name('foodParty.update');
 });
 
 

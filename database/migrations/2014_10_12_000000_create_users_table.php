@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+//            $table->foreignId('restaurant_id');
+//            $table->foreign('restaurant_id')->references('id')->on('restaurant_categories')->cascadeOnDelete();
             $table->rememberToken();
             $table->timestamps();
         });

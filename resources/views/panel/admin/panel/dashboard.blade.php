@@ -62,6 +62,17 @@
                 </td>
             </tr>
 
+
+            <tr>
+                <td>Restaurants</td>
+                <td>
+                    <a href="{{ route('restaurant.index') }}" class="btn btn-primary"><i
+                            class="fas fa-edit"></i>show</a>
+                </td>
+            </tr>
+
+
+
             <tr>
                 <td>users</td>
                 <td>

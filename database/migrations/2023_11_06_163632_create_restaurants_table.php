@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('phone');
             $table->string('credit_card_number');
             $table->string('address');
+            $table->boolean('profile_status')->default(false);
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreignId('restaurant_category_id');
@@ -28,6 +29,13 @@ return new class extends Migration {
             $table->timestamps();
         });
     }
+
+
+
+
+
+
+
 
     /**
      * Reverse the migrations.

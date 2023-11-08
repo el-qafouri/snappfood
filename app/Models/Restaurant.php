@@ -24,9 +24,17 @@ class Restaurant extends Model
         'deleted_at',
     ];
 
-    public function restaurantCategories()
+//    public function restaurantCategories()
+//    {
+//        return $this->belongsTo('restaurantCategories', 'restaurant_category_id', 'id');
+//    }
+
+
+    public function restaurantCategory()
     {
-        return $this->belongsTo('restaurantCategories', 'restaurant_category_id', 'id');
+        return $this->belongsTo(RestaurantCategory::class, 'restaurant_category_id');
     }
+
+
 
 }

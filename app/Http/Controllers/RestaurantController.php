@@ -16,7 +16,8 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-//        return view('panel.seller.restaurants.create');
+        $restaurants = Restaurant::all();
+        return view('panel.seller.restaurants.index' , compact('restaurants'));
     }
 
     /**
@@ -46,72 +47,54 @@ class RestaurantController extends Controller
         }
     }
 
-
-//    public function store(Request $request)
-//    {
-////        dd('llll');
-//        $validatedDate = $request->validate([
-//            'phone' => 'required|string|unique:users',
-//            'restaurant_name' => 'required',
-//            'restaurant_address' => 'required',
-//            'restaurant_category_id' => 'required',
-//        ]);
-//
-//
-//        try {
-////            Restaurant::create($request->validated());
-//            Restaurant::create($validatedDate);
-//            return redirect()->route('seller.dashboard')->with('success', $request->restaurant . 'restaurant add successfully');
-//        } catch (Exception $e) {
-//            Log::error($e->getMessage());
-//            return redirect(status: 500)->route('restaurant.create')->with('fail', 'restaurant didnt add');
-//        }
-//    }
-
-
-
-
-////مااله خودم
-//    public function store(RestaurantRequest $request)
-//    {
-//        try {
-//            Restaurant::query()->create($request->validated());
-//            return redirect()->route('seller.dashboard')->with('success', $request->restaurant . 'restaurant add successfully');
-//        } catch (Exception $e) {
-//            Log::error($e->getMessage());
-//            return redirect(status: 500)->route('restaurant.create')->with('fail', 'restaurant didnt add');
-//        }
-//    }
-
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $restaurant = Restaurant::find($id);
+        return view('panel.seller.restaurants.show' , compact('restaurant'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $restaurant = Restaurant::find($id);
+        $restaurantCategories = RestaurantCategory::all();
+        return view('panel.seller.restaurants.edit', compact('restaurant', 'restaurantCategories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(RestaurantRequest $request, $id)
     {
-        //
+        try {
+            $restaurant = Restaurant::find($id);
+            $restaurantCategories = RestaurantCategory::all();
+            $restaurant->update($request->validated());
+            $restaurantCategoryId = $restaurant->restaurantCategory->id;// پیدا کردن آیدی رستوران کتگوری
+            return view('panel.seller.restaurants.index', compact('restaurant', 'restaurantCategoryId' , 'restaurantCategories'))->with('success', 'Update successfully');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->route('restaurant.edit', $id)->with('fail', 'Update failed');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        try {
+            $restaurant = Restaurant::find($id);
+            $restaurant->delete();
+            return redirect(status: 200)->route("restaurant.index")->with('success', "restaurant deleted successfully");
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return redirect(status: 500)->route('restaurant.index')->with('fail', 'restaurant delete!');
+        }
     }
 }

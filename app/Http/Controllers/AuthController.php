@@ -33,14 +33,11 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
         $result = Auth::attempt($credentials);
-//        dd($result);
         if ($result) {
-//            return redirect()->route('dashboard');
             $user = Auth::user();
             $redirectRoute = $this->getRedirectRouteForUser($user);
 //
             if ($redirectRoute) {
-//                session()->regenerate();
                 return redirect()->route($redirectRoute);
             }
         }

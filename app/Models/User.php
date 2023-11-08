@@ -44,4 +44,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+
+    public function restaurantCategories()
+    {
+        return $this->belongsToMany(RestaurantCategory::class, 'user_restaurant_category', 'user_id', 'restaurant_category_id');
+    }
+
+
+
+
 }

@@ -6,7 +6,7 @@ use App\Http\Controllers\FoodController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::prefix('foods')->middleware(['auth' ,'role:seller'])->group(function () {
+Route::prefix('foods')->middleware(['auth' ,'role:seller|admin'])->group(function () {
     Route::get('/', [FoodController::class, 'index'])->name('food.index');
     Route::get('{id}', [FoodController::class, 'show'])->name('food.show');
     Route::delete('{id}', [FoodController::class, 'destroy'])->name('food.delete');
@@ -19,7 +19,7 @@ Route::prefix('foods')->middleware(['auth' ,'role:seller'])->group(function () {
 });
 
 
-Route::resource('discount', DiscountController::class)->except(['create', 'store']);
+Route::middleware('role:admin|seller')->resource('discount', DiscountController::class)->except(['create', 'store']);
 //Route::get('discount/create', [DiscountController::class, 'create'])->name('discount.create');
 //Route::post('discount', [DiscountController::class, 'store'])->name('discount.store');
 

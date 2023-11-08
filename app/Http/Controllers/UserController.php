@@ -22,32 +22,43 @@ class UserController extends Controller
 //    }
 
 
+//    public function sellerIndex()
+//    {
+//        // Check if the user has a restaurant
+//        $user = Auth::user();
+//        if (!$user->restaurant_id) {
+//            return redirect()->route('restaurant.create');
+//        }
+//
+//        // Get the restaurant information
+//        $restaurant = Restaurant::find($user->restaurant_id);
+//
+//        // Return the view
+//        return view('panel.seller.panel.dashboard', ['restaurant' => $restaurant]);
+//    }
+
+
     public function sellerIndex()
     {
-        // Check if the user has a restaurant
         $user = Auth::user();
-        if (!$user->restaurant_name) {
-            return redirect()->route('restaurant.create');
+        if ($user->restaurant_id) {
+            $restaurant = Restaurant::find($user->restaurant_id);
+            if ($restaurant->profile_status) {
+                return view('panel.seller.panel.dashboard', ['restaurant' => $restaurant]);
+            }
         }
-
-        // Get the restaurant information
-        $restaurant = Restaurant::find($user->restaurant_id);
-
-        // Return the view
-        return view('panel.seller.panel.dashboard', ['restaurant' => $restaurant]);
+        return redirect()->route('restaurant.create');
     }
 
 
     public function dashboard()
     {
+        dd('hoop');
         $user = Auth::user();
         $restaurant = Restaurant::find($user->restaurant_id);
 
         return view('panel.seller.panel.dashboard', ['restaurant' => $restaurant]);
     }
-
-
-
 
 
 }

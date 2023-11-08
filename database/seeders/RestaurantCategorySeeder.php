@@ -6,16 +6,16 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class FoodCategorySeeder extends Seeder
+class RestaurantCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('food_categories')->insert([
-            'name'=>'vegan',
-            'description' => 'vegetarian and vegan foods'
+        DB::table('restaurant_categories')->insert([
+            ['name' => 'کتگوری 1'],
+            ['description' => 'restaurant category id restaurant_category_id'],
             ]);
     }
 }

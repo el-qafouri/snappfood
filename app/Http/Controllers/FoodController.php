@@ -21,13 +21,13 @@ class FoodController extends Controller
 
     }
 
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
         $foodCategories = FoodCategory::all();
-//        dd('create foodddd');
         return view('panel.seller.foods.create', compact('foodCategories'));
 
     }
@@ -37,8 +37,6 @@ class FoodController extends Controller
      */
     public function store(FoodRequest $request)
     {
-//        dd('store foodddd');
-
         try {
             Food::query()->create($request->validated());
             return redirect()->route("food.index")->with('success', $request->food . "food added successfully");
@@ -53,11 +51,8 @@ class FoodController extends Controller
      */
     public function show($id)
     {
-//        dd('show foodddd');
-
         $food = Food::find($id);
         return view('panel.seller.foods.show')->with('food', $food);
-
     }
 
     /**
@@ -65,11 +60,8 @@ class FoodController extends Controller
      */
     public function edit($id)
     {
-////        dd('edit foodddd');
-//        $food = Food::find($id);
-//        return view('panel.seller.foods.edit', compact('food'));
         $food = Food::find($id);
-        $foodCategories = FoodCategory::all(); // دریافت داده‌های مورد نیاز برای $foodCategories
+        $foodCategories = FoodCategory::all();
         return view('panel.seller.foods.edit', compact('food', 'foodCategories'));
     }
 
@@ -88,14 +80,11 @@ class FoodController extends Controller
             return redirect()->route('food.edit', $id)->with('fail', 'Update failed');
         }
     }
-
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-//        dd('destroy foodddd');
         try {
             $food = Food::find($id);
             $food->delete();
@@ -104,6 +93,5 @@ class FoodController extends Controller
             Log::error($e->getMessage());
             return redirect(status: 500)->route('food.index')->with('fail', 'food delete!');
         }
-
     }
 }
