@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthenticationController::class, 'register']);
 //Route::get('/login', [AuthenticationController::class, 'login']);
 Route::post('/login', [AuthenticationController::class, 'login']);
-
+//
 
 
 //protected routes
@@ -39,6 +39,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //restaurant
     Route::apiResource('apiRestaurant', RestaurantController::class);
     Route::get('apiRestaurant/{id}/foods', [RestaurantController::class, 'food']);
+
+    //
+
 
 
 

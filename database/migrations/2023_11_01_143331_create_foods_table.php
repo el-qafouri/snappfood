@@ -20,8 +20,9 @@ return new class extends Migration
             $table->foreignId('food_category_id')->nullable();
             $table->foreign('food_category_id')->references('id')
                 ->on('food_categories')->cascadeOnDelete();
-//            $table->unsignedBigInteger('restaurant_id')->nullable();
-//            $table->foreign('restaurant_id')->references('id')->on('restaurants')->onDelete('cascade');
+            $table->foreignId('restaurant_id')->constrained();
+            $table->foreign('restaurant_id')->references('id')->on('restaurants')->onDelete('cascade');
+
             $table->softDeletes();
             $table->timestamps();
         });

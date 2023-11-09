@@ -19,8 +19,10 @@ return new class extends Migration {
             $table->boolean('profile_status')->default(false);
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreignId('restaurant_category_id');
+            $table->foreignId('restaurant_category_id')->nullable();
             $table->foreign('restaurant_category_id')->references('id')->on('restaurant_categories')->cascadeOnDelete();
+//            $table->foreignId('restaurant_category_id')->constrained();
+
 //            $table->unsignedBigInteger('latitude');
 //            $table->unsignedBigInteger('longitude');
             $table->decimal('send_cost')->default('15000');
