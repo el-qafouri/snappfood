@@ -44,10 +44,10 @@ class PermissionSeeder extends Seeder
         ]);
 
 // Create sample users and assign roles
-        $this->createUser('الهام', 'elham@gmail.com', '123456', $admin);
-        $this->createUser('فروشنده 1', 'test@gmail.com', '1234567', $seller);
-        $this->createUser('فروشنده 2', 'test2@gmail.com', '12345678', $seller);
-        $this->createUser('فروشنده 3', 'test3@gmail.com', '123456789', $seller);
+        $this->createUser('eli', 'elham@gmail.com', '123456', $admin);
+        $this->createUser('seller1', 'test@gmail.com', '1234567', $seller);
+        $this->createUser('seller2', 'test2@gmail.com', '12345678', $seller);
+        $this->createUser('seller3', 'test3@gmail.com', '123456789', $seller);
     }
 
     private function createUser($name, $email, $password, $role)
