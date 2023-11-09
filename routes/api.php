@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AddressController;
 use App\Http\Controllers\API\AuthenticationController;
+use App\Http\Controllers\API\RestaurantController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,8 +37,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('addresses/{address}', [AddressController::class, 'setActiveAddress'])->name('Address.setActiveAddress');
 
     //restaurant
-    Route::apiResource('apiRestaurant', \App\Http\Controllers\API\RestaurantController::class);
-    Route::get('apiRestaurant/{id}/foods', [\App\Http\Controllers\API\RestaurantController::class, 'food']);
+    Route::apiResource('apiRestaurant', RestaurantController::class);
+    Route::get('apiRestaurant/{id}/foods', [RestaurantController::class, 'food']);
 
 
 
