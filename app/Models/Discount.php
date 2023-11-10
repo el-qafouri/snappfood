@@ -21,4 +21,18 @@ class Discount extends Model
         'deleted_at',
     ];
 
+    public function foods(){
+        return $this->hasMany(Food::class , 'discount_id');
+    }
+
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class);
+    }
+
+
+
+
+
+
 }

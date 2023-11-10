@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AddressController;
 use App\Http\Controllers\API\AuthenticationController;
+use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\RestaurantController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -19,10 +20,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
 //public routes
 Route::post('/register', [AuthenticationController::class, 'register']);
-//Route::get('/login', [AuthenticationController::class, 'login']);
 Route::post('/login', [AuthenticationController::class, 'login']);
 //
 
@@ -34,24 +33,27 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //address
     Route::resource('addresses', AddressController::class);
-    Route::post('addresses/{address}', [AddressController::class, 'setActiveAddress'])->name('Address.setActiveAddress');
+    Route::post('addresses/{address}', [AddressController::class, 'setActiveAddress'])->name('address.setActiveAddress');
 
     //restaurant
     Route::apiResource('apiRestaurant', RestaurantController::class);
     Route::get('apiRestaurant/{id}/foods', [RestaurantController::class, 'food']);
 
-    //
+    //orders
+    Route::get('carts', [OrderController::class, 'getCards']);
+    Route::post('carts/add', [OrderController::class, 'add']);
+    Route::put('carts/update', [OrderController::class, 'update']);
+    Route::get('carts/{cartId}', [OrderController::class, 'getCard'])->whereNumber('cartId');
+    Route::post('carts/{cartId}/pay', [OrderController::class, 'payCard'])->whereNumber('cartId');
+    Route::delete('carts/delete', [OrderController::class, 'destroy']);
 
 
-
+//    //comments
+//    Route::post('Comments', [\App\Http\Controllers\API\CommentController::class, 'store']);
+//    Route::get('Comments', [\App\Http\Controllers\API\CommentController::class, 'index']);
+//
 
 });
-
-
-
-
-
-
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

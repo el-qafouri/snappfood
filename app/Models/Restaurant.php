@@ -37,7 +37,17 @@ class Restaurant extends Model
 
     public function food()
     {
-        return $this->hasMany(Food::class);
+        return $this->hasMany(Food::class, 'restaurant_id');
+    }
+
+    public function address()
+    {
+        return $this->morphOne(Address::class, 'addressable');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 
 }
