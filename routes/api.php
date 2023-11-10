@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AddressController;
 use App\Http\Controllers\API\AuthenticationController;
+use App\Http\Controllers\API\CommentController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\RestaurantController;
 use App\Http\Controllers\UserController;
@@ -48,10 +49,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('carts/delete', [OrderController::class, 'destroy']);
 
 
-//    //comments
-//    Route::post('Comments', [\App\Http\Controllers\API\CommentController::class, 'store']);
-//    Route::get('Comments', [\App\Http\Controllers\API\CommentController::class, 'index']);
-//
+    //comments
+    Route::post('comments', [CommentController::class, 'store']);
+    Route::get('comments', [CommentController::class, 'index']);
+
 
 });
 

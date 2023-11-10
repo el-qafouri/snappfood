@@ -152,8 +152,8 @@ class OrderController
         $pivot->count = $request->count;
         $pivot->save();
 
-        $order->total_amount += ((Food::query()->find($food_id)->discounted_price * $request->count)
-            - (Food::query()->find($food_id)->discounted_price * $oldCount));
+        $order->total_price += ((Food::query()->find($food_id)->discount * $request->count)
+            - (Food::query()->find($food_id)->discount * $oldCount));
         $order->save();
 
         return response(['Message' => 'count of food is updated']);
@@ -169,16 +169,5 @@ class OrderController
         $order->save();
         return response(['Message' => "cart number $id paid successfully"]);
     }
-
-
-
-
-
-
-
-
-
-
-
 
 }
