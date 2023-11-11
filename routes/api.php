@@ -30,11 +30,11 @@ Route::post('/login', [AuthenticationController::class, 'login']);
 //protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthenticationController::class, 'logout']);
-    Route::put('user/edit', [AuthenticationController::class, 'editUser'])->name('user.Edit');
+    Route::put('user/edit', [AuthenticationController::class, 'editUser']);
 
     //address
     Route::resource('addresses', AddressController::class);
-    Route::post('addresses/{address}', [AddressController::class, 'setActiveAddress'])->name('address.setActiveAddress');
+    Route::post('addresses/{address}', [AddressController::class, 'setActiveAddress']);
 
     //restaurant
     Route::apiResource('apiRestaurant', RestaurantController::class);

@@ -10,10 +10,10 @@ class Comment extends Model
     use HasFactory;
 
     protected $fillable = [
-      'user_id',
-      'order_id',
-      'messages',
-      'score'
+        'user_id',
+        'order_id',
+        'messages',
+        'score'
     ];
 
     public function user()
@@ -23,7 +23,7 @@ class Comment extends Model
 
     public function orders()
     {
-        return $this->belongsTo(Order::class , 'order_id');
+        return $this->belongsTo(Order::class, 'order_id');
     }
 
 
