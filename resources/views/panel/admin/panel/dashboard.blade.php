@@ -55,15 +55,6 @@
 
 
             <tr>
-                <td>sellers</td>
-                <td>
-                    <a href="#" class="btn btn-primary"><i
-                            class="fas fa-edit"></i>show</a>
-                </td>
-            </tr>
-
-
-            <tr>
                 <td>Restaurants</td>
                 <td>
                     <a href="{{ route('restaurant.index') }}" class="btn btn-primary"><i
@@ -81,6 +72,13 @@
                 </td>
             </tr>
 
+            <tr>
+                <td>sellers</td>
+                <td>
+                    <a href="#" class="btn btn-primary"><i
+                            class="fas fa-edit"></i>show</a>
+                </td>
+            </tr>
 
             <tr>
                 <td>food party</td>
@@ -91,13 +89,13 @@
             </tr>
 
 
-            <tr>
-                <td>discount</td>
-                <td>
-                    <a href="#" class="btn btn-primary"><i
-                            class="fas fa-edit"></i>show</a>
-                </td>
-            </tr>
+{{--            <tr>--}}
+{{--                <td>discount</td>--}}
+{{--                <td>--}}
+{{--                    <a href="#" class="btn btn-primary"><i--}}
+{{--                            class="fas fa-edit"></i>show</a>--}}
+{{--                </td>--}}
+{{--            </tr>--}}
 
 
             {{--            @endforeach--}}

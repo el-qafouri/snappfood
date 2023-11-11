@@ -57,4 +57,20 @@ class User extends Authenticatable
         return $this->morphMany(Address::class, 'addressable');
     }
 
+
+
+    public function restaurant()
+    {
+        return $this->hasOne(Restaurant::class);
+    }
+
+    public function foods()
+    {
+        return $this->hasMany(Food::class , 'user_id');
+    }
+
+//    public function foods()
+//    {
+//        return $this->hasMany(Food::class, 'user_id');
+//    }
 }

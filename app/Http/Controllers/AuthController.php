@@ -10,25 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-
-//    public function login(LoginRequest $request)
-//    {
-//        if ($request->validated()) {
-//            if (Auth::attempt([
-//                'email' => $request->post('email'),
-//                'password' => $request->post('password')
-//            ])) {
-//                return view('dashboard');
-//            } else {
-//                return redirect()->route('login.show')->withErrors([
-//                    'email' => ['نام کاربری یا رمز عبور اشتباه است.'],
-//                ]);
-//            }
-////        return redirect('auth.login');
-//        }
-//    }
-
-
     public function login(LoginRequest $request)
     {
         $credentials = $request->only('email', 'password');
@@ -41,7 +22,8 @@ class AuthController extends Controller
                 return redirect()->route($redirectRoute);
             }
         }
-        return back()->with('error', 'ایمیل یا پسوورد است!');
+        return back()->withErrors('ایمیل یا پسوورد اشتباه است!');
+//        return back()->with('error', 'ایمیل یا پسوورد اشتباه است!');
     }
     private function getRedirectRouteForUser($user)
     {
@@ -49,12 +31,10 @@ class AuthController extends Controller
             return 'admin.dashboard';
         } elseif ($user->hasRole('seller')) {
             return 'seller.dashboard';
+//            return url('seller/dashboard' , ['user' => $user->id]);
         }
         return null;
     }
-
-
-
 
     public function showLogin()
     {

@@ -22,6 +22,7 @@ return new class extends Migration
                 ->on('food_categories')->cascadeOnDelete();
 //            $table->foreignId('restaurant_id')->constrained();
 //            $table->foreign('restaurant_id')->references('id')->on('restaurants')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->on('users')->onDelete('cascade');
 
             $table->softDeletes();
             $table->timestamps();

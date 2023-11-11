@@ -6,6 +6,7 @@ use App\Http\Requests\FoodRequest;
 use App\Models\Food;
 use App\Models\FoodCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FoodController extends Controller
 {
@@ -14,7 +15,8 @@ class FoodController extends Controller
      */
     public function index()
     {
-        $foods = Food::all();
+        $user = Auth::user();
+        $foods = $user->foods;
         return view('panel.seller.foods.index', [
             'foods' => $foods
         ]);
@@ -35,16 +37,42 @@ class FoodController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+//    public function store(FoodRequest $request)
+//    {
+//        $user = Auth::user();
+//        try {
+//            $foodData = $request->validated();
+//            $foodData['user_id'] = $user->id;
+////            Food::query()->create($request->validated());
+//            Food::query()->create($foodData);
+//            return redirect()->route("food.index")->with('success', $request->food . "food added successfully");
+//        } catch (Exception $e) {
+//            Log::error($e->getMessage());
+//            return redirect(status: 500)->route('food.create')->with('fail', 'food didnt add!');
+//        }
+//    }
+
+
+
     public function store(FoodRequest $request)
     {
+        $user = Auth::user();
+
         try {
-            Food::query()->create($request->validated());
-            return redirect()->route("food.index")->with('success', $request->food . "food added successfully");
+            $foodData = $request->validated();
+
+            // افزودن غذا با استفاده از رابطه
+            $food = $user->foods()->create($foodData);
+
+            return redirect()->route("food.index")->with('success', $food->name . " food added successfully");
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect(status: 500)->route('food.create')->with('fail', 'food didnt add!');
         }
     }
+
+
+
 
     /**
      * Display the specified resource.

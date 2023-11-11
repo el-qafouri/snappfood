@@ -15,7 +15,8 @@ class Food extends Model
         'material',
         'food_category_id',
         'restaurant_id',
-        'discount_id'
+        'discount_id',
+        'user_id'
     ];
 
     protected $guarded = [
@@ -23,8 +24,11 @@ class Food extends Model
         'deleted_at',
     ];
 
-    protected $visible = ['discounted_price', 'price', 'count', 'pivot_count'];
+    protected $visible = ['discounted_price', 'final_price' , 'price', 'count', 'pivot_count'];
 
+    protected $attributes = [
+        'final_price' => 0, // یا هر مقدار دلخواه دیگر
+    ];
 
     public function foodCategories()
     {
@@ -54,6 +58,9 @@ class Food extends Model
         return $this->belongsTo(Discount::class , 'discount_id');
     }
 
-
+    public function seller()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
 }

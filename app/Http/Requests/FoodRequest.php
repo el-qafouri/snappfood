@@ -22,7 +22,8 @@ class FoodRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => ['bail',"required", "string",'min:2','max:25','unique:food', "max:255"],
+//            "name" => ['bail',"required", "string",'min:2','max:25','unique:food', "max:255"],
+            "name" => ['bail', 'required', 'string', 'min:2', 'max:25', 'unique:food,name,NULL,id,user_id,' . auth()->id(), 'max:255'],
             "price" => ['bail', 'required', 'numeric', 'min:0'],
             "material" => ['bail', 'required', 'string', 'min:2' , 'max:255'],
             'food_category_id' => 'required',

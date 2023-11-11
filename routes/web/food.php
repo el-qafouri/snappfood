@@ -6,7 +6,7 @@ use App\Http\Controllers\FoodController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::prefix('foods')->middleware(['auth' ,'role:seller|admin'])->group(function () {
+Route::prefix('foods')->middleware('auth')->group(function () {
     Route::get('/', [FoodController::class, 'index'])->name('food.index');
     Route::get('{id}', [FoodController::class, 'show'])->name('food.show');
     Route::delete('{id}', [FoodController::class, 'destroy'])->name('food.delete');
