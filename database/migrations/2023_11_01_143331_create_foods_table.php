@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('food', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->decimal('price' , '10' , '2');
+            $table->decimal('price' , '10' , '3');
             $table->decimal('final_price');
             $table->string('material');
             $table->foreignId('food_category_id')->nullable();

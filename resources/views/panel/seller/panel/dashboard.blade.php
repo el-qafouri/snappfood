@@ -16,57 +16,37 @@
             </script>
         @endif
 
-        <table class="table table-striped mt-5">
-            {{--            <thead class="table-dark">--}}
-            {{--            <tr>--}}
-            {{--                <th scope="col">Discount</th>--}}
-            {{--                <th scope="col">start time</th>--}}
-            {{--                <th scope="col">end time</th>--}}
-            {{--                <th scope="col">actions</th>--}}
+        @if(auth()->check() && auth()->user()->restaurant)
 
-            {{--            </tr>--}}
-            {{--            </thead>--}}
-            <tbody>
-            {{--            @foreach($foodParties as $foodParty)--}}
-            <tr>
-                {{-- max length of title is 20 characters --}}
-                {{--                    <td>{{ Str::limit($foodParty->discount, 20) }}</td>--}}
-                {{--                    <td>{{ $foodParty->start_time }}</td>--}}
-                {{--                    <td>{{ $foodParty->end_time }}</td>--}}
-                <td>foods</td>
+            <table class="table table-striped mt-5">
+                <tbody>
+                <tr>
+                    <td>foods</td>
+                    <td>
+                        <a href="{{ route('food.index') }}" class="btn btn-primary"><i
+                                class="fas fa-edit"></i>show</a>
+                    </td>
+                </tr>
 
-                <td>
-                    {{--                        <a href="{{ route('foodParty.show', $foodParty->id) }}" class="btn btn-success"><i--}}
-                    {{--                                class="fas fa-eye"></i> Show</a>--}}
-                    {{--                    <a href="{{ route('foodParty.edit', $foodParty->id) }}" class="btn btn-primary"><i--}}
-                    {{--                            class="fas fa-edit">--}}
-                    <a href="{{ route('food.index') }}" class="btn btn-primary"><i
-                            class="fas fa-edit"></i>show</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>discounts</td>
+                    <td>
+                        <a href="#" class="btn btn-primary"><i
+                                class="fas fa-edit"></i>show</a>
+                    </td>
+                </tr>
 
-            <tr>
-                <td>discounts</td>
-                <td>
-                    <a href="#" class="btn btn-primary"><i
-                            class="fas fa-edit"></i>show</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>orders</td>
+                    <td>
+                        <a href="#" class="btn btn-primary"><i
+                                class="fas fa-edit"></i>show</a>
+                    </td>
+                </tr>
 
 
-
-            <tr>
-                <td>orders</td>
-                <td>
-                    <a href="#" class="btn btn-primary"><i
-                            class="fas fa-edit"></i>show</a>
-                </td>
-            </tr>
-
-
-            {{--            @endforeach--}}
-            </tbody>
-        </table>
+                </tbody>
+            </table>
     </div>
 
     {{--    <div class="table-responsive">--}}
@@ -76,6 +56,23 @@
     {{--        @csrf--}}
     {{--        <button type="submit">Logout</button>--}}
     {{--    </form>--}}
+
+
+    @else
+        <!-- اگر user_id برای این کاربر وجود ندارد -->
+        <br>
+        <h1>Welcome!</h1><br>
+        <h2>Sorry! You don't have a restaurant.</h2><br>
+        <h3>Please complete your restaurant data from here!</h3><a href="{{ route('restaurant.create') }}"
+                                                                   class="btn btn-primary">Complete Form</a>
+
+
+        <br>
+        <br>
+        <h4>If you complete your restaurant data connect with admin: admin@gmail.com</h4>
+        <!-- دیگر محتویات بدون رستوران -->
+    @endif
+
 @endsection
 
 

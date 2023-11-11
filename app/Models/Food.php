@@ -27,18 +27,25 @@ class Food extends Model
     protected $visible = ['discounted_price', 'final_price' , 'price', 'count', 'pivot_count'];
 
     protected $attributes = [
-        'final_price' => 0, // یا هر مقدار دلخواه دیگر
+        'final_price' => 0,
     ];
 
     public function foodCategories()
     {
         return $this->belongsTo('foodCategories', 'food_category_id', 'id');
+//        return $this->belongsTo(FoodCategory::class, 'food_category_id', 'id');
+//        return $this->belongsTo( 'food_category_id', 'id');
     }
 
 
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class, 'restaurant_id');
+    }
+
+    public function foodCategory()
+    {
+        return $this->belongsTo(FoodCategory::class);
     }
 
 

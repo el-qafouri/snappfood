@@ -2,10 +2,10 @@
     <div class="container">
         <nav
             class="navbar navbar-expand-lg navbar-light"
-            style="background-color: lightgray;"
+            style="background-color: #e3f2fd;"
         >
             <div class="container-fluid">
-                <a class="navbar-brand" href="">
+                <a class="navbar-brand" href="{{ route('') }}">
                     <img
                         src="{{ asset('images/snappfood.JPG') }}"
                         alt="logo"

@@ -2,7 +2,7 @@
     <div class="container">
         <nav
             class="navbar navbar-expand-lg navbar-light"
-            style="background-color: lightgray;"
+            style="background-color: #e3f2fd;"
         >
             <div class="container-fluid">
                 <a class="navbar-brand" href="">
@@ -24,6 +24,29 @@
                 >
                     <i class="fas fa-bars"></i>
                 </button>
+
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="font-size: 20px;">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url()->previous() }}">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="">
+                                <i class="fas fa-home"></i> Homepage
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+
+
+
+{{--                <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>--}}
+
+
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul
                         class="navbar-nav ms-auto mb-2 mb-lg-0"

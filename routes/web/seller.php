@@ -9,10 +9,11 @@ use Illuminate\Support\Facades\Route;
 //Route::middleware('auth')->get('dashboard/seller/{user}', [UserController::class , 'dashboard'])->name('seller.dashboard');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/seller/dashboard', [UserController::class ,'dashboard'])->name('seller.dashboard');
+    Route::get('dashboard/seller', [UserController::class ,'dashboard'])->name('seller.dashboard');
+//    Route::get('/dashboard', [UserController::class, 'sellerIndex'])->name('admin.dashboard');
+
 });
 
-//Route::get('/dashboard/seller', [UserController::class, 'sellerIndex'])->middleware(['auth', 'role:seller'])->name('seller.dashboard');
 
 
 

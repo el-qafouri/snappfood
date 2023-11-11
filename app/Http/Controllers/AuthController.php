@@ -31,7 +31,6 @@ class AuthController extends Controller
             return 'admin.dashboard';
         } elseif ($user->hasRole('seller')) {
             return 'seller.dashboard';
-//            return url('seller/dashboard' , ['user' => $user->id]);
         }
         return null;
     }
