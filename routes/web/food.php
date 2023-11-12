@@ -19,7 +19,19 @@ Route::prefix('foods')->middleware('auth')->group(function () {
 });
 
 
-Route::middleware('role:admin|seller')->resource('discount', DiscountController::class)->except(['create', 'store']);
+//Route::middleware('role:admin|seller')->resource('discount', DiscountController::class)->except(['create', 'store']);
 //Route::get('discount/create', [DiscountController::class, 'create'])->name('discount.create');
 //Route::post('discount', [DiscountController::class, 'store'])->name('discount.store');
 
+
+Route::prefix('discount')->middleware('auth')->group(function () {
+    Route::get('/', [DiscountController::class, 'index'])->name('discount.index');
+    Route::get('{id}', [DiscountController::class, 'show'])->name('discount.show');
+    Route::delete('{id}', [DiscountController::class, 'destroy'])->name('discount.delete');
+
+    Route::get('discount/create', [DiscountController::class, 'create'])->name('discount.create');
+    Route::post('create', [DiscountController::class, 'store'])->name('discount.store');
+
+    Route::get('{id}/edit', [DiscountController::class, 'edit'])->name('discount.edit');
+    Route::put('update/{id}', [DiscountController::class, 'update'])->name('discount.update');
+});

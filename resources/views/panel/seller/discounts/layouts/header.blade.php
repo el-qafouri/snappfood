@@ -25,19 +25,16 @@
                     <i class="fas fa-bars"></i>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="font-size: 20px;">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url()->previous() }}">
-                                <i class="fas fa-arrow-left"></i> Back
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="">
-                                <i class="fas fa-home"></i> Homepage
-                            </a>
-                        </li>
-                    </ul>
+                <div id="header-buttons" class="d-flex align-items-center">
+                    <!-- دکمه‌های دیگر -->
+                    <a href="" class="btn btn-light"><i class="fas fa-home"></i> Dashboard</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-light"><i class="fa-solid fa-arrow-left"></i>Back</a>
+
+                    <!-- دکمه لاگ‌اوت -->
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-light"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    </form>
                 </div>
 
 
