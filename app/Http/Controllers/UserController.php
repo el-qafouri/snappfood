@@ -58,21 +58,42 @@ class UserController extends Controller
 //    }
 
 
+
+//این دشبورد درست شد
+//    public function dashboard()
+//    {
+//        $user = Auth::user();
+//        $restaurant = $user->restaurant;
+//        return view('panel.seller.panel.dashboard', ['restaurant' => $restaurant]);
+//    }
+
+
+
+
+
+
+
     public function dashboard()
     {
         $user = Auth::user();
-        $restaurant = $user->restaurant;
-        return view('panel.seller.panel.dashboard', ['restaurant' => $restaurant]);
-        //        // اگر کاربر دارای رستوران باشد، اطلاعات رستوران را دریافت می‌کنیم
-//        if ($user->restaurant) {
-//            $restaurant = $user->restaurant;
-//
-//            return view('panel.seller.panel.dashboard', ['restaurant' => $restaurant]);
-//        } else {
-//            // اگر کاربر رستوران نداشته باشد، می‌توانید اقدام مناسبی انجام دهید.
-//            abort(403, 'شما دسترسی به این صفحه را ندارید');
-//        }
+
+        if ($user->restaurant && $user->restaurant->profile_status) {
+            // منطق برای نمایش لیست
+            return view('panel.seller.panel.dashboard');
+        } elseif ($user->restaurant && !$user->restaurant->profile_status) {
+            // منطق برای پروفایل غیرفعال
+            return view('panel.seller.panel.inactive_profile');
+        } else {
+            // منطق برای کاربر بدون رستوران
+            return view('panel.seller.panel.no_restaurant');
+        }
     }
+
+
+
+
+
+
 
 
 }

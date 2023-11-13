@@ -16,7 +16,7 @@
             </script>
         @endif
 
-        @if(auth()->check() && auth()->user()->restaurant)
+{{--                @if(auth()->check() && auth()->user()->restaurant && auth()->user()->restaurant->profile_status)--}}
 
             <table class="table table-striped mt-5">
                 <tbody>
@@ -49,29 +49,22 @@
             </table>
     </div>
 
-    {{--    <div class="table-responsive">--}}
-    {{--        {{ $foodParties->links() }}--}}
-    {{--    </div>--}}
-    {{--    <form action="{{route('logout')}}" method="post">--}}
-    {{--        @csrf--}}
-    {{--        <button type="submit">Logout</button>--}}
-    {{--    </form>--}}
+{{--    @elseif(auth()->user()->restaurant->profile_status== false)--}}
+{{--        <!-- شرط profile_status برابر با یک نبود -->--}}
+{{--        <h2>Your profile status is not active. please wait or send email: elham@gmail.com </h2>--}}
 
-
-    @else
-        <!-- اگر user_id برای این کاربر وجود ندارد -->
-        <br>
-        <h1>Welcome!</h1><br>
-        <h2>Sorry! You don't have a restaurant.</h2><br>
-        <h3>Please complete your restaurant data from here!</h3><a href="{{ route('restaurant.create') }}"
-                                                                   class="btn btn-primary">Complete Form</a>
-
-
-        <br>
-        <br>
-        <h4>If you complete your restaurant data connect with admin: admin@gmail.com</h4>
-        <!-- دیگر محتویات بدون رستوران -->
-    @endif
+{{--    @else--}}
+{{--        <!-- اگر user_id برای این کاربر وجود ندارد -->--}}
+{{--        <br>--}}
+{{--        <h1>Welcome!</h1><br>--}}
+{{--        <h2>Sorry! You don't have a restaurant.</h2><br>--}}
+{{--        <h3>Please complete your restaurant data from here!</h3>--}}
+{{--        <a href="{{ route('restaurant.create') }}"--}}
+{{--           class="btn btn-primary">Complete Form</a>--}}
+{{--        <br>--}}
+{{--        <br>--}}
+{{--        <h4>If you complete your restaurant data connect with admin: admin@gmail.com</h4>--}}
+{{--    @endif--}}
 
 @endsection
 
