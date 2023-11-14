@@ -14,8 +14,11 @@ return new class extends Migration {
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Restaurant::class)->constrained()->cascadeOnDelete();
+//            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+//            $table->foreignIdFor(Restaurant::class)->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('restaurant_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+
             $table->enum('customer_status', ['canceled', 'paid', 'unpaid'])->default('unpaid');
             $table->enum('seller_status', ['pending', 'preparing', 'send', 'delivered'])->default('pending');
             $table->decimal('total_price', '10', '2');

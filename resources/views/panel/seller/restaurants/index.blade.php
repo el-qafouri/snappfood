@@ -21,6 +21,7 @@
                 <th scope="col">Restaurant Name</th>
                 <th scope="col">Address</th>
                 <th scope="col">Restaurant Category</th>
+                <th scope="col">profile Status</th>
                 {{--                <th scope="col">Price</th>--}}
                 <th scope="col">Actions</th>
             </tr>
@@ -32,6 +33,8 @@
                     <td>{{ Str::limit($restaurant->restaurant_name, 20) }}</td>
                     <td>{{ $restaurant->address }}</td>
                     <td>{{ $restaurant->restaurant_category_id }}</td>
+{{--                    <td>{{ optional($restaurant->restaurant_category)->name }}</td>--}}
+                    <td>{{ $restaurant->profile_status }}</td>
                     <td>
                         <a href="{{ route('restaurant.show', $restaurant->id) }}" class="btn btn-success"><i
                                 class="fas fa-eye"></i> Show</a>

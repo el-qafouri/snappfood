@@ -35,8 +35,6 @@
                     <td>{{ $discount->end_time }}</td>
 
                     <td>
-{{--                        <a href="{{ route('foodParty.show', $foodParty->id) }}" class="btn btn-success"><i--}}
-{{--                                class="fas fa-eye"></i> Show</a>--}}
                         <a href="{{ route('discount.edit', $discount->id) }}" class="btn btn-primary"><i
                                 class="fas fa-edit"></i> Edit</a>
                         <form action="{{ route('discount.delete', $discount->id) }}" method="POST" class="d-inline">

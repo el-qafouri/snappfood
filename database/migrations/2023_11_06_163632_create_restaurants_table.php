@@ -17,19 +17,21 @@ return new class extends Migration {
             $table->string('credit_card_number');
             $table->string('address');
             $table->boolean('profile_status')->default(false);
-            $table->foreignId('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreignId('restaurant_category_id')->nullable();
-            $table->foreign('restaurant_category_id')->references('id')->on('restaurant_categories')->cascadeOnDelete();
-//            $table->foreignId('restaurant_category_id')->constrained();
-
-//            $table->unsignedBigInteger('latitude');
-//            $table->unsignedBigInteger('longitude');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('restaurant_category_id')->nullable();
             $table->decimal('send_cost')->default('15000');
             $table->time('open_time')->default('09:00:00')->nullable();
             $table->time('close_time')->default('21:00:00')->nullable();
+            $table->boolean('is_open')->default(true);
             $table->timestamps();
+
+
         });
+
+//        Schema::table('restaurants', function (Blueprint $table) {
+//            $table->index('id');
+//        });
+
     }
 
 

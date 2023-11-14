@@ -31,5 +31,9 @@ class RestaurantCategory extends Model
     }
 
 
+    public function category()
+    {
+        return $this->belongsTo(RestaurantCategory::class, 'restaurant_category_id');
+    }
 
 }

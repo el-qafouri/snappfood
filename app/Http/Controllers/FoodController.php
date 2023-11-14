@@ -18,11 +18,7 @@ class FoodController extends Controller
     {
         $user = Auth::user();
         $foods = $user->foods;
-//        return view('panel.seller.foods.index', [
-//            'foods' => $foods
-//        ]);
-
-        return view('panel.seller.foods.index' , compact('foods'));
+        return view('panel.seller.foods.index', compact('foods'));
     }
 
 
@@ -33,27 +29,11 @@ class FoodController extends Controller
     {
         $foodCategories = FoodCategory::all();
         return view('panel.seller.foods.create', compact('foodCategories'));
-
     }
 
     /**
      * Store a newly created resource in storage.
      */
-//    public function store(FoodRequest $request)
-//    {
-//        $user = Auth::user();
-//        try {
-//            $foodData = $request->validated();
-//            $foodData['user_id'] = $user->id;
-////            Food::query()->create($request->validated());
-//            Food::query()->create($foodData);
-//            return redirect()->route("food.index")->with('success', $request->food . "food added successfully");
-//        } catch (Exception $e) {
-//            Log::error($e->getMessage());
-//            return redirect(status: 500)->route('food.create')->with('fail', 'food didnt add!');
-//        }
-//    }
-
 
     public function store(FoodRequest $request)
     {
@@ -61,9 +41,12 @@ class FoodController extends Controller
 
         try {
             $foodData = $request->validated();
+
+            $foodData['restaurant_id'] = $user->restaurant->id;
+
             $food = $user->foods()->create($foodData);
 
-            return redirect()->route("food.index")->with('success', $food->name . " food added successfully");
+            return redirect()->route("food.index")->with('success', $food->name . "food added successfully");
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect(status: 500)->route('food.create')->with('fail', 'food didnt add!');
@@ -115,93 +98,26 @@ class FoodController extends Controller
     }
 
 
-
-
-
-
-
     /**
      * Update the specified resource in storage.
      */
 
-
-
-//    public function update(FoodRequest $request, $id)
-//    {
-//        try {
-////            $food = Food::find($id);
-//            $food = Food::findOrFail($id);
-//
-//            $food->update($request->validated());
-//            $foodCategoryId = $food->foodCategory->id; // یافتن آیدی فود کتگوری
-//            return view('panel.seller.foods.edit', compact('food', 'foodCategoryId'))->with('success', 'Update successfully');
-//        } catch (Exception $e) {
-//            Log::error($e->getMessage());
-//            return redirect()->route('food.edit', $id)->with('fail', 'Update failed');
-//        }
-//    }
-
-//    public function update(FoodRequest $request, $id)
-//    {
-//        try {
-////            $food = Food::find($id);
-//            $food = Food::findOrFail($id);
-////            $foodCategoryId = $food->foodCategory->id; // یافتن آیدی فود کتگوری
-////            $foodCategories = FoodCategory::all();
-//            $food->update($request->validated());
-//            $foodCategories = FoodCategory::all();
-//
-//            return view('panel.seller.foods.index', compact('food', 'foodCategories'))->with('success', 'Update successfully');
-//        } catch (Exception $e) {
-//            Log::error($e->getMessage());
-//            return redirect()->route('food.edit', $id)->with('fail', 'Update failed');
-//        }
-//    }
-
-//1
-//    public function update(FoodRequest $request, $id)
-//    {
-//        try {
-//            $food = Food::findOrFail($id);
-//            $food->update($request->validated());
-//            $foodCategoryId = $food->foodCategory->id;
-//            return view('panel.seller.foods.edit', compact('food', 'foodCategoryId'))->with('success', 'Update successfully');
-//        } catch (Exception $e) {
-//            Log::error($e->getMessage());
-//            return redirect()->route('food.edit', $id)->with('fail', 'Update failed');
-//        }
-//    }
-
-
-
     public function update(FoodRequest $request, $id)
     {
-
         try {
 
             $food = Food::findOrFail($id);
-
             $food->update($request->validated());
-
 //            $foodCategory = $food->foodCategory;
             $foodCategories = FoodCategory::all();
-
 //            $foodCategoryId = $foodCategory->id;
-
-            return view('panel.seller.foods.edit', compact('food' , 'foodCategories'))->with('success', 'Update successfully');
-
-
+            return view('panel.seller.foods.edit', compact('food', 'foodCategories'))->with('success', 'Update successfully');
         } catch (Exception $e) {
-
             Log::error($e->getMessage());
-
             return redirect()->route('food.edit', $id)->with('fail', 'Update failed');
-
         }
 
     }
-
-
 
 
     /**

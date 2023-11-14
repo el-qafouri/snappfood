@@ -12,6 +12,9 @@ class Discount extends Model
 
     protected $fillable = [
         'discount',
+        'user_id',
+        'restaurant_id',
+        'food_id'
     ];
 
     protected $guarded = [
@@ -21,17 +24,26 @@ class Discount extends Model
         'deleted_at',
     ];
 
-    public function foods(){
-        return $this->hasMany(Food::class , 'discount_id');
+    public function foods()
+    {
+        return $this->hasMany(Food::class, 'discount_id');
     }
 
     public function restaurant()
     {
-        return $this->belongsTo(Restaurant::class);
+        return $this->belongsTo(Restaurant::class , 'discount_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 
-
+//    public function scopeForRestaurant($query)
+//    {
+//        return $query->where('restaurant_id', auth()->user()->restaurant->id);
+//    }
 
 
 

@@ -15,11 +15,6 @@ class UserController extends Controller
         return view('panel.admin.panel.dashboard');
     }
 
-//    public function sellerIndex()
-//    {
-////        dd('hi this is index');
-//        return view('panel.seller.panel.dashboard');
-//    }
 
 
     public function sellerIndex()
@@ -59,7 +54,7 @@ class UserController extends Controller
 
 
 
-//این دشبورد درست شد
+//این دشبورد درست شد ولی سطح دسترسی نداره
 //    public function dashboard()
 //    {
 //        $user = Auth::user();
@@ -68,32 +63,19 @@ class UserController extends Controller
 //    }
 
 
-
-
-
-
-
     public function dashboard()
     {
         $user = Auth::user();
-
         if ($user->restaurant && $user->restaurant->profile_status) {
-            // منطق برای نمایش لیست
+            //نمایش لیست
             return view('panel.seller.panel.dashboard');
         } elseif ($user->restaurant && !$user->restaurant->profile_status) {
-            // منطق برای پروفایل غیرفعال
+            //پروفایل غیرفعال
             return view('panel.seller.panel.inactive_profile');
         } else {
-            // منطق برای کاربر بدون رستوران
+            // کاربر بدون رستوران
             return view('panel.seller.panel.no_restaurant');
         }
     }
-
-
-
-
-
-
-
 
 }

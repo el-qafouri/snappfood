@@ -32,3 +32,9 @@ Route::prefix('restaurant')->middleware(['auth' ,'role:admin|seller'])->group(fu
     Route::get('{id}/edit', [RestaurantController::class, 'edit'])->name('restaurant.edit');
     Route::put('update/{id}', [RestaurantController::class, 'update'])->name('restaurant.update');
 });
+
+Route::prefix('restaurant')->middleware(['auth' , 'role:admin'])->group(function (){
+//    Route::get('/{id}/editProfileStatus', [RestaurantController::class , 'editProfileStatus'])->name('restaurant.editProfileStatus');
+    Route::patch('/{id}', [RestaurantController::class , 'updateProfileStatus'])->name('restaurant.updateProfileStatus');
+});
+

@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Food;
 use App\Models\Order;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,10 +17,10 @@ return new class extends Migration
             $table->integer('count');
 
             $table->unsignedBigInteger('order_id');
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->unsignedBigInteger('food_id');
-            $table->foreign('food_id')->references('id')->on('food')->onDelete('cascade');
             $table->timestamps();
+
+
 
 //            $table->foreignIdFor(Order::class)->constrained()->cascadeOnDelete();
 //            $table->foreignIdFor(Food::class)->constrained()->cascadeOnDelete();

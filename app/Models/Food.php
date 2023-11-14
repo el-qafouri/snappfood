@@ -9,6 +9,8 @@ class Food extends Model
 {
     use HasFactory;
 
+    protected $table = 'foods';
+
     protected $fillable = [
         'name',
         'price',
@@ -33,9 +35,13 @@ class Food extends Model
     public function foodCategories()
     {
         return $this->belongsTo('foodCategories', 'food_category_id', 'id');
-//        return $this->belongsTo(FoodCategory::class, 'food_category_id', 'id');
-//        return $this->belongsTo( 'food_category_id', 'id');
     }
+
+//    public function foodCategory()
+//    {
+//        return $this->belongsTo(FoodCategory::class, 'food_category_id');
+//    }
+
 
 
     public function restaurant()
@@ -47,7 +53,6 @@ class Food extends Model
     {
         return $this->belongsTo(FoodCategory::class);
     }
-
 
     public function orders()
     {
@@ -70,4 +75,8 @@ class Food extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

@@ -31,7 +31,7 @@
                 <tr>
                     <td>discounts</td>
                     <td>
-                        <a href="#" class="btn btn-primary"><i
+                        <a href="{{ route('discount.index') }}" class="btn btn-primary"><i
                                 class="fas fa-edit"></i>show</a>
                     </td>
                 </tr>

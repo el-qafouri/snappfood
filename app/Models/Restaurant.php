@@ -16,6 +16,7 @@ class Restaurant extends Model
         'address',
         'credit_card_number',
         'restaurant_category_id',
+        'profile_status',
 
     ];
     protected $guarded = [
@@ -40,7 +41,9 @@ class Restaurant extends Model
         return $this->belongsTo(RestaurantCategory::class, 'restaurant_category_id');
     }
 
-    public function food()
+
+    //اگر food_id را به عنوان فیلد خارجی در رابطه hasMany استفاده کنید، این بدان معناست که یک غذا می‌تواند به چندین رستوران تعلق داشته باشد. این منطقی نیست، زیرا یک غذا فقط می‌تواند به یک رستوران تعلق داشته باشد.
+    public function foods()
     {
         return $this->hasMany(Food::class, 'restaurant_id');
     }
@@ -54,5 +57,13 @@ class Restaurant extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    public function discounts()
+    {
+        return $this->hasMany(Discount::class, 'restaurant_id');
+    }
+
+
+
 
 }

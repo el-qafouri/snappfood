@@ -3,6 +3,7 @@
 use App\Http\Controllers\FoodCategoryController;
 use App\Http\Controllers\FoodPartyController;
 use App\Http\Controllers\RestaurantCategoryController;
+use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +17,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-
+//restaurantCategory
 Route::prefix('restaurantCategory')->middleware(['auth','role:admin'])->group(function () {
 Route::get('/', [RestaurantCategoryController::class, 'index'])->name('restaurantCategory.index');
 Route::get('{id}', [RestaurantCategoryController::class, 'show'])->name('restaurantCategory.show');
@@ -31,6 +32,9 @@ Route::put('update/{id}', [RestaurantCategoryController::class, 'update'])->name
 
 
 
+
+
+// food category
 Route::middleware(['auth','role:admin'])->group(function () {
     Route::prefix('category')->group(function () {
         Route::get('/', [FoodCategoryController::class, 'index'])->name('category.index');
@@ -45,7 +49,7 @@ Route::middleware(['auth','role:admin'])->group(function () {
     });
 });
 
-
+//food party
 Route::prefix('foodParty')->middleware(['auth' , 'role:admin'])->group(function () {
     Route::get('/', [FoodPartyController::class, 'index'])->name('foodParty.index');
     Route::get('{id}', [FoodPartyController::class, 'show'])->name('foodParty.show');
@@ -61,3 +65,5 @@ Route::prefix('foodParty')->middleware(['auth' , 'role:admin'])->group(function 
 
 //Route::get('dashboard' , [\App\Http\Controllers\TestController::class , 'index'])->middleware(['role:admin'])->name('admin.dashboard');
 Route::get('dashboard' , [UserController::class , 'adminIndex'])->middleware(['role:admin'])->name('admin.dashboard');
+
+

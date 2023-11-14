@@ -5,7 +5,7 @@
             style="background-color: #e3f2fd;"
         >
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ route('') }}">
+                <a class="navbar-brand" href="#">
                     <img
                         src="{{ asset('images/snappfood.JPG') }}"
                         alt="logo"

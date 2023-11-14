@@ -47,7 +47,6 @@ class RestaurantCategoryController extends Controller
      */
     public function show($id)
     {
-//        dd('show foodddd');
         $restaurantCategory = RestaurantCategory::find($id);
         return view('panel.admin.restaurantCategories.show')->with('restaurantCategory', $restaurantCategory);
     }
@@ -58,7 +57,6 @@ class RestaurantCategoryController extends Controller
     public function edit($id)
     {
         $restaurantCategory = RestaurantCategory::find($id);
-//        $foodCategories = ::all();
         return view('panel.admin.restaurantCategories.edit', compact('restaurantCategory'));
     }
 

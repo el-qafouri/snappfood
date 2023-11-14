@@ -45,16 +45,6 @@ class FoodPartyController extends Controller
     /**
      * Display the specified resource.
      */
-    /**
-     * Display the specified resource.
-     */
-//    public function show(FoodParty $foodParty)
-//    {
-//        if (!auth()->user()->can('view-food-party', $foodParty)) {
-//            return redirect()->route('home')->with('fail', 'You are not authorized to view this food party.');
-//        }
-//    }
-
 
     /**
      * Show the form for editing the specified resource.

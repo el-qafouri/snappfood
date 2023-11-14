@@ -17,8 +17,17 @@ class RestaurantController extends Controller
     public function index()
     {
         $restaurants = Restaurant::all();
-        return view('panel.seller.restaurants.index' , compact('restaurants'));
+        return view('panel.seller.restaurants.index', compact('restaurants'));
     }
+
+
+
+//    public function index()
+//    {
+//        $restaurants = Restaurant::with('restaurant_category')->get();
+//        return view('panel.seller.restaurants.index', compact('restaurants'));
+//    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -53,7 +62,7 @@ class RestaurantController extends Controller
     public function show($id)
     {
         $restaurant = Restaurant::find($id);
-        return view('panel.seller.restaurants.show' , compact('restaurant'));
+        return view('panel.seller.restaurants.show', compact('restaurant'));
     }
 
     /**
@@ -76,7 +85,7 @@ class RestaurantController extends Controller
             $restaurantCategories = RestaurantCategory::all();
             $restaurant->update($request->validated());
             $restaurantCategoryId = $restaurant->restaurantCategory->id;// پیدا کردن آیدی رستوران کتگوری
-            return view('panel.seller.restaurants.index', compact('restaurant', 'restaurantCategoryId' , 'restaurantCategories'))->with('success', 'Update successfully');
+            return view('panel.seller.restaurants.index', compact('restaurant', 'restaurantCategoryId', 'restaurantCategories'))->with('success', 'Update successfully');
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect()->route('restaurant.edit', $id)->with('fail', 'Update failed');
@@ -97,4 +106,34 @@ class RestaurantController extends Controller
             return redirect(status: 500)->route('restaurant.index')->with('fail', 'restaurant delete!');
         }
     }
+
+
+    public function editProfileStatus($id)
+    {
+        $restaurant = Restaurant::find($id);
+        return view('panel.seller.restaurants.show', compact('restaurant'));
+    }
+
+    public function updateProfileStatus(Request $request, $id)
+    {
+        $restaurant = Restaurant::findOrFail($id);
+        $restaurant->update([
+            'profile_status' => !$restaurant->profile_status        ]);
+
+        return redirect()->route('restaurant.index')->with('success', 'Profile status updated successfully');
+    }
+
+//    // RestaurantController.php
+//    public function updateProfileStatus(Request $request, $id)
+//    {
+//        $restaurant = Restaurant::findOrFail($id);
+//        // اگر پروفایل استاتوس فعال بود، غیرفعال و برعکس
+//        $restaurant->update(['profile_status' => !$restaurant->profile_status]);
+//        return redirect()->back()->with('success', 'Profile status updated successfully');
+//    }
+
+
+
+
+
 }

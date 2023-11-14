@@ -14,10 +14,9 @@ return new class extends Migration
         Schema::create('user_restaurant_category', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('restaurant_category_id');
-            $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('restaurant_category_id')->references('id')->on('restaurant_categories');
+//            $table->foreign('user_id')->references('id')->on('users');
+//            $table->foreign('restaurant_category_id')->references('id')->on('restaurant_categories');
         });
     }
 

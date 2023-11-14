@@ -62,8 +62,6 @@
                 </td>
             </tr>
 
-
-
             <tr>
                 <td>users</td>
                 <td>
@@ -89,13 +87,13 @@
             </tr>
 
 
-{{--            <tr>--}}
-{{--                <td>discount</td>--}}
-{{--                <td>--}}
-{{--                    <a href="#" class="btn btn-primary"><i--}}
-{{--                            class="fas fa-edit"></i>show</a>--}}
-{{--                </td>--}}
-{{--            </tr>--}}
+            {{--            <tr>--}}
+            {{--                <td>discount</td>--}}
+            {{--                <td>--}}
+            {{--                    <a href="#" class="btn btn-primary"><i--}}
+            {{--                            class="fas fa-edit"></i>show</a>--}}
+            {{--                </td>--}}
+            {{--            </tr>--}}
 
 
             {{--            @endforeach--}}
