@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FoodRequest;
 use App\Models\Food;
 use App\Models\FoodCategory;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -108,15 +107,12 @@ class FoodController extends Controller
 
             $food = Food::findOrFail($id);
             $food->update($request->validated());
-//            $foodCategory = $food->foodCategory;
             $foodCategories = FoodCategory::all();
-//            $foodCategoryId = $foodCategory->id;
             return view('panel.seller.foods.edit', compact('food', 'foodCategories'))->with('success', 'Update successfully');
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect()->route('food.edit', $id)->with('fail', 'Update failed');
         }
-
     }
 
 

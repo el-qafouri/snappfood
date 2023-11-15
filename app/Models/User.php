@@ -67,7 +67,8 @@ class User extends Authenticatable
 
     public function foods()
     {
-        return $this->hasMany(Food::class, 'user_id');
+        return $this->hasMany(Food::class);
+//        return $this->hasMany(Food::class, 'user_id');
     }
 
     public function discounts()

@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('dashboard/admin', [UserController::class ,'dashboard'])->name('admin.dashboard');
-//    Route::get('/dashboard', [UserController::class, 'sellerIndex'])->name('admin.dashboard');
+//Route::middleware(['auth'])->group(function () {
+//    Route::get('dashboard/admin', [UserController::class ,'dashboard'])->name('admin.dashboard');
+//});
 
-});
+Route::get('dashboard' , [UserController::class , 'adminIndex'])->middleware(['role:admin'])->name('admin.dashboard');
 
 
 
@@ -63,7 +63,5 @@ Route::prefix('foodParty')->middleware(['auth' , 'role:admin'])->group(function 
 });
 
 
-//Route::get('dashboard' , [\App\Http\Controllers\TestController::class , 'index'])->middleware(['role:admin'])->name('admin.dashboard');
-Route::get('dashboard' , [UserController::class , 'adminIndex'])->middleware(['role:admin'])->name('admin.dashboard');
 
 

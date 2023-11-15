@@ -9,7 +9,13 @@ class Food extends Model
 {
     use HasFactory;
 
+
     protected $table = 'foods';
+    public function getTable()
+    {
+        return 'foods';
+    }
+
 
     protected $fillable = [
         'name',
@@ -77,6 +83,6 @@ class Food extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 }

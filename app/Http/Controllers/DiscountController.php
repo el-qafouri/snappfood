@@ -22,38 +22,6 @@ class DiscountController extends Controller
     }
 
 
-//    public function index()
-//    {
-//        $user = auth()->user();
-//        $restaurant = $user->restaurant;
-//
-//        if (!$restaurant) {
-//            abort(404, 'رستوران یافت نشد');
-//        }
-//
-//        $discounts = $restaurant->discounts;
-//        return view('panel.seller.discounts.index', compact('discounts'));
-//    }
-
-
-//    public function index()
-//    {
-//        $user = auth()->user();
-//        $discounts = $user->restaurant->discounts;
-//        return view('panel.seller.discounts.index', compact('discounts'));
-//    }
-
-//    public function index()
-//    {
-//        $user = auth()->user();
-//        $restaurant = optional($user->restaurant);
-//
-//        $discounts = $restaurant->discounts ?? collect();
-//
-//        return view('panel.seller.discounts.index', compact('discounts'));
-//    }
-
-
     /**
      * Show the form for creating a new resource.
      */
@@ -65,103 +33,34 @@ class DiscountController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+////یوزرآیدی رو سیو میکنه
 //    public function store(DiscountRequest $request)
 //    {
-//
 //        try {
-//            Discount::query()->create($request->validated());
-//            return redirect()->route('discount.index')->with('success', $request->discount . "discount added successfully");
+//            $user = auth()->user();
+//            $discountData = $request->validated();
+//            $discount = $user->discounts()->create($discountData);
+//            return redirect()->route('discount.index')->with('success', $discount->discount . " discount added successfully");
 //        } catch (Exception $e) {
 //            Log::error($e->getMessage());
 //            return redirect(status: 500)->route('discount.create')->with('fail', 'discount didnt add');
 //        }
 //    }
-
-
-
-
-
-
-
-
-    //بارد داده
-//    public function store(DiscountRequest $request)
-//    {
-//        $discountData = $request->validated();
-//
-//        // Retrieve user_id from the request or set it manually
-//        $discountData['user_id'] = Auth::user()->id;
-//
-//        // Retrieve restaurant_id from the request or set it manually
-//        $discountData['restaurant_id'] = Restaurant::query()->where('user_id', Auth::user()->id)->first()->id;
-//
-//        try {
-//            Discount::query()->create($discountData);
-//            return redirect()->route('discount.index')->with('success', $request->discount . "discount added successfully");
-//        } catch (Exception $e) {
-//            Log::error($e->getMessage());
-//            return redirect(status: 500)->route('discount.create')->with('fail', 'discount didnt add');
-//        }
-//    }
-
-
-//بارد 2
-//    public function store(DiscountRequest $request)
-//    {
-//        $discountData = $request->validated();
-//
-//        // Retrieve user_id from the request
-//        $discountData['user_id'] = $request->user_id;
-//
-//        // Retrieve restaurant_id from the request
-//        $discountData['restaurant_id'] = $request->restaurant_id;
-//
-//        try {
-//            Discount::query()->create($discountData);
-//            return redirect()->route('discount.index')->with('success', $request->discount . "discount added successfully");
-//        } catch (Exception $e) {
-//            Log::error($e->getMessage());
-//            return redirect(status: 500)->route('discount.create')->with('fail', 'discount didnt add');
-//        }
-//    }
-
-//بارد 3
-
-//    public function store(DiscountRequest $request)
-//    {
-//        $discountData = $request->validated();
-//
-//        // Retrieve user_id from the request
-//        $discountData['user_id'] = $request->user_id;
-//
-//        // Retrieve restaurant_id from the restaurant record associated with the current user
-//        $restaurant = Restaurant::query()->whereHas('user', function ($query) {
-//            $query->where('id', Auth::user()->id);
-//        })->first();
-//        $discountData['restaurant_id'] = $restaurant->id;
-//
-//        try {
-//            Discount::query()->create($discountData);
-//            return redirect()->route('discount.index')->with('success', $request->discount . "discount added successfully");
-//        } catch (Exception $e) {
-//            Log::error($e->getMessage());
-//            return redirect(status: 500)->route('discount.create')->with('fail', 'discount didnt add');
-//        }
-//    }
-
-
 
     public function store(DiscountRequest $request)
     {
         try {
-            $discount = new Discount();
-            $discount->discount = $request->discount;
-            $discount->user_id = $request->user_id; // یا هر چیزی که نیاز باشد
-            $discount->restaurant_id = $request->restaurant_id; // یا هر چیزی که نیاز باشد
-            $discount->food_id = $request->food_id; // یا هر چیزی که نیاز باشد
-            $discount->save();
-
-            return redirect()->route('discount.index')->with('success', $request->discount . "discount added successfully");
+            $user = auth()->user();
+            $restaurant = $user->restaurant;
+            if (!$restaurant) {
+                abort(404, 'رستوران یافت نشد');
+            }
+            $discountData = $request->validated();
+            $discountData['user_id'] = $user->id;
+            $discountData['restaurant_id'] = $restaurant->id;
+            $discount = Discount::create($discountData);
+            return redirect()->route('discount.index')->with('success', $discount->discount . " discount added successfully");
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect(status: 500)->route('discount.create')->with('fail', 'discount didnt add');

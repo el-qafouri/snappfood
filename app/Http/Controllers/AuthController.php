@@ -22,9 +22,10 @@ class AuthController extends Controller
                 return redirect()->route($redirectRoute);
             }
         }
-        return back()->withErrors('ایمیل یا پسوورد اشتباه است!');
-//        return back()->with('error', 'ایمیل یا پسوورد اشتباه است!');
+//        return back()->withErrors('ایمیل یا پسوورد اشتباه است!');
+        return back()->with('error', 'ایمیل یا پسوورد اشتباه است!');
     }
+
     private function getRedirectRouteForUser($user)
     {
         if ($user->hasRole('admin')) {
@@ -51,7 +52,7 @@ class AuthController extends Controller
         $user->assignRole('seller');
 //        $user->update(['role_id' => 2]);
         return view('auth.login');
-        }
+    }
 
     public function showRegister()
     {
