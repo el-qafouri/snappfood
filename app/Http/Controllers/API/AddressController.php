@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class AddressController extends Controller
 {
@@ -19,9 +20,6 @@ class AddressController extends Controller
     {
         $addresses = User::find(auth()->user()->id)->addresses;
         return response(['All Addresses' => $addresses]);
-
-//        $addresses = (User::query()->find(auth()->user()->id)->addresses);
-//        return response(['All Addresses' => $addresses]);
     }
 
     /**
@@ -35,8 +33,22 @@ class AddressController extends Controller
         $fields = $request->validate([
             'title' => 'required|string',
             'address' => 'required|string',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
+//            'latitude' => 'required|numeric',
+//            'longitude' => 'required|numeric',
+            'latitude' => [
+                'required',
+                'numeric',
+                Rule::unique('addresses')->where(function ($query) use ($request) {
+                    return $query->where('longitude', $request->longitude);
+                }),
+            ],
+            'longitude' => [
+                'required',
+                'numeric',
+                Rule::unique('addresses')->where(function ($query) use ($request) {
+                    return $query->where('latitude', $request->latitude);
+                }),
+            ],
         ]);
 
         $address = User::query()->find(auth()->user()->id)->addresses()->create([
@@ -60,16 +72,32 @@ class AddressController extends Controller
     public function update(Request $request, $id)
     {
         $address = Address::query()->find($id);
-            $request->validate([
-                'title' => 'string',
-                'address' => 'string',
-                'latitude' => 'numeric',
-                'longitude' => 'numeric',
-            ]);
-            $address->update($request->all());
-            return response(['Message' => 'Your address is updated', 'Address details' => $address]);
+        $request->validate([
+            'title' => 'string',
+            'address' => 'string',
+//                'latitude' => 'numeric',
+//                'longitude' => 'numeric',
+            'latitude' => [
+                'required',
+                'numeric',
+                Rule::unique('addresses')->where(function ($query) use ($request) {
+                    return $query->where('longitude', $request->longitude);
+                }),
+            ],
+            'longitude' => [
+                'required',
+                'numeric',
+                Rule::unique('addresses')->where(function ($query) use ($request) {
+                    return $query->where('latitude', $request->latitude);
+                }),
+            ],
 
- }
+
+        ]);
+        $address->update($request->all());
+        return response(['Message' => 'Your address is updated', 'Address details' => $address]);
+
+    }
 
     /**
      * Set location the specified resource from storage.
@@ -81,7 +109,7 @@ class AddressController extends Controller
     {
         $address = Address::query()->find($id);
         $gate = Gate::allows('view', $address);
-
+//آیا کاربر مجاز به مشاهده این آدرس هست؟
         if ($gate) {
             $addresses = User::query()->find(auth()->user()->id)->addresses;
             foreach ($addresses as $address) {
@@ -94,6 +122,7 @@ class AddressController extends Controller
 
         return response(['Message' => "You don't have access to this address"], 403);
     }
+
+
+
 }
-
-
