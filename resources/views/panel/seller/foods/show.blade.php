@@ -32,11 +32,12 @@
                     {{--                    </div>--}}
                 </div>
                 <div class="col-md-6">
-                    <h1>{{ $food->name }}</h1>
-                    <p>{{ $food->material }}</p>
-                    <p>{{ $food->price }}</p>
-                    <p>{{ $food->food_category_id }}</p>
-                    <p>{{ $food->created_at }}</p>
+                    <br><h1>food name: {{ $food->name }}</h1>
+                    <p>material: {{ $food->material }}</p>
+                    <p>price: {{ $food->price }}</p>
+                    <p>food category: {{ $food->food_category_id }}</p>
+                    <p>created at: {{ $food->created_at }}</p>
+                    <p>food discount: {{ $food->discount }}</p>
                     <a href="{{ route('food.index') }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i>
                         Back</a>
                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FoodRequest;
+use App\Models\Discount;
 use App\Models\Food;
 use App\Models\FoodCategory;
 use Illuminate\Support\Facades\Auth;
@@ -26,8 +27,10 @@ class FoodController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
         $foodCategories = FoodCategory::all();
-        return view('panel.seller.foods.create', compact('foodCategories'));
+        $discounts = $user->discounts;
+        return view('panel.seller.foods.create', compact('foodCategories' , 'discounts'));
     }
 
     /**
@@ -65,7 +68,7 @@ class FoodController extends Controller
 //    }
     public function show($id)
     {
-        $food = Food::find($id);
+        $food = Food::query()->find($id);
         if ($food && $food->user_id == auth()->id()) {
             return view('panel.seller.foods.show')->with('food', $food);
         } else {
@@ -90,7 +93,8 @@ class FoodController extends Controller
         $food = Food::find($id);
         if ($food && $food->user_id == auth()->id()) {
             $foodCategories = FoodCategory::all();
-            return view('panel.seller.foods.edit', compact('food', 'foodCategories'));
+            $discounts = Discount::query()->find($id);
+            return view('panel.seller.foods.edit', compact('food', 'foodCategories' , 'discounts'));
         } else {
             abort(403, 'Access denied');
         }

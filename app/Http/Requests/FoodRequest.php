@@ -27,6 +27,7 @@ class FoodRequest extends FormRequest
             "price" => ['bail', 'required', 'numeric', 'min:0'],
             "material" => ['bail', 'required', 'string', 'min:2' , 'max:255'],
             'food_category_id' => 'required',
+            'discount' => 'nullable',
         ];
     }
 }

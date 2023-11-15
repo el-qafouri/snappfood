@@ -15,7 +15,6 @@ return new class extends Migration {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
 //            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
-//            $table->foreignIdFor(Restaurant::class)->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('restaurant_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
 

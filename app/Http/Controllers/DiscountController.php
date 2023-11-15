@@ -59,6 +59,8 @@ class DiscountController extends Controller
             $discountData = $request->validated();
             $discountData['user_id'] = $user->id;
             $discountData['restaurant_id'] = $restaurant->id;
+//            $foodId = $request->input('food_id');
+//            $discountData['food_id'] = $foodId;
             $discount = Discount::create($discountData);
             return redirect()->route('discount.index')->with('success', $discount->discount . " discount added successfully");
         } catch (Exception $e) {

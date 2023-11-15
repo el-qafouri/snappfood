@@ -23,7 +23,8 @@ class Food extends Model
         'material',
         'food_category_id',
         'restaurant_id',
-        'discount_id',
+//        'discount_id',
+//        'discount',
         'user_id'
     ];
 

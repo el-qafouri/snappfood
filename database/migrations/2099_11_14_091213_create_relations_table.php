@@ -17,7 +17,7 @@ return new class extends Migration {
         });
 
         Schema::table('discounts', function (Blueprint $table) {
-            $table->foreign('food_id')->references('id')->on('foods')->cascadeOnDelete();
+//            $table->foreign('food_id')->references('id')->on('foods')->cascadeOnDelete();
             $table->foreign('restaurant_id')->references('id')->on('restaurants');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });
@@ -52,6 +52,7 @@ return new class extends Migration {
             $table->foreign('user_id')->references('id')
                 ->on('users')->cascadeOnDelete();
             $table->foreign('restaurant_id')->references('id')->on('restaurants')->cascadeOnDelete();
+            $table->foreign('discount_id')->references('id')->on('discounts')->cascadeOnDelete();
         });
 
 

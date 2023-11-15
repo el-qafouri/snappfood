@@ -84,7 +84,25 @@
 {{--            </div>--}}
 
 
+            <div class="form-group">
+                <label for="discount_id">food discount</label>
+                <select
+                    class="form-control @error('discount_id') is-invalid @enderror"
+                    id="discount_id"
+                    name="discount_id"
+                    required
+                >
+                    <option value="" selected disabled>Select food discount</option>
 
+                    @foreach($discounts as $discount)
+                        <option value="{{$discount->id}}">{{$discount->discount}}</option>
+                    @endforeach
+                    {{--                    <option value="{{$foodCategory->id}}">{{$foodCategory->name}}</option>--}}
+                </select>
+                @error('discount')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
 
 
 

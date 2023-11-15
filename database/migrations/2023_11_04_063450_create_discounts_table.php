@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
             $table->string('discount');
-            $table->unsignedBigInteger('food_id');
+//            $table->unsignedBigInteger('food_id')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('restaurant_id');
             $table->timestamps();
