@@ -26,7 +26,7 @@ class RestaurantRequest extends FormRequest
             'restaurant_name' => 'required',
             'address' => 'required',
             'restaurant_category_id' => 'required',
-            'credit_card_number' => 'bail|required|numeric',
+            'credit_card_number' => 'bail|required|numeric|min:10',
             'send_cost' => 'bail|required|numeric',
         ];
     }
@@ -40,7 +40,7 @@ class RestaurantRequest extends FormRequest
         'restaurant_category_id.required'=>'نوع رستوران را انتخاب کنید',
         'credit_card_number.required'=>'شماره حساب را وارد کنید',
         'credit_card_number.numeric'=>'شماره حساب را به عدد وارد کنید',
-//        'credit_card_number.size:10'=>'شماره حساب باید 10 رقم باشد',
+        'credit_card_number.min:10'=>'شماره حساب باید 10 رقم باشد',
         'send_cost.required'=>'هزینه ارسال را وارد کنید',
         'send_cost.numeric'=>'هزینه ارسال را به عدد وارد کنید',
         ];

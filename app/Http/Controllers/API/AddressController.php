@@ -64,8 +64,6 @@ class AddressController extends Controller
 //    }
 
 
-
-
     public function store(AddressRequest $request)
     {
         $address = User::query()->find(auth()->user()->id)->addresses()->create($request->validated());
@@ -111,7 +109,6 @@ class AddressController extends Controller
 //    }
 
 
-
     public function update(UpdateAddressRequest $request, $id)
     {
         $address = Address::query()->findOrFail($id);
@@ -127,24 +124,34 @@ class AddressController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
+//    public function setActiveAddress($id)
+//    {
+//        $address = Address::query()->findOrFail($id);
+//        $gate = Gate::allows('view', $address);
+////آیا کاربر مجاز به مشاهده این آدرس هست؟
+//        if ($gate) {
+//            $addresses = User::query()->find(auth()->user()->id)->addresses;
+//            foreach ($addresses as $address) {
+//                if ($address->id == $id) $address->update(['active' => '1']);
+//                else $address->update(['active' => '0']);
+//            }
+//
+//            return response(['Message' => 'Your main address is updated', 'Active address' => (User::query()->find(auth()->user()->id)->addresses)->where('active', '1')]);
+//        }
+//        return response(['Message' => "You don't have access to this address"], 403);
+//    }
+
+
     public function setActiveAddress($id)
     {
-        $address = Address::query()->find($id);
-        $gate = Gate::allows('view', $address);
-//آیا کاربر مجاز به مشاهده این آدرس هست؟
-        if ($gate) {
-            $addresses = User::query()->find(auth()->user()->id)->addresses;
-            foreach ($addresses as $address) {
-                if ($address->id == $id) $address->update(['active' => '1']);
-                else $address->update(['active' => '0']);
-            }
-
-            return response(['Message' => 'Your main address is updated', 'Active address' => (User::query()->find(auth()->user()->id)->addresses)->where('active', '1')]);
+        $specificAddress = Address::query()->findOrFail($id);
+        $user = auth()->user();
+        if ($user->id === $specificAddress->addressable_id && $specificAddress->addressable_type === 'App\\Models\\User') {
+            $user->addresses()->update(['active' => '0']);
+            $specificAddress->update(['active' => '1']);
+            return response(['Message' => 'Your main address is updated']);
         }
-
-        return response(['Message' => "You don't have access to this address"], 403);
+        return response(['Message' => "You don't have access to update this address"], 403);
     }
-
-
 
 }
