@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\api;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -31,14 +31,14 @@ class AddressRequest extends FormRequest
                 'required',
                 'numeric',
                 Rule::unique('addresses')->where(function ($query) {
-                    return $query->where('longitude', $this->longitude);
+                    return $query->where('longitude', $this->input('longitude'));
                 }),
             ],
             'longitude' => [
                 'required',
                 'numeric',
                 Rule::unique('addresses')->where(function ($query) {
-                    return $query->where('latitude', $this->latitude);
+                    return $query->where('latitude', $this->input('latitude'));
                 }),
             ],
         ];
@@ -57,7 +57,7 @@ class AddressRequest extends FormRequest
             'address.min' => 'فیلد آدرس باید حداقل دارای ۲ کاراکتر باشد.',
             'address.max' => 'فیلد آدرس باید حداکثر دارای ۲۵۵ کاراکتر باشد.',
             'latitude.required' => 'فیلد عرض جغرافیایی اجباری است.',
-            'latitude.numeric' => 'فیلد عرض جغرافیایی باید یک عدد باشد.',
+            'latitude.numeric' => 'فیلد عرض جغرافیایی باید عدد باشد.',
             'latitude.unique' => 'مقدار عرض جغرافیایی قبلاً استفاده شده است.',
             'longitude.required' => 'فیلد طول جغرافیایی اجباری است.',
             'longitude.numeric' => 'فیلد طول جغرافیایی باید یک عدد باشد.',

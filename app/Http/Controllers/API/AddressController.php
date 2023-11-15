@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\api\AddressRequest;
+use App\Http\Requests\api\UpdateAddressRequest;
 use App\Models\Address;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,38 +30,50 @@ class AddressController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+//    public function store(Request $request)
+//    {
+//        $fields = $request->validate([
+//            'title' => 'required|string',
+//            'address' => 'required|string',
+////            'latitude' => 'required|numeric',
+////            'longitude' => 'required|numeric',
+//            'latitude' => [
+//                'required',
+//                'numeric',
+//                Rule::unique('addresses')->where(function ($query) use ($request) {
+//                    return $query->where('longitude', $request->longitude);
+//                }),
+//            ],
+//            'longitude' => [
+//                'required',
+//                'numeric',
+//                Rule::unique('addresses')->where(function ($query) use ($request) {
+//                    return $query->where('latitude', $request->latitude);
+//                }),
+//            ],
+//        ]);
+//
+//        $address = User::query()->find(auth()->user()->id)->addresses()->create([
+//            'title' => $fields['title'],
+//            'address' => $fields['address'],
+//            'latitude' => $fields['latitude'],
+//            'longitude' => $fields['longitude'],
+//        ]);
+//
+//        return response(['Message' => 'address submitted successfully', 'Address details' => $address]);
+//    }
+
+
+
+
+    public function store(AddressRequest $request)
     {
-        $fields = $request->validate([
-            'title' => 'required|string',
-            'address' => 'required|string',
-//            'latitude' => 'required|numeric',
-//            'longitude' => 'required|numeric',
-            'latitude' => [
-                'required',
-                'numeric',
-                Rule::unique('addresses')->where(function ($query) use ($request) {
-                    return $query->where('longitude', $request->longitude);
-                }),
-            ],
-            'longitude' => [
-                'required',
-                'numeric',
-                Rule::unique('addresses')->where(function ($query) use ($request) {
-                    return $query->where('latitude', $request->latitude);
-                }),
-            ],
-        ]);
+        $address = User::query()->find(auth()->user()->id)->addresses()->create($request->validated());
 
-        $address = User::query()->find(auth()->user()->id)->addresses()->create([
-            'title' => $fields['title'],
-            'address' => $fields['address'],
-            'latitude' => $fields['latitude'],
-            'longitude' => $fields['longitude'],
-        ]);
-
-        return response(['Message' => 'address submitted successfully', 'Address details' => $address]);
+        return response(['Message' => 'Address submitted successfully', 'Address details' => $address]);
     }
+
+
 
 
     /**
@@ -69,35 +83,43 @@ class AddressController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+//    public function update(Request $request, $id)
+//    {
+//        $address = Address::query()->find($id);
+//        $request->validate([
+//            'title' => 'string',
+//            'address' => 'string',
+////                'latitude' => 'numeric',
+////                'longitude' => 'numeric',
+//            'latitude' => [
+//                'required',
+//                'numeric',
+//                Rule::unique('addresses')->where(function ($query) use ($request) {
+//                    return $query->where('longitude', $request->longitude);
+//                }),
+//            ],
+//            'longitude' => [
+//                'required',
+//                'numeric',
+//                Rule::unique('addresses')->where(function ($query) use ($request) {
+//                    return $query->where('latitude', $request->latitude);
+//                }),
+//            ],
+//        ]);
+//        $address->update($request->all());
+//        return response(['Message' => 'Your address is updated', 'Address details' => $address]);
+//    }
+
+
+
+    public function update(UpdateAddressRequest $request, $id)
     {
-        $address = Address::query()->find($id);
-        $request->validate([
-            'title' => 'string',
-            'address' => 'string',
-//                'latitude' => 'numeric',
-//                'longitude' => 'numeric',
-            'latitude' => [
-                'required',
-                'numeric',
-                Rule::unique('addresses')->where(function ($query) use ($request) {
-                    return $query->where('longitude', $request->longitude);
-                }),
-            ],
-            'longitude' => [
-                'required',
-                'numeric',
-                Rule::unique('addresses')->where(function ($query) use ($request) {
-                    return $query->where('latitude', $request->latitude);
-                }),
-            ],
-
-
-        ]);
+        $address = Address::query()->findOrFail($id);
         $address->update($request->all());
         return response(['Message' => 'Your address is updated', 'Address details' => $address]);
-
     }
+
+
 
     /**
      * Set location the specified resource from storage.
