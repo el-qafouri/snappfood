@@ -66,15 +66,15 @@ class Food extends Model
         return $this->belongsToMany(Order::class)->withPivot('count');
     }
 
-//    public function comments()
-//    {
-//        return $this->hasMany(Comment::class);
-//    }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 
 
     public function discount()
     {
-        return $this->belongsTo(Discount::class , 'discount_id');
+        return $this->belongsTo(Discount::class);
     }
 
     public function seller()

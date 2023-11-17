@@ -90,7 +90,6 @@
                     class="form-control @error('discount_id') is-invalid @enderror"
                     id="discount_id"
                     name="discount_id"
-                    required
                 >
                     <option value="" selected disabled>Select food discount</option>
 

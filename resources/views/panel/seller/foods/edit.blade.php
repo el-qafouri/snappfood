@@ -79,21 +79,49 @@
             </div>
 
 
+{{--            <div class="form-group">--}}
+{{--                <label for="discount_id">food discount</label>--}}
+{{--                <input--}}
+{{--                    --}}{{--                    value="{{  $category->description  }}"--}}
+{{--                    value="{{ old('discount_id' , $food->discount_id) }}"--}}
+{{--                    type="text"--}}
+{{--                    class="form-control @error('discount_id') is-invalid @enderror"--}}
+{{--                    id="discount_id"--}}
+{{--                    name="discount_id"--}}
+{{--                    --}}{{--                    placeholder="Enter description"--}}
+{{--                />--}}
+{{--                @error('discount_id')--}}
+{{--                <div class="alert alert-danger">{{ $message }}</div>--}}
+{{--                @enderror--}}
+{{--            </div>--}}
+
+
+
+
+
+
+
             <div class="form-group">
                 <label for="discount_id">food discount</label>
-                <input
-                    {{--                    value="{{  $category->description  }}"--}}
-                    value="{{ old('discount_id' , $food->discount_id) }}"
-                    type="text"
+                <select
                     class="form-control @error('discount_id') is-invalid @enderror"
                     id="discount_id"
                     name="discount_id"
-                    {{--                    placeholder="Enter description"--}}
-                />
-                @error('discount_id')
+                >
+                    <option value="" selected disabled>Select food discount</option>
+
+                    @foreach($discounts as $discount)
+                        <option value="{{$discount->id}}">{{$discount->discount}}</option>
+                    @endforeach
+                    {{--                    <option value="{{$foodCategory->id}}">{{$foodCategory->name}}</option>--}}
+                </select>
+                @error('discount')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
+
+
+
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

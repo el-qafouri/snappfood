@@ -12,8 +12,12 @@ class Comment extends Model
     protected $fillable = [
         'user_id',
         'order_id',
-        'messages',
+        'food_id',
+        'message',
         'score'
+    ];
+    protected $attributes = [
+        'message'=>'',
     ];
 
     public function user()

@@ -90,10 +90,11 @@ class FoodController extends Controller
 
     public function edit($id)
     {
-        $food = Food::find($id);
+        $food = Food::query()->findOrFail($id);
         if ($food && $food->user_id == auth()->id()) {
             $foodCategories = FoodCategory::all();
-            $discounts = Discount::query()->find($id);
+//            $discounts = Discount::query()->find($id);
+            $discounts = auth()->user()->discounts;
             return view('panel.seller.foods.edit', compact('food', 'foodCategories' , 'discounts'));
         } else {
             abort(403, 'Access denied');
@@ -108,11 +109,11 @@ class FoodController extends Controller
     public function update(FoodRequest $request, $id)
     {
         try {
-
-            $food = Food::findOrFail($id);
+            $food = Food::query()->findOrFail($id);
             $food->update($request->validated());
             $foodCategories = FoodCategory::all();
-            return view('panel.seller.foods.edit', compact('food', 'foodCategories'))->with('success', 'Update successfully');
+            $discounts = auth()->user()->discounts;
+            return view('panel.seller.foods.edit', compact('food', 'foodCategories' , 'discounts'))->with('success', 'Update successfully');
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect()->route('food.edit', $id)->with('fail', 'Update failed');

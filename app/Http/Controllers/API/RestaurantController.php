@@ -42,12 +42,15 @@ class RestaurantController extends Controller
     {
         try {
             $restaurant = Restaurant::query()->findOrFail($id);
-            $foods = $restaurant->foods;
+//            $foods = $restaurant->foods;
+            $foods = $restaurant->foods()->with('discount')->get();
             $foodDetails = [];
             foreach ($foods as $food) {
                 $foodDetails[] = [
                     'name' => $food->name,
                     'price' => $food->price,
+//                    'discount'=>$food->discount,
+                    'discount'=>$food->discount ? $food->discount->discount : null,
                     'final_price' => $food->final_price,
                 ];
             }
