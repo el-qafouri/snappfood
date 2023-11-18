@@ -31,7 +31,8 @@
                     {{-- max length of title is 20 characters --}}
                     <td>{{ Str::limit($food->name, 20) }}</td>
                     <td>{{ $food->material }}</td>
-                    <td>{{ $food->food_category_id }}</td>
+{{--                    <td>{{ $food->food_category_id }}</td>--}}
+                    <td>{{ optional($food->foodCategory)->name }}</td>
                     <td>
                         <a href="{{ route('food.show', $food->id) }}" class="btn btn-success"><i
                                 class="fas fa-eye"></i> Show</a>

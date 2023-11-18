@@ -26,47 +26,15 @@
                 </button>
 
 
-{{--                <div class="collapse navbar-collapse" id="navbarNav">--}}
-{{--                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="font-size: 20px;">--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link" href="{{ url()->previous() }}">--}}
-{{--                                <i class="fas fa-arrow-left"></i> Back--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link" href="">--}}
-{{--                                <i class="fas fa-home"></i> Homepage--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
-{{--                </div>--}}
-
-
-
-
                 <div id="header-buttons" class="d-flex align-items-center">
-                    <!-- دکمه‌های دیگر -->
-                    <a href="" class="btn btn-light"><i class="fas fa-home"></i> Dashboard</a>
+                    <a href="" class="btn btn-light"><i class="fas fa-home"></i>Dashboard</a>
                     <a href="{{ url()->previous() }}" class="btn btn-light"><i class="fa-solid fa-arrow-left"></i>Back</a>
 
-                    <!-- دکمه لاگ‌اوت -->
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-light"><i class="fas fa-sign-out-alt"></i> Logout</button>
                     </form>
                 </div>
-
-
-{{--                <form action="{{ route('logout') }}" method="POST">--}}
-{{--                    @csrf--}}
-{{--                    <button type="submit" class="btn btn-danger">Logout</button>--}}
-{{--                </form>--}}
-
-
-                {{--                <form action="{{route('logout')}}" method="post">--}}
-                {{--                    @csrf--}}
-                {{--                    <button type="submit" >Logout</button>--}}
-                {{--                </form>--}}
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul
@@ -74,15 +42,16 @@
                         style="font-size: 20px;"
                     >
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('category.index') }}"
-                            ><i class="fas fa-home"></i> lllll </a>
+                            <a class="nav-link" href=""
+                            ><i class="fas fa-circle text-success"></i>open/close</a>
+{{--                            <i class="fas fa-times text-danger"></i>--}}
                         </li>
                         <li class="nav-item">
                             <a
                                 class="nav-link active"
                                 aria-current="page"
-                                href="{{ route('category.create') }}"
-                            ><i class="fas fa-plus"></i>فعلا همینطوری باشن</a
+                                href=""
+                            ><i class="fas fa-info-circle"></i>restaurant data</a
                             >
                         </li>
                     </ul>

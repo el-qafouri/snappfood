@@ -6,36 +6,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    {{-- gallery images--}}
-                    {{--                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">--}}
-                    {{--                        <div class="carousel-inner">--}}
-                    {{--                            @foreach($galleries as $image)--}}
-                    {{--                                                                @dd($image)--}}
-                    {{--                                <div class="carousel-item {{ $loop->first ? 'active' : '' }}">--}}
-                    {{--                                    <img src="{{$image }}" class="d-block w-100"--}}
-                    {{--                                         alt="...">--}}
-                    {{--                                </div>--}}
-                    {{--                            @endforeach--}}
-                    {{--                        </div>--}}
-                    {{--                        <button class="carousel-control-prev" type="button"--}}
-                    {{--                                data-bs-target="#carouselExampleControls" data-bs-slide="prev">--}}
-                    {{--                            <span class="carousel-control-prev-icon" aria-hidden="true"><i--}}
-                    {{--                                    class="fas fa-chevron-left"></i></span>--}}
-                    {{--                            <span class="visually-hidden">Previous</span>--}}
-                    {{--                        </button>--}}
-                    {{--                        <button class="carousel-control-next" type="button"--}}
-                    {{--                                data-bs-target="#carouselExampleControls" data-bs-slide="next">--}}
-                    {{--                            <span class="carousel-control-next-icon" aria-hidden="true"><i--}}
-                    {{--                                    class="fas fa-chevron-right"></i></span>--}}
-                    {{--                            <span class="visually-hidden">Next</span>--}}
-                    {{--                        </button>--}}
-                    {{--                    </div>--}}
                 </div>
                 <div class="col-md-6">
                     <br><h1>food name: {{ $food->name }}</h1>
                     <p>material: {{ $food->material }}</p>
                     <p>price: {{ $food->price }}</p>
-                    <p>food category: {{ $food->food_category_id }}</p>
+{{--                    <p>food category: {{ $food->food_category_id }}</p>--}}
+                    <p>food category: {{ optional($food->foodCategory)->name }}</p>
                     <p>created at: {{ $food->created_at }}</p>
                     <p>food discount: {{ $food->discount }}</p>
                     <a href="{{ route('food.index') }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i>
