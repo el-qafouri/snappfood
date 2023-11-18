@@ -17,6 +17,8 @@ class Restaurant extends Model
         'credit_card_number',
         'restaurant_category_id',
         'profile_status',
+        'open_time',
+        'close_time',
 
     ];
     protected $guarded = [

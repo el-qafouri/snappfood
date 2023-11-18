@@ -185,11 +185,6 @@ class OrderController
 
 
 
-
-
-
-
-
     public function add(Request $request)
     {
         $request->validate([

@@ -26,18 +26,16 @@
                 </button>
 
                 <div id="header-buttons" class="d-flex align-items-center">
-                    <!-- دکمه‌های دیگر -->
-                    <a href="" class="btn btn-light"><i class="fas fa-home"></i> Dashboard</a>
-                    <a href="{{ url()->previous() }}" class="btn btn-light"><i class="fa-solid fa-arrow-left"></i>Back</a>
+                    <a href="{{ route('seller.dashboard') }}" class="btn btn-light"><i class="fas fa-home"></i>
+                        Dashboard</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-light"><i
+                            class="fa-solid fa-arrow-left"></i>Back</a>
 
-                    <!-- دکمه لاگ‌اوت -->
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-light"><i class="fas fa-sign-out-alt"></i> Logout</button>
                     </form>
                 </div>
-
-
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul

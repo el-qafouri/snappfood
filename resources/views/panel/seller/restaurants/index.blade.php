@@ -32,8 +32,8 @@
                     {{-- max length of title is 20 characters --}}
                     <td>{{ Str::limit($restaurant->restaurant_name, 20) }}</td>
                     <td>{{ $restaurant->address }}</td>
-                    <td>{{ $restaurant->restaurant_category_id }}</td>
-{{--                    <td>{{ optional($restaurant->restaurant_category)->name }}</td>--}}
+{{--                    <td>{{ $restaurant->restaurant_category_id }}</td>--}}
+                    <td>{{ optional($restaurant->restaurantCategory)->name }}</td>
                     <td>{{ $restaurant->profile_status }}</td>
                     <td>
                         <a href="{{ route('restaurant.show', $restaurant->id) }}" class="btn btn-success"><i

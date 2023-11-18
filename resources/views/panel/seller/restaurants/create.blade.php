@@ -87,7 +87,83 @@
                         @enderror
                     </div>
 
-                    <button type="submit"
+
+
+
+
+        <div class="form-group flex flex-col">
+            <label for="open_time" class="mb-2 text-sm font-medium text-gray-900 dark:text-white">زمان شروع کار رستوران</label>
+            <input
+                value="{{ old('open_time-at') }}"
+                type="time"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                id="open_time"
+                name="open_time"
+                placeholder="Enter open time"
+            />
+            @error('open_time')
+            <p class="text-red-800 text-xl">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="form-group flex flex-col">
+            <label for="close_time" class="mb-2 text-sm font-medium text-gray-900 dark:text-white">زمان پایان کار رستوران</label>
+            <input
+                value="{{ old('close_time') }}"
+                type="time"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                id="close_time"
+                name="close_time"
+                placeholder="Enter close time"
+            />
+            @error('close_time')
+            <p class="text-red-800 text-xl">{{ $message }}</p>
+            @enderror
+        </div>
+
+
+
+
+
+
+        {{--        <div class="form-group">--}}
+{{--            <label for="open_time">open time at</label>--}}
+{{--            <input--}}
+{{--                value="{{ old('open_time-at') }}"--}}
+{{--                type="datetime-local"--}}
+{{--                class="form-control @error('open_time') is-invalid @enderror"--}}
+{{--                id="open_time"--}}
+{{--                name="open_time"--}}
+{{--                placeholder="Enter open time"--}}
+{{--            />--}}
+{{--            @error('open_time')--}}
+{{--            <div class="alert alert-danger">{{ $message }}</div>--}}
+{{--            @enderror--}}
+{{--        </div>--}}
+{{--        <div class="form-group">--}}
+
+
+{{--            <div class="form-group">--}}
+{{--                <label for="close_time">close time at</label>--}}
+{{--                <input--}}
+{{--                    value="{{ old('close_time') }}"--}}
+{{--                    type="datetime-local"--}}
+{{--                    class="form-control @error('close_time') is-invalid @enderror"--}}
+{{--                    id="close_time"--}}
+{{--                    name="close_time"--}}
+{{--                    placeholder="Enter close time"--}}
+{{--                />--}}
+{{--                @error('close_time')--}}
+{{--                <div class="alert alert-danger">{{ $message }}</div>--}}
+{{--                @enderror--}}
+{{--            </div>--}}
+{{--            <div class="form-group">--}}
+
+
+
+
+
+            <button type="submit"
                             class="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                         ایجاد حساب
                     </button>

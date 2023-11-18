@@ -13,7 +13,10 @@
                     <p>credit card number: {{ $restaurant->credit_card_number }}</p>
                     <p>address: {{ $restaurant->address }}</p>
                     <p>send cost: {{ $restaurant->send_cost }}</p>
-                    <p>restaurant category id: {{ $restaurant->restaurant_category_id }}</p>
+{{--                    <p>restaurant category id: {{ $restaurant->restaurant_category_id }}</p>--}}
+                    <p>restaurant category id: {{ optional($restaurant->restaurantCategory)->name }}</p>
+                    <p>open time: {{ $restaurant->open_time }}</p>
+                    <p>close time: {{ $restaurant->close_time }}</p>
                     <p>join at: {{ $restaurant->created_at }}</p>
 
 {{--                    <div>--}}

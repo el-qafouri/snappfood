@@ -24,8 +24,6 @@ return new class extends Migration {
             $table->time('close_time')->default('21:00:00')->nullable();
             $table->boolean('is_open')->default(true);
             $table->timestamps();
-
-
         });
 
 //        Schema::table('restaurants', function (Blueprint $table) {
@@ -33,12 +31,6 @@ return new class extends Migration {
 //        });
 
     }
-
-
-
-
-
-
 
 
     /**
