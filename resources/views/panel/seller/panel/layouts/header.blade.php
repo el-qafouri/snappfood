@@ -55,6 +55,17 @@
                             >
                         </li>
                     </ul>
+
+
+
+
+
+                    <button id="toggleRestaurant" class="btn btn-light">
+                        <i class="fas fa-circle text-success"></i>
+                        <span id="restaurantStatusText">Open</span>
+                    </button>
+
+
                 </div>
             </div>
         </nav>

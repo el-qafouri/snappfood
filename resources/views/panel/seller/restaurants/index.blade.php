@@ -33,7 +33,23 @@
                     <td>{{ Str::limit($restaurant->restaurant_name, 20) }}</td>
                     <td>{{ $restaurant->address }}</td>
 {{--                    <td>{{ $restaurant->restaurant_category_id }}</td>--}}
-                    <td>{{ optional($restaurant->restaurantCategory)->name }}</td>
+{{--                    <td>{{ optional($restaurant->restaurantCategory)->name }}</td>--}}
+
+                    <td>
+                        @forelse($restaurant->restaurantCategories as $category)
+                            {{ $category->name }}
+                            @if(!$loop->last)
+                                ,
+                            @endif
+                        @empty
+                            No categories found
+                        @endforelse
+                    </td>
+
+
+
+
+
                     <td>{{ $restaurant->profile_status }}</td>
                     <td>
                         <a href="{{ route('restaurant.show', $restaurant->id) }}" class="btn btn-success"><i

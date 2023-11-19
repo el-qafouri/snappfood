@@ -31,15 +31,15 @@ class RestaurantCategory extends Model
 
 
 
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'user_restaurant_category', 'restaurant_category_id', 'user_id');
-    }
-
-
-    public function category()
-    {
-        return $this->belongsTo(RestaurantCategory::class, 'restaurant_category_id');
-    }
+//    public function users()
+//    {
+//        return $this->belongsToMany(User::class, 'user_restaurant_category', 'restaurant_category_id', 'user_id');
+//    }
+//
+//
+//    public function category()
+//    {
+//        return $this->belongsTo(RestaurantCategory::class, 'restaurant_category_id');
+//    }
 
 }

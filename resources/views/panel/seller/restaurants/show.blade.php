@@ -14,7 +14,22 @@
                     <p>address: {{ $restaurant->address }}</p>
                     <p>send cost: {{ $restaurant->send_cost }}</p>
 {{--                    <p>restaurant category id: {{ $restaurant->restaurant_category_id }}</p>--}}
-                    <p>restaurant category id: {{ optional($restaurant->restaurantCategory)->name }}</p>
+{{--                    <p>restaurant category id: {{ optional($restaurant->restaurantCategory)->name }}</p>--}}
+
+
+                    <p>Restaurant Categories:</p>
+                    <ul>
+                        @if ($restaurant->restaurantCategories->count() > 0)
+                            @foreach($restaurant->restaurantCategories as $restaurantCategory)
+                                <li>{{ $restaurantCategory->name }}</li>
+                            @endforeach
+                        @else
+                            <li>No categories found</li>
+                        @endif
+                    </ul>
+
+
+
                     <p>open time: {{ $restaurant->open_time }}</p>
                     <p>close time: {{ $restaurant->close_time }}</p>
                     <p>join at: {{ $restaurant->created_at }}</p>
