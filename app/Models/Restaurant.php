@@ -38,10 +38,17 @@ class Restaurant extends Model
     }
 
 
-    public function restaurantCategory()
+//    public function restaurantCategory()
+//    {
+//        return $this->belongsTo(RestaurantCategory::class, 'restaurant_category_id');
+//    }
+
+    public function restaurantCategories()
     {
-        return $this->belongsTo(RestaurantCategory::class, 'restaurant_category_id');
+        return $this->belongsToMany(RestaurantCategory::class, 'restaurant_restaurant_category', 'restaurant_id', 'restaurant_category_id');
     }
+
+
 
 
     //اگر food_id را به عنوان فیلد خارجی در رابطه hasMany استفاده کنید، این بدان معناست که یک غذا می‌تواند به چندین رستوران تعلق داشته باشد. این منطقی نیست، زیرا یک غذا فقط می‌تواند به یک رستوران تعلق داشته باشد.

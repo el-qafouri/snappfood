@@ -23,11 +23,45 @@ class FoodRequest extends FormRequest
     {
         return [
 //            "name" => ['bail',"required", "string",'min:2','max:25','unique:foods', "max:255"],
-            "name" => ['bail', 'required', 'string', 'min:2', 'max:25', 'unique:foods,name,NULL,id,user_id,' . auth()->id(), 'max:255'],
+            "name" => [
+                'bail',
+                'required',
+                'string',
+                'min:2',
+                'max:255',
+//                'unique:foods,name,NULL,id,user_id,' . auth()->id()
+                'unique:foods,name,NULL,id,user_id,' . auth()->user()->restaurant->id,
+            ],
             "price" => ['bail', 'required', 'numeric', 'min:0'],
             "material" => ['bail', 'required', 'string', 'min:2' , 'max:255'],
-            'food_category_id' => 'required',
-            'discount' => 'nullable',
+            "food_category_ids" => ['required' , 'array' , 'min:1'],
+            "discount" => 'nullable',
         ];
     }
+
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'نام غذا الزامی است',
+            'name.string' => 'نام غذا باید یک رشته باشد',
+            'name.min' => 'نام غذا حداقل باید دارای 2 کاراکتر باشد',
+            'name.max' => 'نام غذا حداکثر می‌تواند 255 کاراکتر داشته باشد',
+            'name.unique' => 'نام غذا قبلاً استفاده شده است',
+
+            'price.required' => 'قیمت غذا الزامی است',
+            'price.numeric' => 'قیمت غذا باید یک عدد باشد',
+            'price.min' => 'قیمت غذا نمی‌تواند منفی باشد',
+
+            'material.required' => 'مواد غذا الزامی است',
+            'material.string' => 'مواد غذا باید یک رشته باشد',
+            'material.min' => 'مواد غذا حداقل باید دارای 2 کاراکتر باشد',
+            'material.max' => 'مواد غذا حداکثر می‌تواند 255 کاراکتر داشته باشد',
+
+            'food_category_id.required' => 'دسته بندی غذا الزامی است',
+
+            'discount.nullable' => 'تخفیف غذا باید یک عدد باشد',
+        ];
+    }
+
 }

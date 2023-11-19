@@ -39,15 +39,15 @@ class Food extends Model
         'final_price' => 0,
     ];
 
+//    public function foodCategories()
+//    {
+//        return $this->belongsTo('foodCategories', 'food_category_id', 'id');
+//    }
+
     public function foodCategories()
     {
-        return $this->belongsTo('foodCategories', 'food_category_id', 'id');
+        return $this->belongsToMany(FoodCategory::class, 'food_food_category');
     }
-
-//    public function foodCategory()
-//    {
-//        return $this->belongsTo(FoodCategory::class, 'food_category_id');
-//    }
 
 
 
@@ -56,10 +56,10 @@ class Food extends Model
         return $this->belongsTo(Restaurant::class, 'restaurant_id');
     }
 
-    public function foodCategory()
-    {
-        return $this->belongsTo(FoodCategory::class);
-    }
+//    public function foodCategory()
+//    {
+//        return $this->belongsTo(FoodCategory::class);
+//    }
 
     public function orders()
     {

@@ -22,8 +22,11 @@ class FoodCategory extends Model
         'deleted_at',
     ];
 
+//    public function food() {
+//        return $this->hasMany('food', 'food_category_id' , 'id');
+//    }
     public function food() {
-        return $this->hasMany('food', 'food_category_id' , 'id');
+        return $this->belongsToMany(Food::class, 'food_food_category');
     }
 
 }

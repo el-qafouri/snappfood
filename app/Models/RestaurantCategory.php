@@ -18,10 +18,16 @@ class RestaurantCategory extends Model
         'deleted_at',
     ];
 
-    public function restaurant()
+//    public function restaurant()
+//    {
+//        $this->hasMany('restaurant', 'restaurant_category_id', 'id');
+//    }
+
+    public function restaurants()
     {
-        $this->hasMany('restaurant', 'restaurant_category_id', 'id');
+        return $this->belongsToMany(Restaurant::class, 'restaurant_restaurant_category', 'restaurant_category_id', 'restaurant_id');
     }
+
 
 
 

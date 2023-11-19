@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
 
-        <form action="{{ route('food.store') }}" method="POST" class="d-flex flex-column gap-3 mt-4">
+        <form action="{{ route('food.store') }}" method="post" class="d-flex flex-column gap-3 mt-4">
             @csrf
             <div class="form-group">
 
@@ -11,7 +11,7 @@
                 <input
                     value="{{ old('name') }}"
                     type="text"
-                    class="form-control @error('nane') is-invalid @enderror"
+                    class="form-control @error('name') is-invalid @enderror"
                     id="name"
                     name="name"
                     placeholder="Enter food name"
@@ -53,41 +53,52 @@
             </div>
 
 
-            <div class="form-group">
-                <label for="food_category_id">food category</label>
-                <select
-                    class="form-control @error('category') is-invalid @enderror"
-                    id="food_category_id"
-                    name="food_category_id"
-                    required
-                >
-                    <option value="" selected disabled>Select category</option>
 
-                @foreach($foodCategories as $foodCategory)
-                        <option value="{{$foodCategory->id}}">{{$foodCategory->name}}</option>
-                    @endforeach
-{{--                    <option value="{{$foodCategory->id}}">{{$foodCategory->name}}</option>--}}
-                </select>
-                @error('category')
-                <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-            </div>
 
-{{--                    <option value="" selected disabled>Select Category</option>--}}
-{{--                    @foreach($foodCategories as $foodCategory)--}}
-{{--                        <option value="{{ $foodCategory->id }}">{{ $foodCategory->name }}</option>--}}
+{{--            <div class="form-group">--}}
+{{--                <label for="food_category_id">food category</label>--}}
+{{--                <select --}}
+{{--                        class="form-control @error('category') is-invalid @enderror"--}}
+{{--                    id="food_category_id"--}}
+{{--                    name="food_category_id"--}}
+{{--                    required--}}
+{{--                >--}}
+{{--                    <option value="" selected disabled>Select category</option>--}}
+
+{{--                @foreach($foodCategories as $foodCategory)--}}
+{{--                        <option value="{{$foodCategory->id}}">{{$foodCategory->name}}</option>--}}
 {{--                    @endforeach--}}
 {{--                </select>--}}
-{{--                @error('food_category_id')--}}
+{{--                @error('category')--}}
 {{--                <div class="alert alert-danger">{{ $message }}</div>--}}
 {{--                @enderror--}}
 {{--            </div>--}}
 
 
             <div class="form-group">
+                <label>Food Categories</label>
+                <div>
+                    @foreach($foodCategories as $foodCategory)
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="food_category_ids[]" value="{{ $foodCategory->id }}">
+                            {{ $foodCategory->name }}
+                        </label>
+                    @endforeach
+                </div>
+                @error('food_category_ids')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+
+
+
+
+
+            <div class="form-group">
                 <label for="discount_id">food discount</label>
                 <select
-                    class="form-control @error('discount_id') is-invalid @enderror"
+                        class="form-control @error('discount_id') is-invalid @enderror"
                     id="discount_id"
                     name="discount_id"
                 >

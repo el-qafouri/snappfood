@@ -32,7 +32,21 @@
                     <td>{{ Str::limit($food->name, 20) }}</td>
                     <td>{{ $food->material }}</td>
 {{--                    <td>{{ $food->food_category_id }}</td>--}}
-                    <td>{{ optional($food->foodCategory)->name }}</td>
+{{--                    <td>{{ optional($food->foodCategory)->name }}</td>--}}
+
+
+                    <td>
+                        @forelse($food->foodCategories as $category)
+                            {{ $category->name }}
+                            @if(!$loop->last)
+                                ,
+                            @endif
+                        @empty
+                            No categories found
+                        @endforelse
+                    </td>
+
+
                     <td>
                         <a href="{{ route('food.show', $food->id) }}" class="btn btn-success"><i
                                 class="fas fa-eye"></i> Show</a>

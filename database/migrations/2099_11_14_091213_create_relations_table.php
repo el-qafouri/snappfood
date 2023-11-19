@@ -58,14 +58,14 @@ return new class extends Migration {
 
         Schema::table('restaurant_restaurant_category', function (Blueprint $table) {
             $table->foreign('restaurant_category_id')->references('id')
-                ->on('restaurant_category')->cascadeOnDelete();
+                ->on('restaurant_categories')->cascadeOnDelete();
             $table->foreign('restaurant_id')->references('id')->on('restaurants')->cascadeOnDelete();
         });
 
         Schema::table('food_food_category', function (Blueprint $table) {
             $table->foreign('food_id')->references('id')
-                ->on('food')->cascadeOnDelete();
-            $table->foreign('food_category_id')->references('id')->on('food_category')->cascadeOnDelete();
+                ->on('foods')->cascadeOnDelete();
+            $table->foreign('food_category_id')->references('id')->on('food_categories')->cascadeOnDelete();
         });
     }
 

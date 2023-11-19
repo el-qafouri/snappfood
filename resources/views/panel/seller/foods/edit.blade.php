@@ -58,25 +58,50 @@
             </div>
 
 
-            <div class="form-group">
-                <label for="food_category_id">food category</label>
-                <select
-                    class="form-control @error('category') is-invalid @enderror"
-                    id="food_category_id"
-                    name="food_category_id"
-                    required
-                >
-                    <option value="" selected disabled>Select category</option>
+{{--            <div class="form-group">--}}
+{{--                <label for="food_category_id">food category</label>--}}
+{{--                <select--}}
+{{--                    class="form-control @error('category') is-invalid @enderror"--}}
+{{--                    id="food_category_id"--}}
+{{--                    name="food_category_id"--}}
+{{--                    required--}}
+{{--                >--}}
+{{--                    <option value="" selected disabled>Select category</option>--}}
 
-                    @foreach($foodCategories as $foodCategory)
-                        <option value="{{$foodCategory->id}}">{{$foodCategory->name}}</option>
-                    @endforeach
+{{--                    @foreach($foodCategories as $foodCategory)--}}
+{{--                        <option value="{{$foodCategory->id}}">{{$foodCategory->name}}</option>--}}
+{{--                    @endforeach--}}
 {{--                                        <option value="{{$foodCategory->id}}">{{$foodCategory->name}}</option>--}}
-                </select>
-                @error('category')
+{{--                </select>--}}
+{{--                @error('category')--}}
+{{--                <div class="alert alert-danger">{{ $message }}</div>--}}
+{{--                @enderror--}}
+{{--            </div>--}}
+
+
+
+
+
+
+
+
+            <div class="form-group">
+                <label>Food Categories</label>
+                <div>
+                    @foreach($foodCategories as $foodCategory)
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="food_category_ids[]" value="{{ $foodCategory->id }}">
+                            {{ $foodCategory->name }}
+                        </label>
+                    @endforeach
+                </div>
+                @error('food_category_ids')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
+
+
+
 
 
 {{--            <div class="form-group">--}}
