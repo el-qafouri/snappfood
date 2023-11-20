@@ -31,7 +31,9 @@ Route::prefix('foods')->middleware('auth')->group(function () {
         Route::post('create' , [FoodController::class , 'store'])->name('food.store');
 
     Route::get('{id}/edit', [FoodController::class, 'edit'])->name('food.edit');
-    Route::put('update/{id}', [FoodController::class, 'update'])->name('food.update');
+    Route::put('update/{id}', [FoodController::class, 'update'])->name('food.updated');
+//    Route::put('update/{id}', [FoodController::class, 'update'])->name('food.update');
+
 });
 
 

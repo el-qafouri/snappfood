@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FoodRequest extends FormRequest
+class UpdateFoodRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,26 +22,21 @@ class FoodRequest extends FormRequest
     public function rules(): array
     {
         return [
-//            "name" => ['bail',"required", "string",'min:2','max:25','unique:foods', "max:255"],
             "name" => [
                 'bail',
                 'required',
                 'string',
                 'min:2',
                 'max:255',
-//                'unique:foods,name,NULL,id,user_id,' . auth()->id()
                 'unique:foods,name,NULL,id,user_id,' . auth()->user()->restaurant->id,
             ],
             "price" => ['bail', 'required', 'numeric', 'min:0'],
-            "material" => ['bail', 'required', 'string', 'min:2' , 'max:255'],
-            "food_category_id" => ['required' , 'array' , 'min:1'],
+            "material" => ['bail', 'required', 'string', 'min:2', 'max:255'],
+            "food_category_id" => ['required', 'array', 'min:1'],
             "discount" => 'nullable',
-//            "imagePath" => 'image|mimes:jpg,jpeg,png|max:2048|dimensions:max_width=1000,max_height=1000',
             "image_path" => 'image|mimes:jpg,jpeg,png',
-//            "image" => 'max:1',
         ];
     }
-
 
     public function messages(): array
     {
@@ -63,12 +58,11 @@ class FoodRequest extends FormRequest
 
             'food_category_id.required' => 'دسته بندی غذا الزامی است',
 
-            'discount.nullable' => 'تخفیف غذا مقدار عددی باشد',
+            'discount.nullable' => 'تخفیف غذا باید مقدار عددی باشد',
 
             'image_path.image' => 'فایل باید تصویری باشد',
-            'image_path.required' => 'آپلود تصویر الزامی است',
+//            'image_path.required' => 'آپلود تصویر الزامی است',
             'image_path.mimes' => 'فرمت تصویر باید jpg، jpeg، یا png باشد',
-
         ];
 
     }
