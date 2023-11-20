@@ -37,17 +37,20 @@ class RestaurantRequest extends FormRequest
             'open_time' => [
                 'bail',
                 'required',
-                'date_format:H:i', // فرمت ساعت
-                'after_or_equal:09:00', // بررسی اینکه ساعت انتخابی بزرگتر یا مساوی 09:00 باشد
-                'before_or_equal:23:59', // بررسی اینکه ساعت انتخابی کوچکتر یا مساوی 23:59 باشد
+                'date_format:H:i',
+                'after_or_equal:09:00',
+                'before_or_equal:23:59',
             ],
             'close_time' => [
                 'bail',
                 'required',
-                'date_format:H:i', // فرمت ساعت
-                'after_or_equal:09:00', // بررسی اینکه ساعت انتخابی بزرگتر یا مساوی 09:00 باشد
-                'before_or_equal:23:59', // بررسی اینکه ساعت انتخابی کوچکتر یا مساوی 23:59 باشد
+                'date_format:H:i',
+                'after_or_equal:09:00',
+                'before_or_equal:23:59',
             ],
+
+//            "imagePath" => 'image|mimes:jpg,jpeg,png|max:2048|dimensions:max_width=1000,max_height=1000',
+//            "image" => 'max:1',
 
         ];
     }

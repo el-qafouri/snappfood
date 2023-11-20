@@ -21,11 +21,13 @@ class Food extends Model
         'name',
         'price',
         'material',
-        'food_category_id',
+//        'food_category_id',
         'restaurant_id',
 //        'discount_id',
 //        'discount',
-        'user_id'
+        'user_id',
+        'image_path',
+//        'imagePath',
     ];
 
     protected $guarded = [

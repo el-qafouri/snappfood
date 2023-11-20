@@ -47,6 +47,24 @@
                     </td>
 
 
+
+
+
+{{--                    <td>--}}
+{{--                        @if($food->foodCategories->isNotEmpty())--}}
+{{--                            @foreach($food->foodCategories as $category)--}}
+{{--                                {{ $category->name }}--}}
+{{--                                @if(!$loop->last)--}}
+{{--                                    ,--}}
+{{--                                @endif--}}
+{{--                            @endforeach--}}
+{{--                        @else--}}
+{{--                            No categories found--}}
+{{--                        @endif--}}
+{{--                    </td>--}}
+
+
+
                     <td>
                         <a href="{{ route('food.show', $food->id) }}" class="btn btn-success"><i
                                 class="fas fa-eye"></i> Show</a>

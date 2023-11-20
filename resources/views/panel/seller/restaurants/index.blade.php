@@ -35,6 +35,10 @@
 {{--                    <td>{{ $restaurant->restaurant_category_id }}</td>--}}
 {{--                    <td>{{ optional($restaurant->restaurantCategory)->name }}</td>--}}
 
+
+
+
+
                     <td>
                         @forelse($restaurant->restaurantCategories as $category)
                             {{ $category->name }}

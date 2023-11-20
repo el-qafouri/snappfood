@@ -34,8 +34,9 @@ class FoodRequest extends FormRequest
             ],
             "price" => ['bail', 'required', 'numeric', 'min:0'],
             "material" => ['bail', 'required', 'string', 'min:2' , 'max:255'],
-            "food_category_ids" => ['required' , 'array' , 'min:1'],
+            "food_category_id" => ['required' , 'array', 'min:1'],
             "discount" => 'nullable',
+            "image_path" => 'image|mimes:jpg,jpeg,png',
         ];
     }
 
@@ -60,8 +61,14 @@ class FoodRequest extends FormRequest
 
             'food_category_id.required' => 'دسته بندی غذا الزامی است',
 
-            'discount.nullable' => 'تخفیف غذا باید یک عدد باشد',
+            'discount.nullable' => 'تخفیف غذا باید مقدار عددی باشد',
+
+            'image_path.image' => 'فایل باید تصویری باشد',
+            'image_path.required' => 'آپلود تصویر الزامی است',
+            'image_path.mimes' => 'فرمت تصویر باید jpg، jpeg، یا png باشد',
+
         ];
+
     }
 
 }

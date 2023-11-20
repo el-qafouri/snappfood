@@ -3,11 +3,12 @@
 @section('content')
     <div class="container">
 
-        <form action="{{ route('food.store') }}" method="post" class="d-flex flex-column gap-3 mt-4">
+        <form action="{{ route('food.store') }}" method="post" class="d-flex flex-column gap-3 mt-4"
+        enctype="multipart/form-data">
             @csrf
             <div class="form-group">
 
-                <label for="title">food Name</label>
+                <label for="name">food Name</label>
                 <input
                     value="{{ old('name') }}"
                     type="text"
@@ -52,27 +53,22 @@
                 @enderror
             </div>
 
-
-
-
 {{--            <div class="form-group">--}}
-{{--                <label for="food_category_id">food category</label>--}}
-{{--                <select --}}
-{{--                        class="form-control @error('category') is-invalid @enderror"--}}
-{{--                    id="food_category_id"--}}
-{{--                    name="food_category_id"--}}
-{{--                    required--}}
-{{--                >--}}
-{{--                    <option value="" selected disabled>Select category</option>--}}
-
-{{--                @foreach($foodCategories as $foodCategory)--}}
-{{--                        <option value="{{$foodCategory->id}}">{{$foodCategory->name}}</option>--}}
+{{--                <label>Food Categories</label>--}}
+{{--                <div>--}}
+{{--                    @foreach($foodCategories as $foodCategory)--}}
+{{--                        <label class="checkbox-inline">--}}
+{{--                            <input type="checkbox" name="food_category_id" value="{{ $foodCategory->id }}">--}}
+{{--                            {{ $foodCategory->name }}--}}
+{{--                        </label>--}}
 {{--                    @endforeach--}}
-{{--                </select>--}}
-{{--                @error('category')--}}
+{{--                </div>--}}
+{{--                @error('food_category_id')--}}
 {{--                <div class="alert alert-danger">{{ $message }}</div>--}}
 {{--                @enderror--}}
 {{--            </div>--}}
+
+
 
 
             <div class="form-group">
@@ -80,19 +76,23 @@
                 <div>
                     @foreach($foodCategories as $foodCategory)
                         <label class="checkbox-inline">
-                            <input type="checkbox" name="food_category_ids[]" value="{{ $foodCategory->id }}">
+                            <input type="checkbox" name="food_category_id[]" value="{{ $foodCategory->id }}">
                             {{ $foodCategory->name }}
                         </label>
                     @endforeach
                 </div>
-                @error('food_category_ids')
+                @error('food_category_id')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
 
 
-
-
+            {{--            <label for="food_category_id">Food Category:</label>--}}
+{{--            <select name="food_category_id[]" multiple>--}}
+{{--                @foreach($foodCategories as $category)--}}
+{{--                    <option value="{{ $category->id }}">{{ $category->name }}</option>--}}
+{{--                @endforeach--}}
+{{--            </select>--}}
 
 
             <div class="form-group">
@@ -107,6 +107,7 @@
                     @foreach($discounts as $discount)
                         <option value="{{$discount->id}}">{{$discount->discount}}</option>
                     @endforeach
+
                     {{--                    <option value="{{$foodCategory->id}}">{{$foodCategory->name}}</option>--}}
                 </select>
                 @error('discount')
@@ -114,7 +115,16 @@
                 @enderror
             </div>
 
+{{--            <label for="image">upload image</label>--}}
+{{--            <input type="file" name="image" accept="image/*">--}}
 
+
+            <div class="form-group">
+                <label for="imagePath">upload image</label>
+                <div class="input-group">
+                    <input type="file" name="imagePath" accept="image/*" class="form-control">
+                </div>
+            </div>
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Submit</button>

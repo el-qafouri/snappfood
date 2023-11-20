@@ -17,8 +17,9 @@ return new class extends Migration {
             $table->decimal('food_discount', '5', '2')->default('0');
             $table->decimal('final_price');
             $table->string('material');
+            $table->string('image_path')->nullable();
             $table->unsignedBigInteger('restaurant_id')->nullable();
-            $table->unsignedBigInteger('food_category_id')->nullable();
+//            $table->unsignedBigInteger('food_category_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('discount_id')->nullable();
             $table->timestamps();

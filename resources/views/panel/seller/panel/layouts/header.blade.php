@@ -50,7 +50,7 @@
                             <a
                                 class="nav-link active"
                                 aria-current="page"
-                                href=""
+                                href="{{ route('restaurant.index') }}"
                             ><i class="fas fa-info-circle"></i>restaurant data</a
                             >
                         </li>

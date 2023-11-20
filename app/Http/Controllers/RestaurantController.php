@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RestaurantRequest;
 use App\Models\Restaurant;
 use App\Models\RestaurantCategory;
+use http\Client\Curl\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use mysql_xdevapi\Exception;
@@ -13,12 +15,77 @@ class RestaurantController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @throws AuthorizationException
      */
     public function index()
     {
+
         $restaurants = Restaurant::all();
-        return view('panel.seller.restaurants.index', compact('restaurants'));
+        return view('panel.seller.restaurants.index' , compact('restaurants'));
+
+//        $restaurants = Restaurant::all();
+//        $users = \App\Models\User::all();
+////        $restaurants = auth()->user()->restaurants;
+//        return view('panel.seller.restaurants.index', compact('restaurants' , 'users'));
     }
+
+
+
+//    public function index()
+//    {
+//        $user = auth()->user();
+//
+//        if ($user->hasRole('seller')) {
+//            $restaurants = $user->restaurants;
+//
+//            // اگر سلر رستوران نداشته باشد
+//            if (!$restaurants->isEmpty()) {
+//                return view('panel.seller.restaurants.index', compact('restaurants'));
+//            } else {
+//                return view('panel.seller.restaurants.index');
+//            }
+//        } elseif ($user->hasRole('admin')) {
+////            $restaurants = Restaurant::with('user')->get();
+//            $restaurants = Restaurant::all();
+//            return view('panel.seller.restaurants.index', compact('restaurants'));
+//        } else {
+//            return view('panel.seller.restaurants.index');
+//        }
+//    }
+
+
+
+//    public function index()
+//    {
+//        $user = auth()->user();
+//
+//        if ($user->hasRole('seller')) {
+//            $restaurants = $user->restaurants;
+//            return view('panel.seller.restaurants.index', compact('restaurants'));
+//        } elseif ($user->hasRole('admin')) {
+//            $restaurants = Restaurant::with('user')->get();
+//            return view('panel.seller.restaurants.index', compact('restaurants'));
+//        } else {
+//            return view('panel.seller.restaurants.index');
+//        }
+//    }
+
+
+
+
+
+
+
+//    public function restaurantActive(Request $request)
+//    {
+//        $restaurant = Restaurant::query()->find($request->input('restaurant_id'));
+//        if (!$restaurant) {
+//            return response('not found');
+//        }
+//        $restaurant->status = $restaurant->status == 1 ? 0 : 1 ;
+//        $restaurant->save();
+//        return redirect()->back();
+//    }
 
 
 
@@ -58,7 +125,6 @@ class RestaurantController extends Controller
 //    }
 
 
-
     public function store(RestaurantRequest $request)
     {
         try {
@@ -75,8 +141,6 @@ class RestaurantController extends Controller
             return redirect()->route('restaurant.create')->with('fail', 'رستوران افزوده نشد');
         }
     }
-
-
 
 
     /**
@@ -116,9 +180,6 @@ class RestaurantController extends Controller
 //    }
 
 
-
-
-
     public function update(RestaurantRequest $request, $id)
     {
         try {
@@ -140,10 +201,6 @@ class RestaurantController extends Controller
             return redirect()->route('restaurant.edit', $id)->with('fail', 'Update failed');
         }
     }
-
-
-
-
 
 
     /**
@@ -172,7 +229,7 @@ class RestaurantController extends Controller
     {
         $restaurant = Restaurant::findOrFail($id);
         $restaurant->update([
-            'profile_status' => !$restaurant->profile_status        ]);
+            'profile_status' => !$restaurant->profile_status]);
 
         return redirect()->route('restaurant.index')->with('success', 'Profile status updated successfully');
     }
@@ -185,9 +242,6 @@ class RestaurantController extends Controller
 //        $restaurant->update(['profile_status' => !$restaurant->profile_status]);
 //        return redirect()->back()->with('success', 'Profile status updated successfully');
 //    }
-
-
-
 
 
 }

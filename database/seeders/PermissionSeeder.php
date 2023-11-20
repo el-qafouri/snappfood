@@ -59,7 +59,5 @@ class PermissionSeeder extends Seeder
         ]);
         $user->assignRole($role);
 
-//        $user->syncRoles($role);
-//        $user->syncRoles($role->pluck('name'));
     }
 }

@@ -6,7 +6,8 @@ use App\Http\Requests\FoodRequest;
 use App\Models\Discount;
 use App\Models\Food;
 use App\Models\FoodCategory;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Restaurant;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -16,12 +17,29 @@ class FoodController extends Controller
     /**
      * Display a listing of the resource.
      */
+//    public function index()
+//    {
+//        $user = Auth::user();
+//        $foods = $user->foods;
+//        return view('panel.seller.foods.index', compact('foods'));
+//    }
+
+
     public function index()
     {
         $user = Auth::user();
-        $foods = $user->foods;
-        return view('panel.seller.foods.index', compact('foods'));
+        $restaurant = $user->restaurant;
+
+        if ($restaurant) {
+            $foods = $restaurant->foods;
+            return view('panel.seller.foods.index', compact('foods'));
+        } else {
+            return redirect()->route('restaurant.create')->with('warning', 'You need to create a restaurant first.');
+        }
     }
+
+
+
 
 
     /**
@@ -34,9 +52,6 @@ class FoodController extends Controller
 //        $discounts = $user->discounts;
 //        return view('panel.seller.foods.create', compact('foodCategories' , 'discounts'));
 //    }
-
-
-
 
 
     public function create()
@@ -76,9 +91,6 @@ class FoodController extends Controller
 //        }
 //    }
 
-
-
-
 // ...
 
 //    public function store(FoodRequest $request)
@@ -100,20 +112,159 @@ class FoodController extends Controller
 //    }
 
 
+//بدون عکس درست بود
+//    public function store(FoodRequest $request)
+//    {
+//        $user = Auth::user();
+//        try {
+//            $foodData = $request->validated();
+//            $foodData['restaurant_id'] = $user->restaurant->id;
+//            $food = $user->foods()->create($foodData);
+//
+//            // Get the food category ids from the request
+//            $foodCategoryIds = $request->input('food_category_ids');
+//
+//            // Attach the food categories
+//            $food->foodCategories()->sync($foodCategoryIds);
+//
+//            return redirect()->route("food.index")->with('success', $food->name . "food added successfully");
+//        } catch (Exception $e) {
+//            Log::error($e->getMessage());
+//            return redirect(status: 500)->route('food.create')->with('fail', 'food didnt add!');
+//        }
+//    }
+
+
+//با عکس
+//    public function store(FoodRequest $request)
+//    {
+//        $user = Auth::user();
+//        try {
+//            $foodData = $request->validated();
+//            $foodData['restaurant_id'] = $user->restaurant->id;
+//            if ($request->hasFile('image_path')) {
+//                $imagePath = $request->file('image_path');
+//                $fileName = 'public/food' . time() . '_' . $imagePath->getClientOriginalName();
+//                $imagePath->move(public_path('public/food'), $fileName);
+//            } else {
+//                $fileName = null;
+//            }
+//            $food = $user->foods()->create($foodData);
+//            $foodCategoryIds = $request->input('food_category_ids');
+//            $food->foodCategories()->sync($foodCategoryIds);
+//            return redirect()->route("food.index")->with('success', $food->name . "food added successfully");
+//        } catch (Exception $e) {
+//            Log::error($e->getMessage());
+//            return redirect(status: 500)->route('food.create')->with('fail', 'food didnt add!');
+//        }
+//    }
+
+//دیدی گرفتم خروجی نداد
+//    public function store(FoodRequest $request)
+//    {
+//        $user = Auth::user();
+//        try {
+//            $foodData = $request->validated();
+//            $foodData['restaurant_id'] = $user->restaurant->id;
+//            if ($request->hasFile('imagePath')) {
+//                $imagePath = $request->file('imagePath');
+////                $fileName = $imagePath->getClientOriginalName();
+////                $imagePath->move(public_path('food'), $fileName);
+//
+//                $fileName = 'food_' . time() . '_' . $imagePath->hashName();
+//                $imagePath->move(public_path('food'), $fileName);
+//
+//            } else {
+//                $fileName = null;
+//            }
+//            dd($imagePath);
+//
+//
+//            $food = $user->foods()->create($foodData);
+//
+//
+//
+//            // Get the food category ids from the request
+//            $foodCategoryIds = $request->input('food_category_ids');
+//
+//            // Attach the food categories
+//            $food->foodCategories()->sync($foodCategoryIds);
+//
+//            // Save the food record
+//            $food->save();
+//
+//            return redirect()->route("food.index")->with('success', $food->name . "food added successfully");
+//        } catch (Exception $e) {
+//            Log::error($e->getMessage());
+//            return redirect(status: 500)->route('food.create')->with('fail', 'food didnt add!');
+//        }
+//    }
+
+
+
+//    public function store(FoodRequest $request)
+//    {
+////        dd('iii')
+//        $user = Auth::user();
+//        $imagePath = null;
+//        try {
+//            $foodData = $request->validated();
+//            $foodData['user_id'] = $user->id;
+//
+//            $foodData['restaurant_id'] = $user->restaurant->id;
+//            if ($request->hasFile('imagePath')) {
+//                $imagePath = $request->file('imagePath');
+//                $fileName = 'food' . time() . '_' . $imagePath->hashName();
+//                $imagePath->move(public_path('food'), $fileName);
+//            } else {
+//                $fileName = null;
+//            }
+////            $food = $user->foods()->create($foodData);
+//            $food = new Food($foodData);
+//            $food->image_path = $fileName;
+//            $food->save();
+////            $foodCategoryId = $request->input('food_category_id')[0];
+////            $food->foodCategories()->sync($foodCategoryId);
+//
+//
+//            $foodCategoryIds = $request->input('food_category_id');
+//            $food->foodCategories()->sync($foodCategoryIds);
+//
+//            return redirect()->route("food.index")->with('success', $food->name . "food added successfully");
+//        } catch (Exception $e) {
+//            Log::error($e->getMessage());
+//            return redirect(status: 500)->route('food.create')->with('fail', 'food didnt add!');
+//        }
+//    }
+
+
+
 
     public function store(FoodRequest $request)
     {
         $user = Auth::user();
+//        $restaurant = Restaurant::query()->find($restaurantId);
+//        $foods = $restaurant->foods;
         try {
             $foodData = $request->validated();
             $foodData['restaurant_id'] = $user->restaurant->id;
-            $food = $user->foods()->create($foodData);
+            if ($request->hasFile('imagePath')) {
+                $imagePath = $request->file('imagePath');
+                $fileName = 'food' . time() . '_' . $imagePath->hashName();
+                $imagePath->move(public_path('food'), $fileName);
+                $foodData['image_path'] = $fileName;
+            } else {
+                $foodData['image_path'] = null;
+            }
 
-            // Get the food category ids from the request
-            $foodCategoryIds = $request->input('food_category_ids');
+            $food = new Food($foodData);
+//            dd($food);
 
-            // Attach the food categories
-            $food->foodCategories()->sync($foodCategoryIds);
+            $food->save();
+
+            $foodCategoryIds = $request->input('food_category_id');
+
+            $food->foodCategories()->attach($foodCategoryIds);
 
             return redirect()->route("food.index")->with('success', $food->name . "food added successfully");
         } catch (Exception $e) {
@@ -125,21 +276,35 @@ class FoodController extends Controller
 
 
 
-
-
     /**
      * Display the specified resource.
      */
+//بدون عکس جواب بود
+//    public function show($id)
+//    {
+//        $food = Food::query()->find($id);
+//        if ($food && $food->user_id == auth()->id()) {
+//            return view('panel.seller.foods.show')->with('food', $food);
+//        } else {
+//            abort(403, 'Access denied');
+//        }
+//    }
+
 
     public function show($id)
     {
         $food = Food::query()->find($id);
-        if ($food && $food->user_id == auth()->id()) {
-            return view('panel.seller.foods.show')->with('food', $food);
+        if ($food && $food->restaurant_id == auth()->id()) {
+            $images = $food->imagePath ? json_decode($food->imagePath , true) : [];
+            return view('panel.seller.foods.show')->with(['food' => $food, 'images' => $images]);
         } else {
             abort(403, 'Access denied');
         }
     }
+
+
+
+
 
 
     /**
@@ -156,11 +321,11 @@ class FoodController extends Controller
     public function edit($id)
     {
         $food = Food::query()->findOrFail($id);
-        if ($food && $food->user_id == auth()->id()) {
+        if ($food && $food->restaurant_id == auth()->id()) {
             $foodCategories = FoodCategory::all();
 //            $discounts = Discount::query()->find($id);
             $discounts = auth()->user()->discounts;
-            return view('panel.seller.foods.edit', compact('food', 'foodCategories' , 'discounts'));
+            return view('panel.seller.foods.edit', compact('food', 'foodCategories', 'discounts'));
         } else {
             abort(403, 'Access denied');
         }
@@ -186,10 +351,40 @@ class FoodController extends Controller
 //    }
 
 
+//    public function update(FoodRequest $request, $id)
+//    {
+//        try {
+//            $food = Food::findOrFail($id);
+//
+//            // Make sure the current user owns the food
+//            if ($food && $food->user_id == auth()->id()) {
+//                // Update the food
+//                $food->update($request->validated());
+//
+//                // Sync the food categories
+//                $food->foodCategories()->sync($request->input('food_category_ids'));
+//
+//                // Retrieve the updated food with categories and discounts
+//                $food = Food::with('foodCategories', 'discount')->findOrFail($id);
+//
+//                $foodCategories = FoodCategory::all();
+//                $discounts = auth()->user()->discounts;
+//
+//                return view('panel.seller.foods.edit', compact('food', 'foodCategories', 'discounts'))->with('success', 'Update successfully');
+//            } else {
+//                abort(403, 'Access denied');
+//            }
+//        } catch (Exception $e) {
+//            Log::error($e->getMessage());
+//            return redirect()->route('food.edit', $id)->with('fail', 'Update failed');
+//        }
+//    }
 
 
 
 
+
+/*
     public function update(FoodRequest $request, $id)
     {
         try {
@@ -197,7 +392,67 @@ class FoodController extends Controller
 
             // Make sure the current user owns the food
             if ($food && $food->user_id == auth()->id()) {
-                // Update the food
+                // Check if a new image is uploaded
+                if ($request->hasFile('imagePath')) {
+                    $imagePath = $request->file('imagePath');
+                    $fileName = 'food' . time() . '_' . $imagePath->hashName();
+                    $imagePath->move(public_path('food'), $fileName);
+
+                    // Delete the old image if it exists
+                    if ($food->image_path) {
+                        unlink(public_path('food/' . $food->image_path));
+                    }
+
+                    // Update the image path in the food model
+                    $food->update(['image_path' => $fileName]);
+                }
+
+                // Update the other fields of the food
+                $food->update($request->validated());
+
+                // Sync the food categories
+                $food->foodCategories()->sync($request->input('food_category_ids'));
+
+                // Retrieve the updated food with categories and discounts
+                $food = Food::with('foodCategories', 'discount')->findOrFail($id);
+
+                $foodCategories = FoodCategory::all();
+                $discounts = auth()->user()->discounts;
+
+                return view('panel.seller.foods.edit', compact('food', 'foodCategories', 'discounts'))->with('success', 'Update successfully');
+            } else {
+                abort(403, 'Access denied');
+            }
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->route('food.edit', $id)->with('fail', 'Update failed');
+        }
+    }
+*/
+
+
+
+    public function update(FoodRequest $request ,$id)
+    {
+        dd($request);
+        try {
+            $food = Food::query()->findOrFail($id);
+            if ($food && $food->restaurant_id == auth()->id()) {
+                if ($request->hasFile('imagePath')) {
+                    $imagePath = $request->file('imagePath');
+                    $fileName = 'food' . time() . '_' . $imagePath->hashName();
+                    $imagePath->move(public_path('food'), $fileName);
+
+                    // Delete the old image if it exists
+                    if ($food->image_path) {
+                        unlink(public_path('food/' . $food->image_path));
+                    }
+
+                    // Update the image path in the food model
+                    $food->update(['image_path' => $fileName]);
+                }
+
+                // Update the other fields of the food
                 $food->update($request->validated());
 
                 // Sync the food categories
