@@ -22,6 +22,7 @@ class PermissionSeeder extends Seeder
             'add restaurant category', 'delete restaurant category', 'delete seller',
             'delete food', 'define discount', 'add discount', 'define banner',
             'add banner', 'view user', 'view users', 'view sellers', 'add restaurant', 'define food',
+            'view order' , 'view orders',
         ];
 
         foreach ($permissions as $permission) {
@@ -40,7 +41,9 @@ class PermissionSeeder extends Seeder
 
         $seller = Role::findByName('seller');
         $seller->givePermissionTo([
-            'add discount', 'delete food', 'add banner', 'add restaurant', 'define food',
+            'add discount', 'delete food',
+            'add banner', 'add restaurant', 'define food',
+            'view order' , 'view orders',
         ]);
 
 // Create sample users and assign roles

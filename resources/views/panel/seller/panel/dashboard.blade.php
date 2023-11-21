@@ -39,7 +39,7 @@
                 <tr>
                     <td>orders</td>
                     <td>
-                        <a href="#" class="btn btn-primary"><i
+                        <a href="{{ route('order.getOrders') }}" class="btn btn-primary"><i
                                 class="fas fa-edit"></i>show</a>
                     </td>
                 </tr>

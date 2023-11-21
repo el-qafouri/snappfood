@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 //Route::put('order/update' , [OrderController::class , 'getOrders'])->middleware(['auth' , 'role:seller'])->name('order.update');
 
 
+//Route::prefix('order')->middleware(['auth'])->group(function () {
 Route::prefix('order')->middleware(['auth', 'role:seller'])->group(function () {
     Route::get('/', [OrderController::class, 'getOrder'])->name('order.getOrder');
     Route::get('/all', [OrderController::class, 'getOrders'])->name('order.getOrders');
