@@ -5,8 +5,6 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
-//Route::get('dashboard/seller' , [UserController::class , 'sellerIndex'])->middleware(['auth' ,'role:seller'])->name('seller.dashboard');
-//Route::middleware('auth')->get('dashboard/seller/{user}', [UserController::class , 'dashboard'])->name('seller.dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard/seller', [UserController::class ,'dashboard'])->name('seller.dashboard');
@@ -16,9 +14,6 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-
-//Route::get('restaurant/create' , [RestaurantController::class , 'create'])->name('restaurant.create');
-//Route::post('restaurant/store' , [RestaurantController::class , 'store'])->name('restaurant.store');
 
 
 //Route::prefix('restaurant')->middleware(['auth' ,'role:admin|seller'])->group(function () {

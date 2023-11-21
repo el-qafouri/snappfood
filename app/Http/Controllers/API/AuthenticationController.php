@@ -25,10 +25,10 @@ class AuthenticationController extends Controller
         $fields = $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|unique:users|email',
-            'phone'=>'required|string|min:11',
+            'phone' => 'required|string|min:11',
             'password' => 'required|string'
         ]);
-        $user = User::create([
+        $user = User::query()->create([
             'name' => $fields['name'],
             'email' => $fields['email'],
             'phone' => $fields['phone'],
@@ -46,50 +46,6 @@ class AuthenticationController extends Controller
     /**
      * @throws ValidationException
      */
-//    public function login(Request $request)
-//    {
-//        $request->validate([
-//            'email' => 'required|email',
-//            'password' => 'required|string',
-//
-//        ]);
-//
-//        $user = User::query()->where('email', $request->input('email'))->first();
-//        if (!$user || !Hash::check($request->input('password'), $user->password)) {
-//            throw ValidationException::withMessages([
-//                'email' => ['The provided credentials are incorrect.'],
-//            ]);
-//        }
-//        return response(['Message' => 'you are logged in', 'Token' => $user->createToken('authToken')->plainTextToken]);
-//    }
-
-
-
-
-//    public function login(Request $request)
-//    {
-//        $fields = $request->validate([
-//            'email' => 'required|email',
-//            'password' => 'required'
-//        ]);
-//        $user = User::query()->where('email', $fields['email'])->first();
-//        if (!$user || !Hash::check($fields['password'], $user->password)) {
-//            return response([
-//                'message' => 'bad creds'
-//            ], 401);
-//        }
-//        $token = $user->createToken('token_base_name')->plainTextToken;
-//        $response = [
-//            'user' => $user,
-//            'token' => $token
-//        ];
-//        return response($response, 201);
-//    }
-
-
-
-
-
 
 
     public function login(LoginRequest $request)
@@ -110,10 +66,6 @@ class AuthenticationController extends Controller
     }
 
 
-
-
-
-
     public function logout(Request $request)
     {
         auth()->user()->tokens()->delete();
@@ -121,8 +73,6 @@ class AuthenticationController extends Controller
             'message' => 'logged out'
         ];
     }
-
-
 
 
     public function edit(Request $request)
@@ -147,7 +97,6 @@ class AuthenticationController extends Controller
     }
 
 
-
     public function editUser(Request $request)
     {
         $request->validate([
@@ -168,7 +117,6 @@ class AuthenticationController extends Controller
 
         return response(['Message' => 'information updated successfully', 'user' => $user]);
     }
-
 
 
 }

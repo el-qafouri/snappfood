@@ -41,11 +41,11 @@
                         class="navbar-nav ms-auto mb-2 mb-lg-0"
                         style="font-size: 20px;"
                     >
-                        <li class="nav-item">
-                            <a class="nav-link" href=""
-                            ><i class="fas fa-circle text-success"></i>open/close</a>
+{{--                        <li class="nav-item">--}}
+{{--                            <a class="nav-link" href=""--}}
+{{--                            ><i class="fas fa-circle text-success"></i>open/close</a>--}}
 {{--                            <i class="fas fa-times text-danger"></i>--}}
-                        </li>
+{{--                        </li>--}}
                         <li class="nav-item">
                             <a
                                 class="nav-link active"
@@ -55,9 +55,6 @@
                             >
                         </li>
                     </ul>
-
-
-
 
 
                     <button id="toggleRestaurant" class="btn btn-light">
