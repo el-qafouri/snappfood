@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Request;
+use App\Models\Food;
+use App\Models\Restaurant;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrderResource extends JsonResource
@@ -10,10 +12,20 @@ class OrderResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @return array<string, mixed>
+     * @param  \Illuminate\Http\Request  $request
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'Card ID' => $this->id,
+            'Status' => $this->customer_status,
+            'Restaurant' => [
+                'Title' => Restaurant::query()->find($this->restaurant_id)->name,
+//                'Category' => Restaurant::query()->find($this->restaurant_id)->restaurantCategories[]->name
+            ],
+        'Foods'=>FoodOrderResource::collection($this->foods),
+        ];
     }
 }
+

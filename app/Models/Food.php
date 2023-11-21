@@ -27,7 +27,6 @@ class Food extends Model
 //        'discount',
         'user_id',
         'image_path',
-//        'imagePath',
     ];
 
     protected $guarded = [

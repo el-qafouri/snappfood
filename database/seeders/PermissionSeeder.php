@@ -22,20 +22,20 @@ class PermissionSeeder extends Seeder
             'add restaurant category', 'delete restaurant category', 'delete seller',
             'delete food', 'define discount', 'add discount', 'define banner',
             'add banner', 'view user', 'view users', 'view sellers', 'add restaurant', 'define food',
-            'view order' , 'view orders',
+            'view order', 'view orders',
         ];
 
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);
         }
 
-// Create roles
+// roles
         $roles = enum::getValues();
         foreach ($roles as $role) {
             Role::create(['name' => $role]);
         }
 
-// Assign permissions to roles
+// permissions to roles
         $admin = Role::findByName('admin');
         $admin->givePermissionTo(Permission::all()->except('delete food'));
 
@@ -43,10 +43,10 @@ class PermissionSeeder extends Seeder
         $seller->givePermissionTo([
             'add discount', 'delete food',
             'add banner', 'add restaurant', 'define food',
-            'view order' , 'view orders',
+
         ]);
 
-// Create sample users and assign roles
+//  sample users and assign roles
         $this->createUser('eli', 'elham@gmail.com', '123456', $admin);
         $this->createUser('seller1', 'test@gmail.com', '1234567', $seller);
         $this->createUser('seller2', 'test2@gmail.com', '12345678', $seller);
@@ -61,6 +61,5 @@ class PermissionSeeder extends Seeder
             'password' => Hash::make($password),
         ]);
         $user->assignRole($role);
-
     }
 }

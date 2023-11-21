@@ -86,37 +86,32 @@ class FoodController extends Controller
     /**
      * Display the specified resource.
      */
+
     public function show($id)
     {
-        $food = Food::query()->find($id);
-        if ($food && $food->restaurant_id == auth()->id()) {
-            $images = $food->imagePath ? json_decode($food->imagePath, true) : [];
-            return view('panel.seller.foods.show')->with(['food' => $food, 'images' => $images]);
-        } else {
-            abort(403, 'Access denied');
+        try {
+            $food = Food::query()->findOrFail($id);
+            if ($food->restaurant_id) {
+                $images = $food->imagePath ? json_decode($food->imagePath, true) : [];
+                return view('panel.seller.foods.show')->with(['food' => $food, 'images' => $images]);
+            } else {
+                abort(403, 'Access denied');
+            }
+        } catch (ModelNotFoundException $e) {
+            // در صورت عدم یافتن موجودیت، ایجاد استثناء ModelNotFoundException
+            abort(404, 'Food not found');
         }
     }
-
-
-
-
 
 
     /**
      * Show the form for editing the specified resource.
      */
-//    public function edit($id)
-//    {
-//        $food = Food::find($id);
-//        $foodCategories = FoodCategory::all();
-//        return view('panel.seller.foods.edit', compact('food', 'foodCategories'));
-//    }
-
 
     public function edit($id)
     {
         $food = Food::query()->findOrFail($id);
-        if ($food && $food->restaurant_id == auth()->id()) {
+        if ($food && $food->restaurant_id) {
             $foodCategories = FoodCategory::all();
 //            $discounts = Discount::query()->find($id);
             $discounts = auth()->user()->discounts;
@@ -136,30 +131,21 @@ class FoodController extends Controller
     {
 //        dd('hi');
         try {
-            $food = Food::findOrFail($id);
+            $food = Food::query()->findOrFail($id);
 
-            // Check if a new image is uploaded
             if ($request->hasFile('imagePath')) {
                 $imagePath = $request->file('imagePath');
                 $fileName = 'food' . time() . '_' . $imagePath->hashName();
                 $imagePath->move(public_path('food'), $fileName);
 
-                // Delete the old image if it exists
                 if ($food->image_path) {
                     unlink(public_path('food/' . $food->image_path));
                 }
-
-                // Update the image path in the food model
                 $food->update(['image_path' => $fileName]);
             }
-
-            // Update the other fields of the food
             $food->update($request->validated());
-
-            // Sync the food categories
             $food->foodCategories()->sync($request->input('food_category_id'));
 
-            // Retrieve the updated food with categories and discounts
             $food = Food::with('foodCategories', 'discount')->findOrFail($id);
 
             $foodCategories = FoodCategory::all();
@@ -179,7 +165,7 @@ class FoodController extends Controller
     public function destroy($id)
     {
         try {
-            $food = Food::find($id);
+            $food = Food::query()->find($id);
             $food->delete();
             return redirect(status: 200)->route("food.index")->with('success', "food deleted successfully");
         } catch (Exception $e) {

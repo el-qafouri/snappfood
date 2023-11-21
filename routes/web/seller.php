@@ -17,7 +17,6 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::prefix('restaurant')->middleware(['auth' ,'role:admin|seller'])->group(function () {
-//Route::prefix('restaurant')->middleware(['auth' , 'role:seller'])->group(function () {
     Route::get('/', [RestaurantController::class, 'index'])->name('restaurant.index');
     Route::get('{id}', [RestaurantController::class, 'show'])->name('restaurant.show');
     Route::delete('{id}', [RestaurantController::class, 'destroy'])->name('restaurant.delete');
@@ -29,8 +28,11 @@ Route::prefix('restaurant')->middleware(['auth' ,'role:admin|seller'])->group(fu
     Route::put('update/{id}', [RestaurantController::class, 'update'])->name('restaurant.update');
 });
 
+
+
+
 Route::prefix('restaurant')->middleware(['auth' , 'role:admin'])->group(function (){
-//    Route::get('/{id}/editProfileStatus', [RestaurantController::class , 'editProfileStatus'])->name('restaurant.editProfileStatus');
+    Route::get('/{id}/editProfileStatus', [RestaurantController::class , 'editProfileStatus'])->name('restaurant.editProfileStatus');
     Route::patch('/{id}', [RestaurantController::class , 'updateProfileStatus'])->name('restaurant.updateProfileStatus');
 });
 

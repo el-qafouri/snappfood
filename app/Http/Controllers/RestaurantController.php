@@ -183,7 +183,7 @@ class RestaurantController extends Controller
     public function update(RestaurantRequest $request, $id)
     {
         try {
-            $restaurant = Restaurant::find($id);
+            $restaurant = Restaurant::query()->find($id);
 
             if (!$restaurant) {
                 return redirect()->route('restaurant.edit', $id)->with('fail', 'Restaurant not found');
@@ -209,7 +209,7 @@ class RestaurantController extends Controller
     public function destroy($id)
     {
         try {
-            $restaurant = Restaurant::find($id);
+            $restaurant = Restaurant::query()->find($id);
             $restaurant->delete();
             return redirect(status: 200)->route("restaurant.index")->with('success', "restaurant deleted successfully");
         } catch (Exception $e) {
@@ -221,7 +221,7 @@ class RestaurantController extends Controller
 
     public function editProfileStatus($id)
     {
-        $restaurant = Restaurant::find($id);
+        $restaurant = Restaurant::query()->find($id);
         return view('panel.seller.restaurants.show', compact('restaurant'));
     }
 
