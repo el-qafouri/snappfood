@@ -19,9 +19,6 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('food_id');
             $table->timestamps();
-
-
-
 //            $table->foreignIdFor(Order::class)->constrained()->cascadeOnDelete();
 //            $table->foreignIdFor(Food::class)->constrained()->cascadeOnDelete();
         });

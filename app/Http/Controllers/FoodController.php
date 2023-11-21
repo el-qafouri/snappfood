@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FoodRequest;
 use App\Http\Requests\UpdateFoodRequest;
-use App\Models\Discount;
 use App\Models\Food;
 use App\Models\FoodCategory;
-use App\Models\Restaurant;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -18,13 +15,6 @@ class FoodController extends Controller
     /**
      * Display a listing of the resource.
      */
-//    public function index()
-//    {
-//        $user = Auth::user();
-//        $foods = $user->foods;
-//        return view('panel.seller.foods.index', compact('foods'));
-//    }
-
 
     public function index()
     {
@@ -39,21 +29,9 @@ class FoodController extends Controller
         }
     }
 
-
-
-
-
     /**
      * Show the form for creating a new resource.
      */
-//    public function create()
-//    {
-//        $user = Auth::user();
-//        $foodCategories = FoodCategory::all();
-//        $discounts = $user->discounts;
-//        return view('panel.seller.foods.create', compact('foodCategories' , 'discounts'));
-//    }
-
 
     public function create()
     {
@@ -68,14 +46,9 @@ class FoodController extends Controller
     }
 
 
-
-
     /**
      * Store a newly created resource in storage.
      */
-
-
-
 
     public function store(FoodRequest $request)
     {
@@ -110,29 +83,14 @@ class FoodController extends Controller
         }
     }
 
-
-
-
     /**
      * Display the specified resource.
      */
-//بدون عکس جواب بود
-//    public function show($id)
-//    {
-//        $food = Food::query()->find($id);
-//        if ($food && $food->user_id == auth()->id()) {
-//            return view('panel.seller.foods.show')->with('food', $food);
-//        } else {
-//            abort(403, 'Access denied');
-//        }
-//    }
-
-
     public function show($id)
     {
         $food = Food::query()->find($id);
         if ($food && $food->restaurant_id == auth()->id()) {
-            $images = $food->imagePath ? json_decode($food->imagePath , true) : [];
+            $images = $food->imagePath ? json_decode($food->imagePath, true) : [];
             return view('panel.seller.foods.show')->with(['food' => $food, 'images' => $images]);
         } else {
             abort(403, 'Access denied');
@@ -174,8 +132,6 @@ class FoodController extends Controller
      */
 
 
-
-
     public function update(UpdateFoodRequest $request, $id)
     {
 //        dd('hi');
@@ -215,9 +171,6 @@ class FoodController extends Controller
             return redirect()->route('food.edit', $id)->with('fail', 'Update failed');
         }
     }
-
-
-
 
 
     /**

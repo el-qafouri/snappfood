@@ -29,162 +29,6 @@ class OrderController
     }
 
 
-
-
-//    public function add(Request $request)
-//    {
-//        $request->validate([
-//            'food_id' => ['required', Rule::exists('food', 'id')],
-//            'count' => 'required|integer|min:1'
-//        ]);
-//
-//        $order = Order::where([
-//            'user_id' => auth()->user()->id,
-//            'restaurant_id' => Food::query()->find($request->food_id)->restaurant->id, 'customer_status' => 'unpaid'])->first();
-//
-//        if ($order){
-//            $foods = $order->foods->pluck('id')->toArray();
-//            if (in_array($request->food_id, $foods)){
-//                return response(['Message' => 'This food is exist to your card already']);
-//            }
-//            else{
-//                $order->foods()->attach(['food_id' => $request->food_id], ['count' => $request->count]);
-//
-//                $totalPrice = $order->total_price;
-//                $order->total_price = $totalPrice + Food::find($request->food_id)->final_price * $request->count;
-//                $order->save();
-//            }
-//        }
-//
-//        else {
-//            $order = Order::create([
-//                'user_id' => auth()->user()->id,
-//                'restaurant_id' => Food::find($request->food_id)->restaurant->id,
-//                'total_price' => Food::find($request->food_id)->final_price * $request->count
-//            ]);
-//
-//            $order->foods()->attach(['food_id' => $request->food_id], ['count' => $request->count]);
-//        }
-//        return response(['Message' => 'Food added to card successfully', 'Cart ID' => $order->id]);
-//    }
-//
-
-/*
-    public function add(Request $request)
-    {
-        $request->validate([
-            'food_id' => 'required',
-            'count' => 'required|integer|min:1',
-        ]);
-
-        $food = Food::query()->find($request->food_id);
-        $order = Order::query()->where([
-            'user_id' => auth()->user()->id,
-            'restaurant_id' => $food->restaurant->id,
-            'customer_status' => 'unpaid',
-        ])->first();
-
-        $foodId = $food->id;
-        $discount = Discount::query()->where('food_id', $foodId)->first();
-
-        $discountAmount = $discount ? $discount->discount_amount : 0;
-        $foodPrice = $discountAmount * $request->count;
-
-
-        if ($discount) {
-            $discountAmount = $discount->discount_amount;
-        } else {
-            $discountAmount = 0;
-        }
-
-        $foodPrice = $discountAmount * $request->count;
-
-        if ($order) {
-            $existingFood = $order->foods->find($request->food_id);
-
-            if ($existingFood) {
-                $existingFood->pivot->count += $request->count;
-                $existingFood->pivot->save();
-            } else {
-                $order->foods()->attach($food, ['count' => $request->count]);
-            }
-
-            $order->total_price += $foodPrice;
-            $order->save();
-        } else {
-            $order = Order::query()->create([
-                'user_id' => auth()->user()->id,
-                'restaurant_id' => $food->restaurant->id,
-                'total_amount' => $foodPrice,
-            ]);
-
-            $order->foods()->attach($food, ['count' => $request->count]);
-        }
-
-        return response(['Message' => 'Food added to cart successfully', 'Cart ID' => $order->id]);
-    }
-*/
-
-
-//    public function add(Request $request)
-//    {
-//        $request->validate([
-//            'food_id' => 'required',
-//            'count' => 'required|integer|min:1',
-//        ]);
-//
-//        $food = Food::query()->find($request->food_id);
-//        $order = Order::query()->where([
-//            'user_id' => auth()->user()->id,
-//            'restaurant_id' => $food->restaurant->id,
-//            'customer_status' => 'unpaid',
-//        ])->first();
-//
-//        $discountAmount = $food->discounts->sum('discount_amount');
-//        $foodPrice = $discountAmount * $request->count;
-//
-//        $foodId = $food->id;
-//        $discount = Discount::query()->where('food_id', $foodId)->first();
-//
-//        $discountAmount = $discount ? $discount->discount_amount : 0;
-//        $foodPrice = $discountAmount * $request->count;
-//
-//        if ($discount) {
-//            $discountAmount = $discount->discount_amount;
-//        } else {
-//            $discountAmount = 0;
-//        }
-//
-//        $foodPrice = $discountAmount * $request->count;
-//
-//        if ($order) {
-//            $existingFood = $order->foods->find($request->food_id);
-//
-//            if ($existingFood) {
-//                $existingFood->pivot->count += $request->count;
-//                $existingFood->pivot->save();
-//            } else {
-//                $order->foods()->attach($food, ['count' => $request->count]);
-//            }
-//
-//            $order->total_price += $foodPrice;
-//            $order->save();
-//        } else {
-//            $order = Order::query()->create([
-//                'user_id' => auth()->user()->id,
-//                'restaurant_id' => $food->restaurant->id,
-//                'total_price' => $foodPrice,
-//                'total_amount' => $foodPrice,
-//            ]);
-//
-//            $order->foods()->attach($food, ['count' => $request->count]);
-//        }
-//
-//        return response(['Message' => 'Food added to cart successfully', 'Cart ID' => $order->id]);
-//    }
-
-
-
     public function add(Request $request)
     {
         $request->validate([
@@ -204,10 +48,9 @@ class OrderController
                 'restaurant_id' => $food->restaurant->id,
                 'customer_status' => 'unpaid',
             ])->first();
-                $discounts = $food->discounts;
-            // Calculate discount amount based on food's discounts
+            $discounts = $food->discounts;
 //            $discountAmount = $food->discounts->sum('discount_amount');
-            $discountAmount = $discounts ? $discounts->sum('discountAmount') :0;
+            $discountAmount = $discounts ? $discounts->sum('discountAmount') : 0;
             $foodPrice = $discountAmount * $request->count;
 
             if ($order) {
@@ -241,10 +84,7 @@ class OrderController
     }
 
 
-
-
-
-    public function  update(Request $request)
+    public function update(Request $request)
     {
         $request->validate([
             'food_id' => ['required',],
