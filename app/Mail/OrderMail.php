@@ -13,41 +13,53 @@ class OrderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $user;
+    public $order;
+    public $restaurant;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($order)
     {
-        //
+        $this->order = $order;
+        $this->user = $order->user;
+        $this->restaurant = $order->restaurant;
     }
 
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
+//    /**
+//     * Get the message envelope.
+//     */
+//    public function envelope(): Envelope
+//    {
+//        return new Envelope(
+//            subject: 'Order Mail',
+//        );
+//    }
+//
+//    /**
+//     * Get the message content definition.
+//     */
+//    public function content(): Content
+//    {
+//        return new Content(
+//            view: 'view.name',
+//        );
+//    }
+//
+//    /**
+//     * Get the attachments for the message.
+//     *
+//     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+//     */
+//    public function attachments(): array
+//    {
+//        return [];
+//    }
+
+    public function build()
     {
-        return new Envelope(
-            subject: 'Order Mail',
-        );
+    return $this->view('Mail.order')->subject('new stage for order')->to($this->user->email);
     }
 
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
-    }
 }

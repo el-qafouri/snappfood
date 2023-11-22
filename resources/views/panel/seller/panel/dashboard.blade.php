@@ -50,12 +50,11 @@
     </div>
 
 {{--    @elseif(auth()->user()->restaurant->profile_status== false)--}}
-{{--        <!-- شرط profile_status برابر با یک نبود -->--}}
-{{--        <h2>Your profile status is not active. please wait or send email: elham@gmail.com </h2>--}}
+    {{--        <h2>Your profile status is not active. please wait or send email: elham@gmail.com </h2>--}}
 
 {{--    @else--}}
-{{--        <!-- اگر user_id برای این کاربر وجود ندارد -->--}}
-{{--        <br>--}}
+
+    {{--        <br>--}}
 {{--        <h1>Welcome!</h1><br>--}}
 {{--        <h2>Sorry! You don't have a restaurant.</h2><br>--}}
 {{--        <h3>Please complete your restaurant data from here!</h3>--}}
