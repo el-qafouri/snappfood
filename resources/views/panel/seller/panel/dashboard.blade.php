@@ -16,8 +16,6 @@
             </script>
         @endif
 
-{{--                @if(auth()->check() && auth()->user()->restaurant && auth()->user()->restaurant->profile_status)--}}
-
             <table class="table table-striped mt-5">
                 <tbody>
                 <tr>
@@ -39,7 +37,7 @@
                 <tr>
                     <td>orders</td>
                     <td>
-                        <a href="{{ route('order.getOrders') }}" class="btn btn-primary"><i
+                        <a href="{{ route('orders.index') }}" class="btn btn-primary"><i
                                 class="fas fa-edit"></i>show</a>
                     </td>
                 </tr>

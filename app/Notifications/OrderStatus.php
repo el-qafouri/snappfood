@@ -7,16 +7,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class OrderStatus extends Notification
+class OrderStatus extends Notification implements ShouldQueue
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(public $order , public $status)
     {
-        //
+
     }
 
     /**
@@ -35,8 +35,9 @@ class OrderStatus extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
+            ->subject('order status')
+                    ->line("your order status changed to {$this->status}")
+//                    ->action('order tracking', url(route('factor' , $this->order)))
                     ->line('Thank you for using our application!');
     }
 

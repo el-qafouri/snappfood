@@ -1,62 +1,6 @@
 @extends('panel.seller.layouts.main')
-@section('title', 'foods')
+@section('title', 'orders')
 @section('content')
-{{--    <div class="container">--}}
-{{--        @if(session()->has('success'))--}}
-{{--            <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert"--}}
-{{--                 style="margin-top: 20px;">--}}
-{{--                <strong>Success!</strong> {{ session()->get('success') }}--}}
-{{--                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>--}}
-{{--            </div>--}}
-
-{{--            <script>--}}
-{{--                setTimeout(function () {--}}
-{{--                    $('#success-alert').fadeOut('slow');--}}
-{{--                }, 2000);--}}
-{{--            </script>--}}
-{{--        @endif--}}
-{{--        <table class="table table-striped mt-5">--}}
-{{--            <thead class="table-dark">--}}
-{{--            <tr>--}}
-{{--                <th scope="col">order number</th>--}}
-{{--                <th scope="col">food</th>--}}
-{{--                <th scope="col">delivered address</th>--}}
-{{--                <th scope="col">food level</th>--}}
-{{--            </tr>--}}
-{{--            </thead>--}}
-{{--            <tbody>--}}
-{{--            @foreach($orders as $order)--}}
-{{--                @foreach($order->foods as $food)--}}
-{{--                    <tr>--}}
-{{--                        <td>{{ $food->id }}</td>--}}
-{{--                        <td>{{ $food->name }}</td>--}}
-{{--                        <td>{{ $food->order->address }}</td>--}}
-{{--                        <td>address</td>--}}
-{{--                        <td>--}}
-{{--                            @if($order->food_level == 'pending')--}}
-{{--                                <a href="" class="btn btn-success"><i--}}
-{{--                                        class="fas fa-eye"></i> pending</a>--}}
-{{--                            @elseif($order->food_level == 'preparing')--}}
-{{--                                <a href="" class="btn btn-primary"><i--}}
-{{--                                        class="fas fa-edit"></i> preparing</a>--}}
-{{--                            @elseif($order->food_level == 'delivered')--}}
-{{--                                <a href="" class="btn btn-primary"><i--}}
-{{--                                        class="fas fa-edit"></i> delivered</a>--}}
-{{--                            @elseif($order->food_level == 'send')--}}
-{{--                                <a href="" class="btn btn-success"><i--}}
-{{--                                        class="fas fa-eye"></i> send</a>--}}
-{{--                        @endif--}}
-{{--                    </tr>--}}
-{{--                @endforeach--}}
-{{--            @endforeach--}}
-{{--            </tbody>--}}
-{{--        </table>--}}
-{{--    </div>--}}
-{{--@endsection--}}
-
-
-
-
     <div class="container">
         @if(session()->has('success'))
             <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert"
@@ -78,7 +22,7 @@
                 <th scope="col">Food</th>
                 <th scope="col">Delivered Address</th>
                 <th scope="col">Food Level</th>
-{{--                <th scope="col">Actions</th>--}}
+                {{--                <th scope="col">Actions</th>--}}
             </tr>
             </thead>
             <tbody>
@@ -88,32 +32,96 @@
                         <td>{{ $order->id }}</td>
                         <td>{{ $food->name }}</td>
                         <td>{{ $order->address }}</td>
+
                         <td>
-                            @if($order->food_level == 'pending')
-                                <span class="badge bg-success">Pending</span>
-                            @elseif($order->food_level == 'preparing')
-                                <span class="badge bg-primary">Preparing</span>
-                            @elseif($order->food_level == 'delivered')
-                                <span class="badge bg-primary">Delivered</span>
-                            @elseif($order->food_level == 'send')
-                                <span class="badge bg-success">Send</span>
+
+                            @if($order->seller_status === 'pending')
+                                <form method="post"
+                                      action="{{ route('orders.update' , ['order'=>$order , 'newStatus'=>'preparing']) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <button class="btn btn-success">
+                                        <i class="fas fa-eye"></i>Pending
+                                    </button>
+                                </form>
                             @endif
                         </td>
+
                         <td>
-                            @if($order->seller_status == 'pending')
-                                <a href="#" class="btn btn-success" disabled><i class="fas fa-eye"></i> Next Step</a>
-                            @elseif($order->seller_status == 'preparing')
-                                <a href="#" class="btn btn-primary" disabled><i class="fas fa-edit"></i> Next Step</a>
-                            @elseif($order->seller_status == 'send')
-                                <a href="#" class="btn btn-primary" disabled><i class="fas fa-edit"></i> Next Step</a>
-                            @elseif($order->seller_status == 'delivered')
-                                <a href="#" class="btn btn-success"><i class="fas fa-eye"></i> Next Step</a>
+                            @if($order->seller_status === 'preparing')
+                                <form method="post"
+                                      action="{{ route('orders.update' , ['order'=>$order , 'newStatus'=>'send']) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <button class="btn btn-success">
+                                        <i class="fas fa-eye"></i>Preparing
+                                    </button>
+                                </form>
                             @endif
                         </td>
+
+                        <td>
+                            @if($order->seller_status === 'send')
+                                <form method="post"
+                                      action="{{ route('orders.update' , ['order'=>$order , 'newStatus'=>'delivered']) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <button class="btn btn-success">
+                                        <i class="fas fa-eye"></i>Send
+                                    </button>
+                                </form>
+                            @endif
+                        </td>
+
                     </tr>
+
+                    @if($order->seller_status === 'Delivered')
+                        <form method="post"
+                              action="{{ route('orders.update' , ['order'=>$order , 'newStatus'=>'delivered']) }}">
+                            @csrf
+                            @method('PUT')
+                            <button class="btn btn-success">
+                                <i class="fas fa-eye"></i>Send
+                            </button>
+                        </form>
+                    @endif
                 @endforeach
             @endforeach
             </tbody>
         </table>
     </div>
+
+
+
+
+
+
+    {{--    <script>--}}
+    {{--        function nextStage(orderId) {--}}
+    {{--            axios.post(`/update-order/${orderId}`, {}, {--}}
+    {{--                headers: {--}}
+    {{--                    'Content-Type': 'application/json',--}}
+    {{--                    'X-CSRF-TOKEN': '{{ csrf_token() }}',--}}
+    {{--                }--}}
+    {{--            })--}}
+    {{--                .then(response => {--}}
+    {{--                    console.log(response.data);--}}
+
+    {{--                    // اگر درخواست موفق بود، مرحله سفارش را بروزرسانی کنید و دکمه‌ها را مدیریت کنید--}}
+    {{--                    if (response.data.success) {--}}
+    {{--                        // بروزرسانی مرحله سفارش--}}
+    {{--                        document.getElementById('sellerStatus').innerText = 'preparing'; // یک مثال بسازید--}}
+
+    {{--                        // مدیریت دکمه‌ها--}}
+    {{--                        document.getElementById('nextStageBtn').style.display = 'none'; // مثال: مخفی کردن دکمه--}}
+    {{--                        document.getElementById('otherBtn').style.display = 'block'; // مثال: نمایش دکمه دیگر--}}
+    {{--                    }--}}
+    {{--                })--}}
+    {{--                .catch(error => {--}}
+    {{--                    console.error('Error:', error);--}}
+    {{--                    // در صورت خطا، مدیریت خطاها--}}
+    {{--                });--}}
+    {{--        }--}}
+    {{--    </script>--}}
+
 @endsection
