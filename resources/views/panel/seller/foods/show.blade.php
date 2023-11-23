@@ -35,7 +35,10 @@
                     </ul>
 
                     <p>created at: {{ $food->created_at }}</p>
-                    <p>food discount: {{ $food->discount }}</p>
+{{--                    <p>food discount: {{ $food->discount->discount }}</p>--}}
+
+                    <p>food discount: {{ $food->discount ? $food->discount->discount : 'No discount available' }}</p>
+
                     <a href="{{ route('food.index') }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</a>
                 </div>
             </div>

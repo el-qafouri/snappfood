@@ -5,16 +5,10 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
-
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard/seller', [UserController::class ,'dashboard'])->name('seller.dashboard');
 //    Route::get('/dashboard', [UserController::class, 'sellerIndex'])->name('admin.dashboard');
-
 });
-
-
-
-
 
 Route::prefix('restaurant')->middleware(['auth' ,'role:admin|seller'])->group(function () {
     Route::get('/', [RestaurantController::class, 'index'])->name('restaurant.index');
@@ -27,9 +21,6 @@ Route::prefix('restaurant')->middleware(['auth' ,'role:admin|seller'])->group(fu
     Route::get('{id}/edit', [RestaurantController::class, 'edit'])->name('restaurant.edit');
     Route::put('update/{id}', [RestaurantController::class, 'update'])->name('restaurant.update');
 });
-
-
-
 
 Route::prefix('restaurant')->middleware(['auth' , 'role:admin'])->group(function (){
     Route::get('/{id}/editProfileStatus', [RestaurantController::class , 'editProfileStatus'])->name('restaurant.editProfileStatus');

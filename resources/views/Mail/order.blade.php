@@ -92,36 +92,4 @@
     </div>
 
 
-
-
-
-
-    {{--    <script>--}}
-    {{--        function nextStage(orderId) {--}}
-    {{--            axios.post(`/update-order/${orderId}`, {}, {--}}
-    {{--                headers: {--}}
-    {{--                    'Content-Type': 'application/json',--}}
-    {{--                    'X-CSRF-TOKEN': '{{ csrf_token() }}',--}}
-    {{--                }--}}
-    {{--            })--}}
-    {{--                .then(response => {--}}
-    {{--                    console.log(response.data);--}}
-
-    {{--                    // اگر درخواست موفق بود، مرحله سفارش را بروزرسانی کنید و دکمه‌ها را مدیریت کنید--}}
-    {{--                    if (response.data.success) {--}}
-    {{--                        // بروزرسانی مرحله سفارش--}}
-    {{--                        document.getElementById('sellerStatus').innerText = 'preparing'; // یک مثال بسازید--}}
-
-    {{--                        // مدیریت دکمه‌ها--}}
-    {{--                        document.getElementById('nextStageBtn').style.display = 'none'; // مثال: مخفی کردن دکمه--}}
-    {{--                        document.getElementById('otherBtn').style.display = 'block'; // مثال: نمایش دکمه دیگر--}}
-    {{--                    }--}}
-    {{--                })--}}
-    {{--                .catch(error => {--}}
-    {{--                    console.error('Error:', error);--}}
-    {{--                    // در صورت خطا، مدیریت خطاها--}}
-    {{--                });--}}
-    {{--        }--}}
-    {{--    </script>--}}
-
 @endsection

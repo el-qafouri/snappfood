@@ -30,39 +30,6 @@ class AddressController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-//    public function store(Request $request)
-//    {
-//        $fields = $request->validate([
-//            'title' => 'required|string',
-//            'address' => 'required|string',
-////            'latitude' => 'required|numeric',
-////            'longitude' => 'required|numeric',
-//            'latitude' => [
-//                'required',
-//                'numeric',
-//                Rule::unique('addresses')->where(function ($query) use ($request) {
-//                    return $query->where('longitude', $request->longitude);
-//                }),
-//            ],
-//            'longitude' => [
-//                'required',
-//                'numeric',
-//                Rule::unique('addresses')->where(function ($query) use ($request) {
-//                    return $query->where('latitude', $request->latitude);
-//                }),
-//            ],
-//        ]);
-//
-//        $address = User::query()->find(auth()->user()->id)->addresses()->create([
-//            'title' => $fields['title'],
-//            'address' => $fields['address'],
-//            'latitude' => $fields['latitude'],
-//            'longitude' => $fields['longitude'],
-//        ]);
-//
-//        return response(['Message' => 'address submitted successfully', 'Address details' => $address]);
-//    }
-
 
     public function store(AddressRequest $request)
     {
@@ -81,32 +48,6 @@ class AddressController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-//    public function update(Request $request, $id)
-//    {
-//        $address = Address::query()->find($id);
-//        $request->validate([
-//            'title' => 'string',
-//            'address' => 'string',
-////                'latitude' => 'numeric',
-////                'longitude' => 'numeric',
-//            'latitude' => [
-//                'required',
-//                'numeric',
-//                Rule::unique('addresses')->where(function ($query) use ($request) {
-//                    return $query->where('longitude', $request->longitude);
-//                }),
-//            ],
-//            'longitude' => [
-//                'required',
-//                'numeric',
-//                Rule::unique('addresses')->where(function ($query) use ($request) {
-//                    return $query->where('latitude', $request->latitude);
-//                }),
-//            ],
-//        ]);
-//        $address->update($request->all());
-//        return response(['Message' => 'Your address is updated', 'Address details' => $address]);
-//    }
 
 
     public function update(UpdateAddressRequest $request, $id)
@@ -124,23 +65,6 @@ class AddressController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-//    public function setActiveAddress($id)
-//    {
-//        $address = Address::query()->findOrFail($id);
-//        $gate = Gate::allows('view', $address);
-////آیا کاربر مجاز به مشاهده این آدرس هست؟
-//        if ($gate) {
-//            $addresses = User::query()->find(auth()->user()->id)->addresses;
-//            foreach ($addresses as $address) {
-//                if ($address->id == $id) $address->update(['active' => '1']);
-//                else $address->update(['active' => '0']);
-//            }
-//
-//            return response(['Message' => 'Your main address is updated', 'Active address' => (User::query()->find(auth()->user()->id)->addresses)->where('active', '1')]);
-//        }
-//        return response(['Message' => "You don't have access to this address"], 403);
-//    }
-
 
     public function setActiveAddress($id)
     {

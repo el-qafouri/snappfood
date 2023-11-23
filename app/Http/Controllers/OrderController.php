@@ -2,20 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\OrderResource;
 use App\Jobs\SendEmailJob;
-use App\Models\Food;
 use App\Models\Order;
 use App\Models\Restaurant;
 use App\Notifications\OrderStatus;
 use Carbon\Carbon;
-use http\Env\Response;
-use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
-use Illuminate\Notifications\Notification;
-use Illuminate\Validation\Rule;
 use Illuminate\Database\QueryException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 class OrderController extends Controller

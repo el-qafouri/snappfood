@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FoodRequest;
 use App\Http\Requests\UpdateFoodRequest;
+use App\Models\Discount;
 use App\Models\Food;
 use App\Models\FoodCategory;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -50,30 +53,75 @@ class FoodController extends Controller
      * Store a newly created resource in storage.
      */
 
+//    public function store(FoodRequest $request)
+//    {
+//        $user = Auth::user();
+//
+//        try {
+//            $foodData = $request->validated();
+//            $foodData['restaurant_id'] = $user->restaurant->id;
+//            if ($request->hasFile('imagePath')) {
+//                $imagePath = $request->file('imagePath');
+//                $fileName = 'food' . time() . '_' . $imagePath->hashName();
+//                $imagePath->move(public_path('food'), $fileName);
+//                $foodData['image_path'] = $fileName;
+//            } else {
+//                $foodData['image_path'] = null;
+//            }
+//            $food = new Food($foodData);
+////            dd($food);
+//            $food->discount_id = $request->input('discount_id');
+//
+//
+//            $food->save();
+//
+//            $foodCategoryIds = $request->input('food_category_id');
+//
+//            $food->foodCategories()->attach($foodCategoryIds);
+//
+//            return redirect()->route("food.index")->with('success', $food->name . "food added successfully");
+//        } catch (Exception $e) {
+//            Log::error($e->getMessage());
+//            return redirect(status: 500)->route('food.create')->with('fail', 'food didnt add!');
+//        }
+//    }
+
+
+
+
+
+
+
     public function store(FoodRequest $request)
     {
         $user = Auth::user();
-//        $restaurant = Restaurant::query()->find($restaurantId);
-//        $foods = $restaurant->foods;
+
         try {
             $foodData = $request->validated();
             $foodData['restaurant_id'] = $user->restaurant->id;
-            if ($request->hasFile('imagePath')) {
-                $imagePath = $request->file('imagePath');
-                $fileName = 'food' . time() . '_' . $imagePath->hashName();
-                $imagePath->move(public_path('food'), $fileName);
-                $foodData['image_path'] = $fileName;
-            } else {
-                $foodData['image_path'] = null;
+
+            // خواندن تخفیف از دیتابیس
+            $discountId = $request->input('discount_id');
+            $discount = Discount::query()->find($discountId);
+
+            // اعمال تخفیف به قیمت غذا اگر تخفیف موجود باشد
+            if ($discount) {
+                $discountAmount = ($discount->discount / 100) * $foodData['price'];
+                $foodData['final_price'] = $foodData['price'] - $discountAmount;
+            }
+//            dd($foodData);
+            else {
+                // اگر تخفیف موجود نباشد، قیمت نهایی برابر با قیمت اصلی غذا است
+                $foodData['final_price'] = $foodData['price'];
             }
 
+            // ذخیره غذا با تخفیف
             $food = new Food($foodData);
-//            dd($food);
-
+            $food->discount_id = $discountId;
             $food->save();
 
+            // ذخیره اطلاعات دسته‌بندی‌ها
             $foodCategoryIds = $request->input('food_category_id');
-
             $food->foodCategories()->attach($foodCategoryIds);
 
             return redirect()->route("food.index")->with('success', $food->name . "food added successfully");
@@ -82,6 +130,12 @@ class FoodController extends Controller
             return redirect(status: 500)->route('food.create')->with('fail', 'food didnt add!');
         }
     }
+
+
+
+
+
+
 
     /**
      * Display the specified resource.
@@ -98,7 +152,6 @@ class FoodController extends Controller
                 abort(403, 'Access denied');
             }
         } catch (ModelNotFoundException $e) {
-            // در صورت عدم یافتن موجودیت، ایجاد استثناء ModelNotFoundException
             abort(404, 'Food not found');
         }
     }
@@ -127,11 +180,58 @@ class FoodController extends Controller
      */
 
 
+//    public function update(UpdateFoodRequest $request, $id)
+//    {
+//        try {
+//            $food = Food::findOrFail($id);
+//
+//            if ($request->hasFile('imagePath')) {
+//                $imagePath = $request->file('imagePath');
+//                $fileName = 'food' . time() . '_' . $imagePath->hashName();
+//                $imagePath->move(public_path('food'), $fileName);
+//
+//                if ($food->image_path) {
+//                    unlink(public_path('food/' . $food->image_path));
+//                }
+//                $food->update(['image_path' => $fileName]);
+//            }
+//            if ($request->filled('discount_id')) {
+//                $discountId = $request->input('discount_id');
+//                $discount = Discount::query()->find($discountId);
+//                if ($discount) {
+//                    $food->discount_id = $discountId;
+//                } else {
+//                    return redirect()->route('food.edit', $id)->with('fail', 'Discount not found');
+//                }
+//            }
+//
+//            $food->update($request->validated());
+//            $food->foodCategories()->sync($request->input('food_category_id'));
+//
+//            $food = Food::with('foodCategories', 'discount')->findOrFail($id);
+//
+//            $foodCategories = FoodCategory::all();
+//            $discounts = auth()->user()->discounts;
+//
+//            return view('panel.seller.foods.edit', compact('food', 'foodCategories', 'discounts'))->with('success', 'Update successfully');
+//        } catch (Exception $e) {
+//            Log::error($e->getMessage());
+//            return redirect()->route('food.edit', $id)->with('fail', 'Update failed');
+//        }
+//    }
+
+
+
+
+
+
+
+
+
     public function update(UpdateFoodRequest $request, $id)
     {
-//        dd('hi');
         try {
-            $food = Food::query()->findOrFail($id);
+            $food = Food::findOrFail($id);
 
             if ($request->hasFile('imagePath')) {
                 $imagePath = $request->file('imagePath');
@@ -143,6 +243,27 @@ class FoodController extends Controller
                 }
                 $food->update(['image_path' => $fileName]);
             }
+
+            if ($request->filled('discount_id')) {
+                $discountId = $request->input('discount_id');
+                $discount = Discount::find($discountId);
+
+                if ($discount) {
+                    $food->discount_id = $discountId;
+                } else {
+                    return redirect()->route('food.edit', $id)->with('fail', 'Discount not found');
+                }
+            }
+
+            // اعمال تخفیف به قیمت غذا اگر تخفیف موجود باشد
+            if ($food->discount) {
+                $discountAmount = ($food->discount->discount / 100) * $food->price;
+                $food->final_price = $food->price - $discountAmount;
+            } else {
+                // اگر تخفیف موجود نباشد، قیمت نهایی برابر با قیمت اصلی غذا است
+                $food->final_price = $food->price;
+            }
+
             $food->update($request->validated());
             $food->foodCategories()->sync($request->input('food_category_id'));
 
@@ -157,6 +278,11 @@ class FoodController extends Controller
             return redirect()->route('food.edit', $id)->with('fail', 'Update failed');
         }
     }
+
+
+
+
+
 
 
     /**

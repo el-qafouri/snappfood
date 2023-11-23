@@ -11,6 +11,7 @@ class Food extends Model
 
 
     protected $table = 'foods';
+
     public function getTable()
     {
         return 'foods';
@@ -21,10 +22,8 @@ class Food extends Model
         'name',
         'price',
         'material',
-//        'food_category_id',
         'restaurant_id',
-//        'discount_id',
-//        'discount',
+        'final_price',
         'user_id',
         'image_path',
     ];
@@ -34,7 +33,7 @@ class Food extends Model
         'deleted_at',
     ];
 
-    protected $visible = ['discounted_price', 'final_price' , 'price', 'count', 'pivot_count'];
+    protected $visible = ['discounted_price', 'final_price', 'price', 'count', 'pivot_count'];
 
     protected $attributes = [
         'final_price' => 0,
@@ -49,7 +48,6 @@ class Food extends Model
     {
         return $this->belongsToMany(FoodCategory::class, 'food_food_category');
     }
-
 
 
     public function restaurant()
