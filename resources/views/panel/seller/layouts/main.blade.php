@@ -24,12 +24,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <title>@yield('title')</title>
+
 </head>
 <body>
 <header>
     {{-- import--}}
     @include('panel.seller.layouts.header')
+
+    <a
+        class="navbar-brand"
+        href="#">{{ auth()->user()->name }}</a>
+
 </header>
 <main>
     @yield('content')
@@ -42,5 +52,9 @@
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"
 ></script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
 </body>
 </html>
