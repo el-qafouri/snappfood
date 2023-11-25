@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\api\AddressRequest;
 use App\Http\Requests\RestaurantRequest;
+use App\Models\Address;
 use App\Models\Restaurant;
 use App\Models\RestaurantCategory;
 use http\Client\Curl\User;
@@ -21,79 +23,13 @@ class RestaurantController extends Controller
     {
 
         $restaurants = Restaurant::all();
-        return view('panel.seller.restaurants.index' , compact('restaurants'));
+        return view('panel.seller.restaurants.index', compact('restaurants'));
 
 //        $restaurants = Restaurant::all();
 //        $users = \App\Models\User::all();
 ////        $restaurants = auth()->user()->restaurants;
 //        return view('panel.seller.restaurants.index', compact('restaurants' , 'users'));
     }
-
-
-
-//    public function index()
-//    {
-//        $user = auth()->user();
-//
-//        if ($user->hasRole('seller')) {
-//            $restaurants = $user->restaurants;
-//
-//            // اگر سلر رستوران نداشته باشد
-//            if (!$restaurants->isEmpty()) {
-//                return view('panel.seller.restaurants.index', compact('restaurants'));
-//            } else {
-//                return view('panel.seller.restaurants.index');
-//            }
-//        } elseif ($user->hasRole('admin')) {
-////            $restaurants = Restaurant::with('user')->get();
-//            $restaurants = Restaurant::all();
-//            return view('panel.seller.restaurants.index', compact('restaurants'));
-//        } else {
-//            return view('panel.seller.restaurants.index');
-//        }
-//    }
-
-
-
-//    public function index()
-//    {
-//        $user = auth()->user();
-//
-//        if ($user->hasRole('seller')) {
-//            $restaurants = $user->restaurants;
-//            return view('panel.seller.restaurants.index', compact('restaurants'));
-//        } elseif ($user->hasRole('admin')) {
-//            $restaurants = Restaurant::with('user')->get();
-//            return view('panel.seller.restaurants.index', compact('restaurants'));
-//        } else {
-//            return view('panel.seller.restaurants.index');
-//        }
-//    }
-
-
-
-
-
-
-
-//    public function restaurantActive(Request $request)
-//    {
-//        $restaurant = Restaurant::query()->find($request->input('restaurant_id'));
-//        if (!$restaurant) {
-//            return response('not found');
-//        }
-//        $restaurant->status = $restaurant->status == 1 ? 0 : 1 ;
-//        $restaurant->save();
-//        return redirect()->back();
-//    }
-
-
-
-//    public function index()
-//    {
-//        $restaurants = Restaurant::with('restaurant_category')->get();
-//        return view('panel.seller.restaurants.index', compact('restaurants'));
-//    }
 
 
     /**
@@ -108,21 +44,6 @@ class RestaurantController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-//    public function store(RestaurantRequest $request)
-//    {
-////        dd('hi');
-//        try {
-//            $user = $request->user();
-//            $restaurant = new Restaurant();
-//            $restaurant->fill($request->validated());
-//            $restaurant->user_id = $user->id;
-//            $restaurant->save();
-//            return redirect()->route('seller.dashboard')->with('success', $request->restaurant . 'restaurant add successfully');
-//        } catch (Exception $e) {
-//            Log::error($e->getMessage());
-//            return redirect(status: 500)->route('restaurant.create')->with('fail', 'restaurant didnt add');
-//        }
-//    }
 
 
     public function store(RestaurantRequest $request)
@@ -163,47 +84,6 @@ class RestaurantController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     */
-//    public function update(RestaurantRequest $request, $id)
-//    {
-//        try {
-//            $restaurant = Restaurant::find($id);
-//            $restaurantCategories = RestaurantCategory::all();
-//            $restaurant->update($request->validated());
-//            $restaurantCategoryId = $restaurant->restaurantCategory->id;// پیدا کردن آیدی رستوران کتگوری
-//            return view('panel.seller.restaurants.index', compact('restaurant', 'restaurantCategoryId', 'restaurantCategories'))->with('success', 'Update successfully');
-//        } catch (Exception $e) {
-//            Log::error($e->getMessage());
-//            return redirect()->route('restaurant.edit', $id)->with('fail', 'Update failed');
-//        }
-//    }
-
-
-    public function update(RestaurantRequest $request, $id)
-    {
-        try {
-            $restaurant = Restaurant::query()->find($id);
-
-            if (!$restaurant) {
-                return redirect()->route('restaurant.edit', $id)->with('fail', 'Restaurant not found');
-            }
-            $restaurant->update($request->validated());
-            if ($request->has('restaurant_category_ids')) {
-                $restaurant->restaurantCategories()->sync($request->input('restaurant_category_ids'));
-            } else {
-                $restaurant->restaurantCategories()->detach();
-            }
-
-            return redirect()->route('restaurant.index')->with('success', 'Restaurant updated successfully');
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return redirect()->route('restaurant.edit', $id)->with('fail', 'Update failed');
-        }
-    }
-
-
-    /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
@@ -234,14 +114,56 @@ class RestaurantController extends Controller
         return redirect()->route('restaurant.index')->with('success', 'Profile status updated successfully');
     }
 
-//    // RestaurantController.php
-//    public function updateProfileStatus(Request $request, $id)
+
+    //    public function updateProfileStatus(Request $request, $id)
 //    {
 //        $restaurant = Restaurant::findOrFail($id);
 //        // اگر پروفایل استاتوس فعال بود، غیرفعال و برعکس
 //        $restaurant->update(['profile_status' => !$restaurant->profile_status]);
 //        return redirect()->back()->with('success', 'Profile status updated successfully');
 //    }
+
+    public function getLocation()
+    {
+        return view('panel.seller.restaurants.selectRestaurantLocation');
+    }
+
+    public function setLocation(Request $request)
+    {
+        $user = auth()->user();
+        Log::info('Request data:', $request->toArray());
+
+        $title = $request->input('title');
+        $addressText = $request->input('address');
+        $latitude = $request->input('latitude');
+        $longitude = $request->input('longitude');
+
+        $existingAddress = $user->addresses->first();
+
+        if ($existingAddress) {
+            $existingAddress->update([
+                'title' => $title,
+                'address' => $addressText,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+            ]);
+
+            $message = 'address update successfully';
+        } else {
+            $newAddress = new Address([
+                'title' => $title,
+                'address' => $addressText,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+            ]);
+
+            $user->addresses()->save($newAddress);
+
+            $message = 'address save successfully';
+        }
+
+        return redirect()->route('restaurant.create')->with('success', $message);
+    }
 
 
 }

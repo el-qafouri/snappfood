@@ -1,5 +1,4 @@
 @extends('layouts.auth')
-
 <section class="bg-gray-50 dark:bg-gray-900 text-end">
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
@@ -72,23 +71,6 @@
 
 
 
-{{--                    <div class="form-group">--}}
-{{--                        <label for="restaurant_category_id"--}}
-{{--                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">نوع--}}
-{{--                            رستوران را انتخاب کنید</label>--}}
-{{--                        <select id="restaurant_category_id" name="restaurant_category_id"--}}
-{{--                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">--}}
-{{--                            <option selected disabled>نوع رستوران</option>--}}
-{{--                            @foreach($restaurantCategories as $restaurantCategory)--}}
-{{--                                <option--}}
-{{--                                    value="{{ $restaurantCategory->id }}">{{ $restaurantCategory->name }}</option>--}}
-{{--                            @endforeach--}}
-{{--                        </select>--}}
-{{--                        @error('category')--}}
-{{--                        <div class="alert alert-danger">{{ $message }}</div>--}}
-{{--                        @enderror--}}
-{{--                    </div>--}}
-
 
         <div class="form-group">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">نوع رستوران را انتخاب کنید</label>
@@ -141,51 +123,34 @@
         </div>
 
 
+{{--        <input type="submit" name="select_location" value=" انتخاب لوکیشن"--}}
+{{--                class="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">--}}
 
 
 
-
-        {{--        <div class="form-group">--}}
-{{--            <label for="open_time">open time at</label>--}}
-{{--            <input--}}
-{{--                value="{{ old('open_time-at') }}"--}}
-{{--                type="datetime-local"--}}
-{{--                class="form-control @error('open_time') is-invalid @enderror"--}}
-{{--                id="open_time"--}}
-{{--                name="open_time"--}}
-{{--                placeholder="Enter open time"--}}
-{{--            />--}}
-{{--            @error('open_time')--}}
-{{--            <div class="alert alert-danger">{{ $message }}</div>--}}
-{{--            @enderror--}}
-{{--        </div>--}}
-{{--        <div class="form-group">--}}
+{{--        <iframe src="[your unique google URL] " width="400" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>--}}
 
 
-{{--            <div class="form-group">--}}
-{{--                <label for="close_time">close time at</label>--}}
-{{--                <input--}}
-{{--                    value="{{ old('close_time') }}"--}}
-{{--                    type="datetime-local"--}}
-{{--                    class="form-control @error('close_time') is-invalid @enderror"--}}
-{{--                    id="close_time"--}}
-{{--                    name="close_time"--}}
-{{--                    placeholder="Enter close time"--}}
-{{--                />--}}
-{{--                @error('close_time')--}}
-{{--                <div class="alert alert-danger">{{ $message }}</div>--}}
-{{--                @enderror--}}
-{{--            </div>--}}
-{{--            <div class="form-group">--}}
+{{--        <form action="{{ route('restaurant.location') }}" method="post">--}}
+{{--            @csrf--}}
+{{--            <button type="submit">انتخاب موقعیت مکانی از روی نقشه</button>--}}
+{{--        </form>--}}
 
 
 
+        <div class="form-group">
+            <label for="map_location" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">موقعیت مکانی رستوران</label>
+            <button type="submit" formaction="{{ route('restaurant.location') }}" formmethod="post">انتخاب موقعیت مکانی از روی نقشه</button>
+        </div>
 
 
-            <button type="submit"
+
+        <button type="submit"
                             class="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                         ایجاد حساب
                     </button>
+
+
                 </form>
             </div>
         </div>

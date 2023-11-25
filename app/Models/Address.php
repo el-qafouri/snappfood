@@ -8,17 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class Address extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-      'title',
-      'address',
-      'latitude',
-      'longitude',
-      'active'
+        'title',
+        'address',
+        'latitude',
+        'longitude',
+        'active',
+//        'addressable',
+        'addressable_type',
+        'addressable_id',
     ];
 
     public function addressable()
     {
         return $this->morphTo();
     }
+
+
+
 
 }

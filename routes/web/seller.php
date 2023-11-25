@@ -20,6 +20,10 @@ Route::prefix('restaurant')->middleware(['auth' ,'role:admin|seller'])->group(fu
 
     Route::get('{id}/edit', [RestaurantController::class, 'edit'])->name('restaurant.edit');
     Route::put('update/{id}', [RestaurantController::class, 'update'])->name('restaurant.update');
+    Route::get('location', [RestaurantController::class, 'getLocation'])->name('restaurant.location');
+    Route::post('location', [RestaurantController::class, 'getLocation'])->name('restaurant.location');
+    Route::post('location/set', [RestaurantController::class, 'setLocation'])->name('restaurant.setLocation');
+//    Route::post('location/update', [RestaurantController::class, 'updateLocation'])->name('restaurant.updateLocation');
 });
 
 Route::prefix('restaurant')->middleware(['auth' , 'role:admin'])->group(function (){
