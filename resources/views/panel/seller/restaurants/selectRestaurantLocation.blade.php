@@ -1,11 +1,4 @@
-{{--@extends('layouts.auth')--}}
-
-{{--@section('content')--}}
-{{--    --}}
-{{--@endsection--}}
-
-
-    <!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">

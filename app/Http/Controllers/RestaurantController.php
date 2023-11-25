@@ -107,7 +107,7 @@ class RestaurantController extends Controller
 
     public function updateProfileStatus(Request $request, $id)
     {
-        $restaurant = Restaurant::findOrFail($id);
+        $restaurant = Restaurant::query()->findOrFail($id);
         $restaurant->update([
             'profile_status' => !$restaurant->profile_status]);
 
