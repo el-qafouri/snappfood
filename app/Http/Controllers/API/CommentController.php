@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\CommentRequest;
+use App\Http\Requests\api\ShowCommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\Order;
@@ -147,13 +148,54 @@ class CommentController extends Controller
 
 
 
-    public function index(Request $request)
-    {
-        $request->validate([
-            'food_id' => 'nullable|exists:foods,id',
-            'restaurant_id' => 'nullable|exists:restaurants,id',
-        ]);
+//    public function index(Request $request)
+//    {
+//        $request->validate([
+//            'food_id' => 'nullable|exists:foods,id',
+//            'restaurant_id' => 'nullable|exists:restaurants,id',
+//        ]);
+//
+//        $user = auth()->user();
+//
+//        if (!is_null($request->food_id)) {
+//            $comments = Comment::query()
+//                ->where(['food_id' => $request->food_id, 'user_id' => $user->id])
+//                ->with(['user', 'order'])
+//                ->orderByDesc('created_at')
+//                ->get();
+//
+//            $viewComments = $comments->map(function ($comment) {
+//                return $this->viewComment($comment);
+//            });
+//
+//            return response(['comments' => $viewComments]);
+//        }
+//
+//        if (!is_null($request->restaurant_id)) {
+//            $orders = Order::query()
+//                ->where(['restaurant_id' => $request->restaurant_id, 'user_id' => $user->id])
+//                ->get();
+//
+//            $comments = collect([]);
+//
+//            foreach ($orders as $order) {
+//                $orderComments = $order->comments->map(function ($comment) use ($order) {
+//                    return $this->viewComment($comment);
+//                });
+//
+//                $comments = $comments->concat($orderComments);
+//            }
+//
+//            $sortedComments = $comments->sortBy('created_at')->values();
+//
+//            return response(['comments' => $sortedComments]);
+//        }
+//    }
 
+
+
+    public function index(ShowCommentRequest $request)
+    {
         $user = auth()->user();
 
         if (!is_null($request->food_id)) {
@@ -190,7 +232,6 @@ class CommentController extends Controller
             return response(['comments' => $sortedComments]);
         }
     }
-
 
 
 
