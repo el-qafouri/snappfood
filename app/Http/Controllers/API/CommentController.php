@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\api\CommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\Order;
@@ -12,16 +13,32 @@ use Illuminate\Validation\Rule;
 
 class CommentController extends Controller
 {
-    public function store(Request $request)
+//    public function store(Request $request)
+//    {
+//        $request->validate([
+//            'order_id' => 'required',
+//            'food_id' => 'required',
+//            'score' => 'required|integer|min:1|max:5',
+//            'message' => 'required|string'
+//        ]);
+//        $order = $request->order_id;
+////        $food = $request->food_id;
+//        Comment::query()->create([
+//            'user_id' => auth()->user()->id,
+//            'order_id' => $order,
+//            'food_id' => $request->food_id,
+//            'message' => $request->message,
+//            'score' => $request->score,
+//        ]);
+//        return response(['message' => 'comment created successfully']);
+//    }
+
+
+
+    public function store(CommentRequest $request)
     {
-        $request->validate([
-            'order_id' => 'required',
-            'food_id' => 'required',
-            'score' => 'required|integer|min:1|max:5',
-            'message' => 'required|string'
-        ]);
         $order = $request->order_id;
-//        $food = $request->food_id;
+
         Comment::query()->create([
             'user_id' => auth()->user()->id,
             'order_id' => $order,
@@ -29,8 +46,19 @@ class CommentController extends Controller
             'message' => $request->message,
             'score' => $request->score,
         ]);
+
         return response(['message' => 'comment created successfully']);
     }
+
+
+
+
+
+
+
+
+
+
 
 //    public function index(Request $request)
 //    {
