@@ -62,6 +62,18 @@
                 </td>
             </tr>
 
+
+
+            <tr>
+                <td>Banners</td>
+                <td>
+                    <a href="{{ route('banner.index') }}" class="btn btn-primary"><i
+                            class="fas fa-edit"></i>show</a>
+                </td>
+            </tr>
+
+
+
             <tr>
                 <td>users</td>
                 <td>
