@@ -1,4 +1,4 @@
-@section('content')
+@section('banner')
 
     <!-- Existing content ... -->
 

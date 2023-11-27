@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 
+use App\Models\Banner;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('layouts.main');
+    $banners = Banner::query()->get()->all();
+    return view('layouts.main', compact('banners'));
+//    return view('layouts.main');
 })->name('main');
 
 

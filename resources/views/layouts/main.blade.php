@@ -8,6 +8,7 @@
     @vite(['resources/css/app.css','resources/js/app.js'])
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
 
+
     <title>اسنپ فود</title>
 
 
