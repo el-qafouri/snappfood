@@ -100,27 +100,22 @@ class FoodController extends Controller
             $foodData = $request->validated();
             $foodData['restaurant_id'] = $user->restaurant->id;
 
-            // خواندن تخفیف از دیتابیس
             $discountId = $request->input('discount_id');
             $discount = Discount::query()->find($discountId);
 
-            // اعمال تخفیف به قیمت غذا اگر تخفیف موجود باشد
             if ($discount) {
                 $discountAmount = ($discount->discount / 100) * $foodData['price'];
                 $foodData['final_price'] = $foodData['price'] - $discountAmount;
             }
 //            dd($foodData);
             else {
-                // اگر تخفیف موجود نباشد، قیمت نهایی برابر با قیمت اصلی غذا است
                 $foodData['final_price'] = $foodData['price'];
             }
 
-            // ذخیره غذا با تخفیف
             $food = new Food($foodData);
             $food->discount_id = $discountId;
             $food->save();
 
-            // ذخیره اطلاعات دسته‌بندی‌ها
             $foodCategoryIds = $request->input('food_category_id');
             $food->foodCategories()->attach($foodCategoryIds);
 

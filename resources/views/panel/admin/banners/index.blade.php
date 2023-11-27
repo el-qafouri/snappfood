@@ -37,7 +37,7 @@
 
 
                     <td>
-                        <a href="{{ route('banner.index', $banner->id) }}" class="btn btn-success"><i
+                        <a href="{{ route('banner.show', $banner->id) }}" class="btn btn-success"><i
                                 class="fas fa-eye"></i> Show</a>
 {{--                    </td>--}}
 {{--                        <td>--}}

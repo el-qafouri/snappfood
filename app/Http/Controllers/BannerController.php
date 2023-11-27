@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BannerRequest;
 use App\Models\Banner;
 use App\Models\Image;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Mockery\Exception;
@@ -72,9 +73,15 @@ class BannerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Banner $banner)
+    public function show($id)
     {
-        //
+        try {
+            $banner = Banner::query()->findOrFail($id);
+                $image = $banner->image ? json_decode($banner->image, true) : [];
+                return view('panel.admin.banners.show')->with(['banner' => $banner, 'image' => $image]);
+        } catch (ModelNotFoundException $e) {
+            abort(404, 'banner not found');
+        }
     }
 
     /**
