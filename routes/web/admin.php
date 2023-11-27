@@ -40,6 +40,8 @@ Route::prefix('banners')->middleware(['auth','role:admin'])->group(function () {
     Route::post('create', [BannerController::class, 'store'])->name('banner.store');
     Route::get('{id}/edit', [BannerController::class, 'edit'])->name('banner.edit');
     Route::put('update/{id}', [BannerController::class, 'update'])->name('banner.update');
+    Route::get('/get-banners', [BannerController::class, 'getBanners'])->name('get.banners');
+
 });
 
 
