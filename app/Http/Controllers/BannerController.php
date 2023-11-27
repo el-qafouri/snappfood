@@ -13,7 +13,7 @@ class BannerController extends Controller
     public function index()
     {
 //        $banners = Banner::all();
-        return view('panel.admin.banners');
+        return view('panel.admin.banners.index');
     }
 
     /**
