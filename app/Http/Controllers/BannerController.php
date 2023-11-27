@@ -21,7 +21,7 @@ class BannerController extends Controller
      */
     public function create()
     {
-        //
+        return view('panel.admin.banners.create');
     }
 
     /**
@@ -29,7 +29,7 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
