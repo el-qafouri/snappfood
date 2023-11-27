@@ -41,7 +41,7 @@
                                 class="fas fa-eye"></i> Show</a>
 {{--                    </td>--}}
 {{--                        <td>--}}
-                        <a href="{{ route('banner.index', $banner->id) }}" class="btn btn-primary"><i
+                        <a href="{{ route('banner.edit', $banner->id) }}" class="btn btn-primary"><i
                                 class="fas fa-edit"></i> Edit</a>
                     </td>
                     <td>

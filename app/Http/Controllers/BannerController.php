@@ -6,6 +6,7 @@ use App\Http\Requests\BannerRequest;
 use App\Models\Banner;
 use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Mockery\Exception;
 
 class BannerController extends Controller
@@ -79,17 +80,50 @@ class BannerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Banner $cr)
+    public function edit(Banner $banner, $id)
     {
-        //
+        $banner = Banner::query()->findOrFail($id);
+        return view('panel.admin.banners.edit', compact('banner'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Banner $cr)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'text' => 'required',
+        ]);
+
+        $banner = Banner::query()->findOrFail($id);
+
+        if ($request->hasFile('image')) {
+            // If a new image is uploaded, update it
+            $request->validate([
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+
+            // Delete the old image
+            if ($banner->image) {
+                Storage::disk('public')->delete($banner->image->url);
+            }
+
+            // Store the new image
+            $imagePath = $request->file('image')->store('banner', 'public');
+            $banner->image()->update([
+                'url' => $imagePath,
+            ]);
+        }
+
+        // Update the banner details
+        $banner->update([
+            'title' => $request->input('title'),
+            'text' => $request->input('text'),
+        ]);
+
+        return redirect()->route('banner.index')->with('success', 'Banner updated successfully');
+
     }
 
     /**
