@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\FoodCategoryController;
 use App\Http\Controllers\FoodPartyController;
 use App\Http\Controllers\RestaurantCategoryController;
@@ -30,8 +31,14 @@ Route::get('{id}/edit', [RestaurantCategoryController::class, 'edit'])->name('re
 Route::put('update/{id}', [RestaurantCategoryController::class, 'update'])->name('restaurantCategory.update');
 });
 
+//banners
+Route::prefix('banners')->middleware(['auth','role:admin'])->group(function () {
+    Route::get('/', [BannerController::class, 'index'])->name('banner.index');
+    Route::delete('{id}', [BannerController::class, 'destroy'])->name('banner.delete');
 
-
+    Route::get('banner/create', [BannerController::class, 'create'])->name('banner.create');
+    Route::post('create', [BannerController::class, 'store'])->name('banners.store');
+});
 
 
 // food category

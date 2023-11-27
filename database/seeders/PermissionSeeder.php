@@ -20,8 +20,8 @@ class PermissionSeeder extends Seeder
         $permissions = [
             'accept admin', 'add food category', 'delete food category',
             'add restaurant category', 'delete restaurant category', 'delete seller',
-            'delete food', 'define discount', 'add discount', 'define banner',
-            'add banner', 'view user', 'view users', 'view sellers', 'add restaurant', 'define food',
+            'delete food', 'define discount', 'add discount', 'define banners',
+            'add banners', 'view user', 'view users', 'view sellers', 'add restaurant', 'define food',
             'view order', 'view orders',
         ];
 
@@ -42,7 +42,7 @@ class PermissionSeeder extends Seeder
         $seller = Role::findByName('seller');
         $seller->givePermissionTo([
             'add discount', 'delete food',
-            'add banner', 'add restaurant', 'define food',
+            'add banners', 'add restaurant', 'define food',
 
         ]);
 
