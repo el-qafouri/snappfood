@@ -37,6 +37,8 @@ Route::prefix('banners')->middleware(['auth','role:admin'])->group(function () {
     Route::delete('{id}', [BannerController::class, 'destroy'])->name('banner.destroy');
     Route::get('banner/create', [BannerController::class, 'create'])->name('banner.create');
     Route::post('create', [BannerController::class, 'store'])->name('banner.store');
+    Route::post('{id}/edit', [BannerController::class, 'edit'])->name('banner.edit');
+    Route::put('update/{id}', [BannerController::class, 'update'])->name('banner.update');
 });
 
 
