@@ -26,7 +26,7 @@ class BannerRequest extends FormRequest
             'alt' => 'required',
             'title' => 'required',
             'image_path' => 'required',
-            'link' => 'nullable' | 'url',
+            'link' => 'nullable|url',
             'is_active' => 'required|boolean',
         ];
     }

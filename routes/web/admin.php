@@ -34,10 +34,9 @@ Route::put('update/{id}', [RestaurantCategoryController::class, 'update'])->name
 //banners
 Route::prefix('banners')->middleware(['auth','role:admin'])->group(function () {
     Route::get('/', [BannerController::class, 'index'])->name('banner.index');
-    Route::delete('{id}', [BannerController::class, 'destroy'])->name('banner.delete');
-
+    Route::delete('{id}', [BannerController::class, 'destroy'])->name('banner.destroy');
     Route::get('banner/create', [BannerController::class, 'create'])->name('banner.create');
-    Route::post('create', [BannerController::class, 'store'])->name('banners.store');
+    Route::post('create', [BannerController::class, 'store'])->name('banner.store');
 });
 
 

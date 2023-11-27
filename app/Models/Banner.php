@@ -7,11 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Banner extends Model
 {
-    protected $fillable = [
-      'alt',
-        'title',
-        'image_path',
-        'link',
-        'is_active',
-    ];
+    use HasFactory;
+
+    protected $table = 'banners';
+
+    protected $fillable =
+        [
+            'title',
+            'text',
+            'user_id'
+        ];
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 }

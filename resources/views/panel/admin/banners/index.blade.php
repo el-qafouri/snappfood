@@ -19,40 +19,49 @@
         <table class="table table-striped mt-5">
             <thead class="table-dark">
             <tr>
-                <th scope="col">Discount</th>
-                <th scope="col">start time</th>
-                <th scope="col">end time</th>
+                <th scope="col">title</th>
+                <th scope="col">banners image</th>
                 <th scope="col">actions</th>
 
             </tr>
             </thead>
             <tbody>
-{{--            @foreach($foodParties as $foodParty)--}}
-{{--                <tr>--}}
-{{--                    --}}{{-- max length of title is 20 characters --}}
-{{--                    <td>{{ Str::limit($foodParty->discount, 20) }}</td>--}}
-{{--                    <td>{{ $foodParty->start_time }}</td>--}}
-{{--                    <td>{{ $foodParty->end_time }}</td>--}}
+            @foreach($banners as $banner)
+                <tr>
+{{--                     max length of title is 20 characters--}}
+                    <td>{{ Str::limit($banner->title, 20) }}</td>
+                    <td>
+                        <!-- افزودن تگ img برای نمایش تصویر -->
+                        <img src="{{ asset($banner->image) }}"  width="50" height="50">
+                    </td>
 
-{{--                    <td>--}}
-{{--                        --}}
 
-{{--                        <form action="{{ route('banner.delete', $foodParty->id) }}" method="POST" class="d-inline">--}}
-{{--                            @csrf--}}
-{{--                            @method('DELETE')--}}
-                            <button class="btn btn-danger" onclick="return confirm('Are you sure?')"><i
-                                    class="fas fa-trash"></i> Delete
+                    <td>
+                        <a href="{{ route('banner.index', $banner->id) }}" class="btn btn-success"><i
+                                class="fas fa-eye"></i> Show</a>
+{{--                    </td>--}}
+{{--                        <td>--}}
+                        <a href="{{ route('banner.index', $banner->id) }}" class="btn btn-primary"><i
+                                class="fas fa-edit"></i> Edit</a>
+                    </td>
+                    <td>
+                        <!-- فرم حذف بنر -->
+                        <form action="{{ route('banner.destroy', $banner->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger" onclick="return confirm('Are you sure?')">
+                                <i class="fas fa-trash"></i> Delete
                             </button>
-{{--                        </form>--}}
+                        </form>
                     </td>
                 </tr>
-{{--            @endforeach--}}
+            @endforeach
             </tbody>
         </table>
     </div>
 
     {{--    <div class="table-responsive">--}}
-    {{--        {{ $foodParties->links() }}--}}
+    {{--        {{ $banner->links() }}--}}
     {{--    </div>--}}
 
 @endsection
