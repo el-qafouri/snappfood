@@ -143,13 +143,22 @@ class CommentController extends Controller
 //    }
 
 
-
-
-
+//    private function transformComment($comment)
+//    {
+//        return [
+//            'author' => [
+//                'name' => $comment->user->name,
+//            ],
+//            'food' => $comment->order->food->name,
+//            'created_at' => $comment->created_at->toDateTimeString(),
+//            'score' => $comment->score,
+//            'content' => $comment->message,
+//        ];
+//    }
 
     private function transformComment($comment)
     {
-        return [
+        $transformedComment = [
             'author' => [
                 'name' => $comment->user->name,
             ],
@@ -158,7 +167,28 @@ class CommentController extends Controller
             'score' => $comment->score,
             'content' => $comment->message,
         ];
+
+        // اگر کامنت ریپلای دارد
+        if ($comment->replies->count() > 0) {
+            $transformedComment['replies'] = [];
+
+            foreach ($comment->replies as $reply) {
+                $transformedComment['replies'][] = [
+                    'author' => [
+                        'name' => $reply->user->name,
+                    ],
+                    'content' => $reply->message,
+                    'created_at' => $reply->created_at->toDateTimeString(),
+                ];
+            }
+        }
+
+        return $transformedComment;
     }
+
+
+
+
 
     public function store(Request $request)
     {
@@ -229,6 +259,7 @@ class CommentController extends Controller
                         'created_at' => $comment->created_at->toDateTimeString(),
                         'score' => $comment->score,
                         'content' => $comment->message,
+
                     ];
                 });
                 $comments = $comments->concat($orderComments);
@@ -244,49 +275,124 @@ class CommentController extends Controller
 
     // CommentController.php
 
-    public function answerComment($commentId)
+//    public function answerComment(Request $request, $commentId)
+//    {
+//        $request->validate([
+//            'answer_message' => 'required|string',
+//        ]);
+//
+//        $comment = Comment::find($commentId);
+//
+//        if (!$comment) {
+//            // اگر کامنت یافت نشد، مدیریت کنید
+//            return redirect()->route('food.index')->with('error', 'Comment not found.');
+//        }
+//
+//        $answer = new Comment([
+//            'user_id' => auth()->id(),
+//            'message' => $request->input('answer_message'),
+//            'order_id' => $comment->order_id, // یا هر فیلد مرتبط با جواب دادن به کامنت
+//            'score' => 0, // یا هر فیلد دیگری که لازم است
+//        ]);
+//
+//        $comment->answers()->save($answer);
+//
+//        return redirect()->route('food.show', ['id' => $comment->order->food_id])
+//            ->with('success', 'Answer added successfully.');
+//    }
+
+
+//    public function answerComment($id, Request $request)
+//    {
+//        $comment = Comment::find($id);
+//
+//        if (!$comment) {
+//            return redirect()->route('food.index')->with('error', 'Comment not found.');
+//        }
+//
+//        $reply = new Comment([
+//            'user_id' => auth()->id(),
+//            'message' => $request->input('answer_message'),
+//            'parent_id' => $comment->id,
+//            'score' => 0,
+//        ]);
+//
+//        $reply->save();
+//
+//        return redirect()->route('food.show', ['id' => $comment->order->food_id])
+//            ->with('success', 'Answer added successfully.');
+//    }
+
+
+//    public function answerComment($id, Request $request)
+//    {
+//        $comment = Comment::find($id);
+//
+//        if (!$comment || !$comment->order) {
+//            return redirect()->route('food.index')->with('error', 'Comment not found or has no associated order.');
+//        }
+//
+//        $reply = new Comment([
+//            'user_id' => auth()->id(),
+//            'message' => $request->input('answer_message'),
+//            'parent_id' => $comment->id,
+//            'order_id' => $comment->order_id,
+//        ]);
+//
+//        $reply->save();
+//
+//        return redirect()->route('food.show', ['id' => $comment->order->food_id])
+//            ->with('success', 'Answer added successfully.');
+//
+//    }
+
+
+    public function answerComment($id, Request $request)
     {
-        // متد مربوط به ذخیره پاسخ به کامنت
+        $comment = Comment::find($id);
+
+        if (!$comment) {
+            return redirect()->route('food.index')->with('error', 'Comment not found.');
+        }
+
+        // اگر order موجود باشد، ادامه دهید
+        if ($comment->order) {
+            $reply = new Comment([
+                'user_id' => auth()->id(),
+                'message' => $request->input('answer'),
+                'parent_id' => $comment->id,
+                'order_id' => $comment->order_id,
+
+            ]);
+
+            $reply->save();
+
+            return redirect()->route('food.show', ['id' => $comment->order->food_id])
+                ->with('success', 'Answer added successfully.');
+        } else {
+            // اگر order وجود نداشته باشد، به روز رسانی کنید
+            // یا با یک خطا مدیریت کنید
+            return redirect()->route('food.index')->with('error', 'Order not found for the comment.');
+        }
     }
+
 
     public function acceptComment($commentId)
     {
         // متد مربوط به تأیید کامنت
     }
 
-//    public function deleteComment($id)
-//    {
-//        $comment = Comment::query()->find($id);
-//        $comment->delete();
-//        return redirect()->route('food.show');
-//    }
-
-
-//    public function deleteComment($id)
-//    {
-//        $comment = Comment::query()->find($id);
-//        $foodId = $comment->order->food_id;
-//        $comment->delete();
-//
-//        return redirect()->route('food.show', ['id' => $foodId]);
-//    }
-
-
 
     public function deleteComment($id)
     {
         $comment = Comment::query()->find($id);
 
-
         if ($comment && $comment->order) {
             $foodId = $comment->order->food_id;
-            $comment->delete();
-
-
+            $comment->delete(); // Soft Delete
             return redirect()->route('food.show', ['id' => $foodId]);
         } else {
-           
             return redirect()->route('food.index')->with('error', 'Comment or order not found.');
         }
-    }
+        }
 }

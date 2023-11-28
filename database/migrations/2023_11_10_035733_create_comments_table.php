@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->text('message');
             $table->text('answer')->nullable();
             $table->enum('score' , ['1' , '2' , '3' , '4' , '5']);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
