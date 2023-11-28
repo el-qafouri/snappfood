@@ -38,10 +38,10 @@ class Comment extends Model
         return $this->belongsTo(Order::class, 'order_id');
     }
 
-    public function replies()
-    {
-        return $this->hasMany(Comment::class, 'parent_id');
-    }
+//    public function replies()
+//    {
+//        return $this->hasMany(Comment::class, 'parent_id');
+//    }
 
     public function parent()
     {
@@ -56,4 +56,11 @@ class Comment extends Model
     public function getIsOwnerAttribute() {
         return auth()->check() && auth()->user()->id == $this->user_id;
     }
+
+
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
+
 }

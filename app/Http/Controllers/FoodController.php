@@ -53,45 +53,6 @@ class FoodController extends Controller
      * Store a newly created resource in storage.
      */
 
-//    public function store(FoodRequest $request)
-//    {
-//        $user = Auth::user();
-//
-//        try {
-//            $foodData = $request->validated();
-//            $foodData['restaurant_id'] = $user->restaurant->id;
-//            if ($request->hasFile('imagePath')) {
-//                $imagePath = $request->file('imagePath');
-//                $fileName = 'food' . time() . '_' . $imagePath->hashName();
-//                $imagePath->move(public_path('food'), $fileName);
-//                $foodData['image_path'] = $fileName;
-//            } else {
-//                $foodData['image_path'] = null;
-//            }
-//            $food = new Food($foodData);
-////            dd($food);
-//            $food->discount_id = $request->input('discount_id');
-//
-//
-//            $food->save();
-//
-//            $foodCategoryIds = $request->input('food_category_id');
-//
-//            $food->foodCategories()->attach($foodCategoryIds);
-//
-//            return redirect()->route("food.index")->with('success', $food->name . "food added successfully");
-//        } catch (Exception $e) {
-//            Log::error($e->getMessage());
-//            return redirect(status: 500)->route('food.create')->with('fail', 'food didnt add!');
-//        }
-//    }
-
-
-
-
-
-
-
     public function store(FoodRequest $request)
     {
         $user = Auth::user();
@@ -106,8 +67,7 @@ class FoodController extends Controller
             if ($discount) {
                 $discountAmount = ($discount->discount / 100) * $foodData['price'];
                 $foodData['final_price'] = $foodData['price'] - $discountAmount;
-            }
-//            dd($foodData);
+            } //            dd($foodData);
             else {
                 $foodData['final_price'] = $foodData['price'];
             }
@@ -125,11 +85,6 @@ class FoodController extends Controller
             return redirect(status: 500)->route('food.create')->with('fail', 'food didnt add!');
         }
     }
-
-
-
-
-
 
 
     /**
@@ -173,55 +128,6 @@ class FoodController extends Controller
     /**
      * Update the specified resource in storage.
      */
-
-
-//    public function update(UpdateFoodRequest $request, $id)
-//    {
-//        try {
-//            $food = Food::findOrFail($id);
-//
-//            if ($request->hasFile('imagePath')) {
-//                $imagePath = $request->file('imagePath');
-//                $fileName = 'food' . time() . '_' . $imagePath->hashName();
-//                $imagePath->move(public_path('food'), $fileName);
-//
-//                if ($food->image_path) {
-//                    unlink(public_path('food/' . $food->image_path));
-//                }
-//                $food->update(['image_path' => $fileName]);
-//            }
-//            if ($request->filled('discount_id')) {
-//                $discountId = $request->input('discount_id');
-//                $discount = Discount::query()->find($discountId);
-//                if ($discount) {
-//                    $food->discount_id = $discountId;
-//                } else {
-//                    return redirect()->route('food.edit', $id)->with('fail', 'Discount not found');
-//                }
-//            }
-//
-//            $food->update($request->validated());
-//            $food->foodCategories()->sync($request->input('food_category_id'));
-//
-//            $food = Food::with('foodCategories', 'discount')->findOrFail($id);
-//
-//            $foodCategories = FoodCategory::all();
-//            $discounts = auth()->user()->discounts;
-//
-//            return view('panel.seller.foods.edit', compact('food', 'foodCategories', 'discounts'))->with('success', 'Update successfully');
-//        } catch (Exception $e) {
-//            Log::error($e->getMessage());
-//            return redirect()->route('food.edit', $id)->with('fail', 'Update failed');
-//        }
-//    }
-
-
-
-
-
-
-
-
 
     public function update(UpdateFoodRequest $request, $id)
     {
@@ -275,11 +181,6 @@ class FoodController extends Controller
     }
 
 
-
-
-
-
-
     /**
      * Remove the specified resource from storage.
      */
@@ -294,4 +195,14 @@ class FoodController extends Controller
             return redirect(status: 500)->route('food.index')->with('fail', 'food delete!');
         }
     }
+
+
+    public function showFoodWithComment()
+    {
+        dd('lololo');
+        $foodsWithComments = Food::query()->has('comments')->get();
+        return view('seller.foods.foodComments', compact('foodsWithComments'));
+
+    }
+
 }

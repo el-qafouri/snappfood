@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\api\CommentRequest;
 use App\Http\Requests\api\ShowCommentRequest;
 use App\Models\Comment;
+use App\Models\Reply;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use App\Models\Order;
@@ -347,7 +348,63 @@ class CommentController extends Controller
 //    }
 
 
-    public function answerComment($id, Request $request)
+//    public function answerComment($id, Request $request)
+//    {
+//        $comment = Comment::find($id);
+//
+//        if (!$comment) {
+//            return redirect()->route('food.index')->with('error', 'Comment not found.');
+//        }
+//
+//        // اگر order موجود باشد، ادامه دهید
+//        if ($comment->order) {
+//            $reply = new Comment([
+//                'user_id' => auth()->id(),
+//                'message' => $request->input('answer'),
+//                'parent_id' => $comment->id,
+//                'order_id' => $comment->order_id,
+//
+//            ]);
+//
+//            $reply->save();
+//
+//            return redirect()->route('food.show', ['id' => $comment->order->food_id])
+//                ->with('success', 'Answer added successfully.');
+//        } else {
+//            // اگر order وجود نداشته باشد، به روز رسانی کنید
+//            // یا با یک خطا مدیریت کنید
+//            return redirect()->route('food.index')->with('error', 'Order not found for the comment.');
+//        }
+//    }
+
+
+//    public function answerComment(Request $request, $id)
+//    {
+//        $comment = Comment::find($id);
+//
+//        if (!$comment) {
+//            return redirect()->route('food.index')->with('error', 'Comment not found.');
+//        }
+//
+//        $request->validate([
+//            'answer' => 'required|string',
+//        ]);
+//
+//        // ایجاد یک Reply جدید
+//        $reply = new Reply([
+//            'message' => $request->input('answer'),
+//        ]);
+//
+//        // اتصال Reply به Comment
+//        $comment->replies()->save($reply);
+//
+//        return redirect()->route('food.show', ['id' => $comment->order->food_id])->with('success', 'Answer added successfully.');
+//    }
+
+
+
+
+    public function answerComment(Request $request, $id)
     {
         $comment = Comment::find($id);
 
@@ -355,20 +412,21 @@ class CommentController extends Controller
             return redirect()->route('food.index')->with('error', 'Comment not found.');
         }
 
-        // اگر order موجود باشد، ادامه دهید
+        $request->validate([
+            'answer' => 'required|string',
+        ]);
+
+        // ایجاد یک Reply جدید
+        $reply = new Reply([
+            'message' => $request->input('answer'),
+        ]);
+
+        // اتصال Reply به Comment
+        $comment->replies()->save($reply);
+
+        // اگر order وجود داشته باشد، به روز رسانی کنید
         if ($comment->order) {
-            $reply = new Comment([
-                'user_id' => auth()->id(),
-                'message' => $request->input('answer'),
-                'parent_id' => $comment->id,
-                'order_id' => $comment->order_id,
-
-            ]);
-
-            $reply->save();
-
-            return redirect()->route('food.show', ['id' => $comment->order->food_id])
-                ->with('success', 'Answer added successfully.');
+            return redirect()->route('food.show', ['id' => $comment->order->food_id])->with('success', 'Answer added successfully.');
         } else {
             // اگر order وجود نداشته باشد، به روز رسانی کنید
             // یا با یک خطا مدیریت کنید
@@ -383,16 +441,47 @@ class CommentController extends Controller
     }
 
 
+
+
+//    public function deleteComment($id)
+//    {
+//        $comment = Comment::find($id);
+//
+//        if (!$comment) {
+//            return redirect()->route('food.index')->with('error', 'Comment not found.');
+//        }
+//        if (isset($comment->order)) {
+//            $foodId = $comment->order->food_id;
+//
+//            $comment->delete();
+//
+//            return redirect()->route('food.show', ['id' => $foodId])->with('success', 'Comment deleted successfully.');
+//        } else {
+//            return redirect()->route('food.index')->with('error', 'Order not found for the comment.');
+//        }
+//    }
+
+
+
     public function deleteComment($id)
     {
         $comment = Comment::query()->find($id);
 
-        if ($comment && $comment->order) {
-            $foodId = $comment->order->food_id;
-            $comment->delete(); // Soft Delete
-            return redirect()->route('food.show', ['id' => $foodId]);
+        if (!$comment) {
+            return redirect()->route('food.index')->with('error', 'Comment not found.');
+        }
+
+        // دسترسی به غذا از طریق رابطه
+        $food = $comment->food;
+
+        if ($food) {
+            $comment->delete();
+            return redirect()->route('food.show', ['id' => $food->id])->with('success', 'Comment deleted successfully.');
         } else {
-            return redirect()->route('food.index')->with('error', 'Comment or order not found.');
+            return redirect()->route('food.index')->with('error', 'Food not found for the comment.');
         }
-        }
+    }
+
+
+
 }

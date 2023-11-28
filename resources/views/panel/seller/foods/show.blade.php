@@ -310,7 +310,7 @@
                                         </div>
                                     </div>
 
-                                    <p>{{ $comment->message }}</p>
+{{--                                    <p>{{ $comment->message }}</p>--}}
 
                                     @if($comment->replies->count() > 0)
                                         <ul>

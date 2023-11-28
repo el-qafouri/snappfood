@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Food;
 use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,7 +13,8 @@ class UserController extends Controller
 {
     public function adminIndex()
     {
-        return view('panel.admin.panel.dashboard');
+        $foods = Food::all();
+        return view('panel.admin.panel.dashboard' , compact('foods'));
     }
 
 

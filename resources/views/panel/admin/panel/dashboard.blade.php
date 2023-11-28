@@ -17,36 +17,20 @@
         @endif
 
         <table class="table table-striped mt-5">
-            {{--            <thead class="table-dark">--}}
-            {{--            <tr>--}}
-            {{--                <th scope="col">Discount</th>--}}
-            {{--                <th scope="col">start time</th>--}}
-            {{--                <th scope="col">end time</th>--}}
-            {{--                <th scope="col">actions</th>--}}
 
-            {{--            </tr>--}}
-            {{--            </thead>--}}
             <tbody>
-            {{--            @foreach($foodParties as $foodParty)--}}
+
             <tr>
-                {{-- max length of title is 20 characters --}}
-                {{--                    <td>{{ Str::limit($foodParty->discount, 20) }}</td>--}}
-                {{--                    <td>{{ $foodParty->start_time }}</td>--}}
-                {{--                    <td>{{ $foodParty->end_time }}</td>--}}
-                <td>food category</td>
+                <td>Food Category</td>
 
                 <td>
-                    {{--                        <a href="{{ route('foodParty.show', $foodParty->id) }}" class="btn btn-success"><i--}}
-                    {{--                                class="fas fa-eye"></i> Show</a>--}}
-                    {{--                    <a href="{{ route('foodParty.edit', $foodParty->id) }}" class="btn btn-primary"><i--}}
-                    {{--                            class="fas fa-edit">--}}
                     <a href="{{ route('category.index') }}" class="btn btn-primary"><i
                             class="fas fa-edit"></i>show</a>
                 </td>
             </tr>
 
             <tr>
-                <td>restaurant category</td>
+                <td>Restaurant Category</td>
                 <td>
                     <a href="{{ route('restaurantCategory.index') }}" class="btn btn-primary"><i
                             class="fas fa-edit"></i>show</a>
@@ -73,6 +57,44 @@
             </tr>
 
 
+            <tr>
+                <td>Food Parties</td>
+                <td>
+                    <a href="{{ route('foodParty.index') }}" class="btn btn-primary"><i
+                            class="fas fa-edit"></i>show</a>
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <td>Comments</td>
+                <td>
+                    <a href="{{ route('salam') }}" class="btn btn-primary"><i class="fas fa-edit"></i>show</a>
+                </td>
+            </tr>
+
+
+
+
+
+
+{{--            @foreach($foods as $food)--}}
+{{--                <tr>--}}
+{{--                    <td>{{ $food->name }}</td>--}}
+{{--                    <td>--}}
+{{--                        <a href="{{ route('food.show', ['id' => $food->id]) }}" class="btn btn-primary">--}}
+{{--                            <i class="fas fa-edit"></i> show--}}
+{{--                        </a>--}}
+{{--                    </td>--}}
+{{--                </tr>--}}
+{{--            @endforeach--}}
+
+
+
+
+
+
 
             <tr>
                 <td>users</td>
@@ -90,25 +112,9 @@
                 </td>
             </tr>
 
-            <tr>
-                <td>food party</td>
-                <td>
-                    <a href="{{ route('foodParty.index') }}" class="btn btn-primary"><i
-                            class="fas fa-edit"></i>show</a>
-                </td>
-            </tr>
 
 
-            {{--            <tr>--}}
-            {{--                <td>discount</td>--}}
-            {{--                <td>--}}
-            {{--                    <a href="#" class="btn btn-primary"><i--}}
-            {{--                            class="fas fa-edit"></i>show</a>--}}
-            {{--                </td>--}}
-            {{--            </tr>--}}
 
-
-            {{--            @endforeach--}}
             </tbody>
         </table>
     </div>
