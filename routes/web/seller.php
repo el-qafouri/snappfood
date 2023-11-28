@@ -31,3 +31,5 @@ Route::prefix('restaurant')->middleware(['auth' , 'role:admin'])->group(function
     Route::patch('/{id}', [RestaurantController::class , 'updateProfileStatus'])->name('restaurant.updateProfileStatus');
 });
 
+
+

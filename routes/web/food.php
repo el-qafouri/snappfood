@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\API\CommentController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\FoodController;
 use Illuminate\Support\Facades\Route;
@@ -35,4 +36,11 @@ Route::prefix('discount')->middleware('auth')->group(function () {
 
     Route::get('{id}/edit', [DiscountController::class, 'edit'])->name('discount.edit');
     Route::put('update/{id}', [DiscountController::class, 'update'])->name('discount.update');
+});
+
+
+Route::prefix('comment')->middleware('auth')->group(function () {
+    Route::post('/{id}/answer',[CommentController::class , 'answerComment'])->name('comment.answer');
+    Route::post('/{id}/accept', [CommentController::class , 'acceptComment'])->name('comment.accept');
+    Route::delete('/{id}/delete', [CommentController::class , 'deleteComment'])->name('comment.delete');
 });
