@@ -10,7 +10,9 @@ use App\Models\FoodCategory;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 
 class FoodController extends Controller
@@ -61,6 +63,16 @@ class FoodController extends Controller
             $foodData = $request->validated();
             $foodData['restaurant_id'] = $user->restaurant->id;
 
+
+            if ($request->hasFile('imagePath')) {
+                $imagePath = $request->file('imagePath');
+                $fileName = 'food' . time() . '_' . $imagePath->hashName();
+                $imagePath->move(public_path('food'), $fileName);
+                $foodData['image_path'] = $fileName;
+            }
+
+
+
             $discountId = $request->input('discount_id');
             $discount = Discount::query()->find($discountId);
 
@@ -85,6 +97,8 @@ class FoodController extends Controller
             return redirect(status: 500)->route('food.create')->with('fail', 'food didnt add!');
         }
     }
+
+
 
 
     /**
@@ -132,7 +146,7 @@ class FoodController extends Controller
     public function update(UpdateFoodRequest $request, $id)
     {
         try {
-            $food = Food::findOrFail($id);
+            $food = Food::query()->findOrFail($id);
 
             if ($request->hasFile('imagePath')) {
                 $imagePath = $request->file('imagePath');
@@ -147,7 +161,7 @@ class FoodController extends Controller
 
             if ($request->filled('discount_id')) {
                 $discountId = $request->input('discount_id');
-                $discount = Discount::find($discountId);
+                $discount = Discount::query()->find($discountId);
 
                 if ($discount) {
                     $food->discount_id = $discountId;
@@ -156,12 +170,11 @@ class FoodController extends Controller
                 }
             }
 
-            // اعمال تخفیف به قیمت غذا اگر تخفیف موجود باشد
             if ($food->discount) {
                 $discountAmount = ($food->discount->discount / 100) * $food->price;
                 $food->final_price = $food->price - $discountAmount;
             } else {
-                // اگر تخفیف موجود نباشد، قیمت نهایی برابر با قیمت اصلی غذا است
+
                 $food->final_price = $food->price;
             }
 
