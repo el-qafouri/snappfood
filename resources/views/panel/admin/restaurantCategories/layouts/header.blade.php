@@ -25,7 +25,11 @@
                     <i class="fas fa-bars"></i>
                 </button>
 
-
+                <div id="header-buttons" class="d-flex align-items-center">
+    <span class="user-info">
+        <span class="username">{{ auth()->user()->name }}</span>
+    </span>
+                </div>
 
 
 
@@ -68,3 +72,23 @@
         </nav>
     </div>
 </div>
+
+
+<style>
+    /* استایل کلی کاربر */
+    .user-info {
+        background-color: mediumspringgreen; /* رنگ صورتی */
+        padding: 8px;
+        border-radius: 8px;
+        margin-right: 10px; /* فاصله از دکمه‌ها */
+        display: inline-block; /* برای جلوگیری از خط افقی ناخواسته */
+    }
+
+    /* استایل نام کاربر */
+    .username {
+        font-weight: bold;
+        color: #333; /* رنگ متن */
+    }
+
+    /* سایر استایل‌ها ... */
+</style>

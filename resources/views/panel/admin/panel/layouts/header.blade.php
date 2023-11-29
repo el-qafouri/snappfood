@@ -26,25 +26,18 @@
                 </button>
 
 
-{{--                <div class="collapse navbar-collapse" id="navbarNav">--}}
-{{--                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="font-size: 20px;">--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link" href="{{ url()->previous() }}">--}}
-{{--                                <i class="fas fa-arrow-left"></i> Back--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link" href="">--}}
-{{--                                <i class="fas fa-home"></i> Homepage--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
-{{--                </div>--}}
+                <div id="header-buttons" class="d-flex align-items-center">
+    <span class="user-info">
+        <span class="username">{{ auth()->user()->name }}</span>
+    </span>
+                </div>
+
 
                 <div id="header-buttons" class="d-flex align-items-center">
                     <!-- دکمه‌های دیگر -->
                     <a href="" class="btn btn-light"><i class="fas fa-home"></i> Dashboard</a>
-                    <a href="{{ url()->previous() }}" class="btn btn-light"><i class="fa-solid fa-arrow-left"></i>Back</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-light"><i
+                            class="fa-solid fa-arrow-left"></i>Back</a>
 
                     <!-- دکمه لاگ‌اوت -->
                     <form action="{{ route('logout') }}" method="POST">
@@ -53,12 +46,6 @@
                     </form>
                 </div>
 
-
-
-{{--                <form action="{{route('logout')}}" method="post">--}}
-{{--                    @csrf--}}
-{{--                    <button type="submit" >Logout</button>--}}
-{{--                </form>--}}
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul
@@ -83,3 +70,23 @@
         </nav>
     </div>
 </div>
+
+
+<style>
+    /* استایل کلی کاربر */
+    .user-info {
+        background-color: mediumspringgreen; /* رنگ صورتی */
+        padding: 8px;
+        border-radius: 8px;
+        margin-right: 10px; /* فاصله از دکمه‌ها */
+        display: inline-block; /* برای جلوگیری از خط افقی ناخواسته */
+    }
+
+    /* استایل نام کاربر */
+    .username {
+        font-weight: bold;
+        color: #333; /* رنگ متن */
+    }
+
+    /* سایر استایل‌ها ... */
+</style>

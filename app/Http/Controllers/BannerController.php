@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BannerRequest;
 use App\Models\Banner;
-use App\Models\Image;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -45,24 +44,49 @@ class BannerController extends Controller
 
 
 // در مدل BannerController
+//    public function store(Request $request)
+//    {
+//        $request->validate([
+//            'title' => 'required',
+//            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+//            'text' => 'required',
+//        ]);
+//
+//        // Store the image
+//        if ($request->hasFile('image')) {
+//            $imagePath = $request->file('image');
+//            $fileName = 'banner' . time() . '_' . $imagePath->hashName();
+//            $imagePath->move(public_path('banner'), $fileName);
+//        }
+//
+//        // Create the banner
+//        $banner = Banner::create([
+//            'title' => $request->input('title'),
+//            'text' => $request->input('text'),
+//        ]);
+//
+//        // Associate the image with the banner
+//        $banner->image()->create([
+//            'url' => $imagePath,
+//        ]);
+//
+//        return redirect()->route('banner.index')->with('success', 'Banner added successfully');
+//    }
+
+
+
+
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'text' => 'required',
-        ]);
 
-        // Store the image
+//        dd($request);
         $imagePath = $request->file('image')->store('banners', 'public');
 
-        // Create the banner
-        $banner = Banner::create([
+        $banner = Banner::query()->create([
             'title' => $request->input('title'),
             'text' => $request->input('text'),
         ]);
 
-        // Associate the image with the banner
         $banner->image()->create([
             'url' => $imagePath,
         ]);

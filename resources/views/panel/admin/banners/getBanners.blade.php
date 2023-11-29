@@ -9,7 +9,7 @@
                 <div class="col-md-12">
                     <div class="banner">
                         @if ($banner->image)
-                            <img src="{{ asset($banner->image) }}" alt="{{ $banner->title }}" class="img-fluid">
+                            <img src="{{ asset('storage/' . $banner->image->url) }}" class="img-fluid">
                         @else
                             <p>No Image Available</p>
                         @endif

@@ -72,7 +72,6 @@ class FoodController extends Controller
             }
 
 
-
             $discountId = $request->input('discount_id');
             $discount = Discount::query()->find($discountId);
 

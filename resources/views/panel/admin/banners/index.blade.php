@@ -32,7 +32,7 @@
                     <td>{{ Str::limit($banner->title, 20) }}</td>
                     <td>
                         <!-- افزودن تگ img برای نمایش تصویر -->
-                        <img src="{{ asset($banner->image) }}"  width="50" height="50">
+                        <img src="{{ asset('storage/' . $banner->image->url) }}"  width="50" height="50">
                     </td>
 
 

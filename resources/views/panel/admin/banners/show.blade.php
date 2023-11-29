@@ -35,7 +35,7 @@
             <div class="row">
                 <div class="col-md-6">
                     @if ($banner->image)
-                        <img src="{{ asset($banner->image) }}" alt="Banner Image" class="img-fluid">
+                        <img src="{{ asset('storage/' . $banner->image->url) }}" alt="Banner Image" class="img-fluid">
                     @else
                         <p>No Image Available</p>
                     @endif

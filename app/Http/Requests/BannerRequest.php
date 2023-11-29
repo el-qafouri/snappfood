@@ -22,25 +22,25 @@ class BannerRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'alt' => 'required',
+        $rules = [
             'title' => 'required',
-            'image_path' => 'required',
-            'link' => 'nullable|url',
-            'is_active' => 'required|boolean',
+            'text' => 'required',
         ];
+
+        if ($this->isMethod('put') || $this->isMethod('patch')) {
+            $rules['image'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        } else {
+            $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        }
+
+        return $rules;
     }
-
-
     public function messages(): array
     {
         return [
-            'alt.required' => 'وارد کردن فیلد alt الزامی است.',
-            'title.required' => 'وارد کردن فیلد title الزامی است.',
-            'image_path.required' => 'وارد کردن فیلد عکس الزامی است.',
-            'link.url' => 'فرمت لینک وارد شده صحیح نمی‌باشد.',
-            'is_active.required' => 'مشخص کردن فعال یا غیرفعال بودن بنر الزامی است.',
-            'is_active.boolean' => 'باید یک مقدار صحیح یا غیرصحیح باشد.',
+            'title.required' => 'تایتل رو خالی گذاشتی',
+            'text.required' => 'متنتو بنویس',
+            'image.required' => 'عکس اجباریه',
         ];
     }
 }

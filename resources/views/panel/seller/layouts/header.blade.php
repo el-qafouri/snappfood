@@ -27,9 +27,18 @@
 
 
                 <div id="header-buttons" class="d-flex align-items-center">
+    <span class="user-info">
+        <span class="username">{{ auth()->user()->name }}</span>
+    </span>
+                </div>
+
+
+                <div id="header-buttons" class="d-flex align-items-center">
                     <!-- دکمه‌های دیگر -->
-                    <a href="{{ route('seller.dashboard') }}" class="btn btn-light"><i class="fas fa-home"></i> Dashboard</a>
-                    <a href="{{ url()->previous() }}" class="btn btn-light"><i class="fa-solid fa-arrow-left"></i>Back</a>
+                    <a href="{{ route('seller.dashboard') }}" class="btn btn-light"><i class="fas fa-home"></i>
+                        Dashboard</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-light"><i
+                            class="fa-solid fa-arrow-left"></i>Back</a>
 
                     <!-- دکمه لاگ‌اوت -->
                     <form action="{{ route('logout') }}" method="POST">
@@ -37,12 +46,6 @@
                         <button type="submit" class="btn btn-light"><i class="fas fa-sign-out-alt"></i> Logout</button>
                     </form>
                 </div>
-
-
-
-
-
-                {{--                <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>--}}
 
 
                 <div class="collapse navbar-collapse" id="navbarNav">
@@ -68,3 +71,22 @@
         </nav>
     </div>
 </div>
+
+<style>
+    /* استایل کلی کاربر */
+    .user-info {
+        background-color: mediumspringgreen; /* رنگ صورتی */
+        padding: 8px;
+        border-radius: 8px;
+        margin-right: 10px; /* فاصله از دکمه‌ها */
+        display: inline-block; /* برای جلوگیری از خط افقی ناخواسته */
+    }
+
+    /* استایل نام کاربر */
+    .username {
+        font-weight: bold;
+        color: #333; /* رنگ متن */
+    }
+
+    /* سایر استایل‌ها ... */
+</style>

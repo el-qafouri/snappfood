@@ -10,7 +10,8 @@ Route::middleware(['auth'])->group(function () {
 //    Route::get('/dashboard', [UserController::class, 'sellerIndex'])->name('admin.dashboard');
 });
 
-Route::prefix('restaurant')->middleware(['auth' ,'role:admin|seller'])->group(function () {
+//Route::prefix('restaurant')->middleware(['auth' ,'role:admin|seller'])->group(function () {
+Route::prefix('restaurant')->middleware(['auth' , 'role:admin'])->group(function () {
     Route::get('/', [RestaurantController::class, 'index'])->name('restaurant.index');
     Route::get('{id}', [RestaurantController::class, 'show'])->name('restaurant.show');
     Route::delete('{id}', [RestaurantController::class, 'destroy'])->name('restaurant.delete');
@@ -25,6 +26,19 @@ Route::prefix('restaurant')->middleware(['auth' ,'role:admin|seller'])->group(fu
     Route::post('location/set', [RestaurantController::class, 'setLocation'])->name('restaurant.setLocation');
 //    Route::post('location/update', [RestaurantController::class, 'updateLocation'])->name('restaurant.updateLocation');
 });
+
+
+
+Route::prefix('restaurant')->middleware(['auth', 'custom_role:seller'])->group(function () {
+    // Routes for sellers
+    Route::get('{id}', [RestaurantController::class, 'show'])->name('restaurantSeller.show');
+    // ...
+});
+
+
+
+
+
 
 Route::prefix('restaurant')->middleware(['auth' , 'role:admin'])->group(function (){
     Route::get('/{id}/editProfileStatus', [RestaurantController::class , 'editProfileStatus'])->name('restaurant.editProfileStatus');

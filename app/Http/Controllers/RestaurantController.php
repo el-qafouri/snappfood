@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\api\AddressRequest;
 use App\Http\Requests\RestaurantRequest;
 use App\Models\Address;
 use App\Models\Restaurant;
 use App\Models\RestaurantCategory;
-use http\Client\Curl\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use mysql_xdevapi\Exception;
 
@@ -19,17 +18,28 @@ class RestaurantController extends Controller
      * Display a listing of the resource.
      * @throws AuthorizationException
      */
+//    public function index()
+//    {
+//        $restaurants = Restaurant::all();
+//        return view('panel.seller.restaurants.index', compact('restaurants'));
+//    }
+
+
+
     public function index()
     {
+        $user = Auth::user();
 
-        $restaurants = Restaurant::all();
-        return view('panel.seller.restaurants.index', compact('restaurants'));
-
-//        $restaurants = Restaurant::all();
-//        $users = \App\Models\User::all();
-////        $restaurants = auth()->user()->restaurants;
-//        return view('panel.seller.restaurants.index', compact('restaurants' , 'users'));
+        if ($user->role === 'seller') {
+            $restaurants = Restaurant::where('user_id', $user->id)->get();
+            return view('panel.seller.restaurants.index', compact('restaurants'));
+        } elseif ($user->role === 'admin') {
+            $restaurants = Restaurant::all();
+            return view('panel.admin.restaurants.index', compact('restaurants'));
+        }
+        abort(403, 'Unauthorized action.');
     }
+
 
 
     /**

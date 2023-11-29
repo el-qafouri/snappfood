@@ -39,7 +39,6 @@
     {{-- import--}}
     @include('panel.seller.layouts.header')
 
-    <a class="navbar-brand" href="#">{{ auth()->user()->name }}</a>
 
 </header>
 <main>
