@@ -111,15 +111,49 @@ class OrderController
         return response(['Message' => 'count of food is updated']);
     }
 
+//    public function payCard($id)
+//    {
+//        $order = Order::query()->find($id);
+//        if ($order == null)
+//            return response(['Message' => "this isn't your cart"]);
+//
+//        $order->customer_status = 'paid';
+//        $order->save();
+//        return response(['Message' => "cart number $id paid successfully"]);
+//    }
+
+
     public function payCard($id)
     {
-        $order = Order::query()->find($id);
-        if ($order == null)
-            return response(['Message' => "this isn't your cart"]);
+        try {
+            $order = Order::find($id);
 
-        $order->customer_status = 'paid';
-        $order->save();
-        return response(['Message' => "cart number $id paid successfully"]);
+            if (!$order) {
+                return response(['Message' => "This isn't a valid cart."], 404);
+            }
+
+            if ($order->user_id != auth()->user()->id) {
+                return response(['Message' => "You don't have permission to pay for this cart."], 403);
+            }
+
+            if ($order->customer_status == 'paid') {
+                return response(['Message' => "This cart has already been paid."], 400);
+            }
+
+            $order->customer_status = 'paid';
+            $order->seller_status = 'paid';
+            $order->save();
+
+
+            return response(['Message' => "Cart number $id paid successfully"]);
+        } catch (\Exception $e) {
+            \Log::error('An unexpected error occurred: ' . $e->getMessage());
+            return response(['Message' => 'An unexpected error occurred. Please try again later.'], 500);
+        }
     }
+
+
+
+
 
 }

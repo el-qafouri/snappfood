@@ -60,6 +60,7 @@
                 </div>
             </div>
         </div>
+    </main>
 
 
 
@@ -68,74 +69,99 @@
 
 
 
-        <div class="banner-section">
-            <div class="container">
-                <div class="row">
-                    @foreach ($banners as $banner)
-                        <div class="col-md-12">
-                            <div class="banner">
-                                @if (is_object($banner) && $banner->image)
-                                    <img src="{{ asset($banner->image) }}" alt="{{ $banner->title }}" class="img-fluid">
-                                @else
-                                    <p>No Image Available</p>
-                                @endif
-                                <h2>{{ $banner->title ?? 'Default Title' }}</h2>
-                                <p>{{ $banner->text ?? 'Default Text' }}</p>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
+{{--    <div class="banner-section">--}}
+{{--        <div class="container">--}}
+{{--            <div class="row">--}}
+{{--                @foreach ($banners as $banner)--}}
+{{--                    <div class="col-md-12">--}}
+{{--                        <div class="banner">--}}
+{{--                            @if (is_object($banner) && $banner->image)--}}
+{{--                                <img src="{{ asset('storage/' . $banner->image->url) }}" alt="{{ $banner->title }}" class="img-fluid">--}}
+{{--                            @else--}}
+{{--                                <p>No Image Available</p>--}}
+{{--                            @endif--}}
+{{--                            <h2>{{ $banner->title ?? 'Default Title' }}</h2>--}}
+{{--                            <p>{{ $banner->text ?? 'Default Text' }}</p>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                @endforeach--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+
+
+
+{{--    @foreach ($banners as $banner)--}}
+{{--<div class="banner">--}}
+{{--    @if (!empty($banner->image))--}}
+{{--        <img src="{{ asset('storage/' . $banner->image->url) }}" class="img-fluid">--}}
+{{--    @else--}}
+{{--        <p>No Image Available</p>--}}
+{{--    @endif--}}
+{{--    <h2>{{ $banner->title ?? 'Default Title' }}</h2>--}}
+{{--    <p>{{ $banner->text ?? 'Default Text' }}</p>--}}
+{{--</div>--}}
+{{--    @endforeach--}}
+
+
+
+
+
+
+    <div id="bannerContainer">
+    @foreach ($banners as $banner)
+        <div class="banner" style="background-color: {{ $banner->background_color }}">
+            @if (!empty($banner->image))
+                <img src="{{ asset('storage/' . $banner->image->url) }}" alt="{{ $banner->title }}" class="img-fluid" width="100" height="50" style="border: 2px solid {{ $banner->border_color }}" >
+            @else
+                <p style="color: {{ $banner->text_color }}">No Image Available</p>
+            @endif
+            <h2 style="color: {{ $banner->title_color }}">{{ $banner->title ?? 'Default Title' }}</h2>
+            <p style="color: {{ $banner->text_color }}">{{ $banner->text ?? 'Default Text' }}</p>
+        </div>
+    @endforeach
         </div>
 
+    @push('scripts')
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                var banners = @json($banners); // تبدیل آرایه بنرها به JSON
+                var bannerContainer = $('#bannerContainer');
+                var currentBannerIndex = 0;
 
-        @push('scripts')
-            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-            <script>
-                $(document).ready(function () {
-                    // Ajax request to get banners
-                    $.ajax({
-                        url: "{{ route('get.banners') }}",
-                        type: "GET",
-                        dataType: "json",
-                        success: function (data) {
-                            // Display banners
-                            displayBanners(data);
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    });
+                function displayBanner() {
+                    var banner = banners[currentBannerIndex];
 
-                    // Function to display banners
-                    function displayBanners(banners) {
-                        var bannerSection = $('#ajaxBannerSection');
-
-                        // Loop through banners
-                        $.each(banners, function (index, banner) {
-                            var bannerHtml = '<div class="banner">';
-                            bannerHtml += '<img src="' + banner.image + '" alt="' + banner.title + '" class="img-fluid">';
-                            bannerHtml += '<h2>' + banner.title + '</h2>';
-                            bannerHtml += '<p>' + banner.text + '</p>';
-                            bannerHtml += '</div>';
-
-                            // Append banner to bannerSection
-                            bannerSection.append(bannerHtml);
-                        });
+                    var bannerHtml = '<div class="banner">';
+                    if (banner.image) {
+                        bannerHtml += '<img src="' + banner.image.url + '" alt="' + banner.title + '" class="img-fluid">';
+                    } else {
+                        bannerHtml += '<p>No Image Available</p>';
                     }
-                });
-            </script>
-        @endpush
+                    bannerHtml += '<h2 style="color: ' + banner.title_color + '">' + (banner.title || 'Default Title') + '</h2>';
+                    bannerHtml += '<p style="color: ' + banner.text_color + '">' + (banner.text || 'Default Text') + '</p>';
+                    bannerHtml += '</div>';
+
+                    bannerContainer.html(bannerHtml);
+
+                    currentBannerIndex++;
+                    if (currentBannerIndex >= banners.length) {
+                        currentBannerIndex = 0;
+                    }
+
+                    setTimeout(displayBanner, 5000); // تاخیر برای نمایش بعدی
+                }
+
+                // اجرای اولیه
+                displayBanner();
+            });
+        </script>
+    @endpush
 
 
 
 
-
-
-
-
-
-    </main>
 
     <footer class="bg-gray-200">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">

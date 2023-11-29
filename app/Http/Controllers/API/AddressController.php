@@ -20,7 +20,7 @@ class AddressController extends Controller
      */
     public function index()
     {
-        $addresses = User::find(auth()->user()->id)->addresses;
+        $addresses = User::query()->find(auth()->user()->id)->addresses;
         return response(['All Addresses' => $addresses]);
     }
 

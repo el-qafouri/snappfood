@@ -6,7 +6,6 @@ use App\Jobs\SendEmailJob;
 use App\Models\Order;
 use App\Models\Restaurant;
 use App\Notifications\OrderStatus;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
@@ -32,34 +31,8 @@ class OrderController extends Controller
                 });
             }
 
-
-//            $index = 0;
-//            if ($request->filter == 'lastWeek') {
-//                foreach ($orders as $order) {
-//                    if (Carbon::now()->diff($order->created_at)->days > 7) {
-//                        unset($orders[$index]);
-//                    }
-//                    $index++;
-//                }
-//            } elseif ($request->filter == 'lastMonth') {
-//                foreach ($orders as $order) {
-//                    if (Carbon::now()->diff($order->created_at)->days > 30) {
-//                        unset($orders[$index]);
-//                    }
-//                    $index++;
-//                }
-//            } elseif ($request->filter == 'lastYear') {
-//                foreach ($orders as $order) {
-//                    if (Carbon::now()->diff($order->created_at)->days > 365) {
-//                        unset($orders[$index]);
-//                    }
-//                    $index++;
-//                }
-//            }
             return view('Mail.order', ['orders' => $orders]);
-        } catch (QueryException $e) {
-            return response(['Message' => $e->getMessage()], 500);
-        } catch (\Exception $e) {
+        } catch (QueryException|\Exception $e) {
             return response(['Message' => $e->getMessage()], 500);
         }
     }

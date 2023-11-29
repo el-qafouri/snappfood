@@ -31,47 +31,6 @@ class BannerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-//    public function store(BannerRequest $request)
-//    {
-//        try {
-//            (new \App\Models\Image)->save($request, 'banners');
-//            return redirect('panel.admin.banners')->with('success', 'banner create successfully');
-//        } catch (Exception $exception) {
-//            return redirect('panel.admin.banners', 500)->with('fail', 'failed to create banner...');
-//        }
-//
-//    }
-
-
-// در مدل BannerController
-//    public function store(Request $request)
-//    {
-//        $request->validate([
-//            'title' => 'required',
-//            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-//            'text' => 'required',
-//        ]);
-//
-//        // Store the image
-//        if ($request->hasFile('image')) {
-//            $imagePath = $request->file('image');
-//            $fileName = 'banner' . time() . '_' . $imagePath->hashName();
-//            $imagePath->move(public_path('banner'), $fileName);
-//        }
-//
-//        // Create the banner
-//        $banner = Banner::create([
-//            'title' => $request->input('title'),
-//            'text' => $request->input('text'),
-//        ]);
-//
-//        // Associate the image with the banner
-//        $banner->image()->create([
-//            'url' => $imagePath,
-//        ]);
-//
-//        return redirect()->route('banner.index')->with('success', 'Banner added successfully');
-//    }
 
 
 
