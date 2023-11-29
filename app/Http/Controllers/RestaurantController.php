@@ -18,28 +18,11 @@ class RestaurantController extends Controller
      * Display a listing of the resource.
      * @throws AuthorizationException
      */
-//    public function index()
-//    {
-//        $restaurants = Restaurant::all();
-//        return view('panel.seller.restaurants.index', compact('restaurants'));
-//    }
-
-
-
     public function index()
     {
-        $user = Auth::user();
-
-        if ($user->role === 'seller') {
-            $restaurants = Restaurant::where('user_id', $user->id)->get();
-            return view('panel.seller.restaurants.index', compact('restaurants'));
-        } elseif ($user->role === 'admin') {
-            $restaurants = Restaurant::all();
-            return view('panel.admin.restaurants.index', compact('restaurants'));
-        }
-        abort(403, 'Unauthorized action.');
+        $restaurants = Restaurant::all();
+        return view('panel.seller.restaurants.index', compact('restaurants'));
     }
-
 
 
     /**
@@ -125,13 +108,6 @@ class RestaurantController extends Controller
     }
 
 
-    //    public function updateProfileStatus(Request $request, $id)
-//    {
-//        $restaurant = Restaurant::findOrFail($id);
-//        // اگر پروفایل استاتوس فعال بود، غیرفعال و برعکس
-//        $restaurant->update(['profile_status' => !$restaurant->profile_status]);
-//        return redirect()->back()->with('success', 'Profile status updated successfully');
-//    }
 
     public function getLocation()
     {

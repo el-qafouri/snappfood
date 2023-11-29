@@ -54,7 +54,15 @@
 
 
 
-                    <td>{{ $restaurant->profile_status }}</td>
+{{--                    <td>{{ $restaurant->profile_status }}</td>--}}
+                    <td>
+                        @if($restaurant->profile_status == 1)
+                            فعال
+                        @else
+                            غیرفعال
+                        @endif
+                    </td>
+
                     <td>
                         <a href="{{ route('restaurant.show', $restaurant->id) }}" class="btn btn-success"><i
                                 class="fas fa-eye"></i> Show</a>
