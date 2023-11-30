@@ -23,4 +23,8 @@ class Cart extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function food()
+    {
+        return $this->belongsTo(Food::class, 'food_id');
+    }
 }

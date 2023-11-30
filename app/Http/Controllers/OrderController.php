@@ -19,23 +19,45 @@ class OrderController extends Controller
     }
 
 
+//    public function index(Request $request)
+//    {
+//        try {
+//            $restaurantId = Restaurant::query()->where('user_id', auth()->user()->id)->value('id');
+//            $orders = Order::query()->where('restaurant_id', $restaurantId)->where('seller_status', '!=' , 'delivered')->orderBy('created_at')->get();
+//            if ($request->has('seller_status')){
+//                $orders = $orders->filter(function ($order){
+//                   return $order->seller_status === \request()->get('seller_status');
+//                });
+//            }
+//
+//            return view('Mail.order', ['orders' => $orders]);
+//        } catch (QueryException|\Exception $e) {
+//            return response(['Message' => $e->getMessage()], 500);
+//        }
+//    }
+
+
     public function index(Request $request)
     {
         try {
-            $restaurantId = Restaurant::query()->where('user_id', auth()->user()->id)->value('id');
+            $restaurantId = Restaurant::where('user_id', auth()->user()->id)->value('id');
 
-            $orders = Order::query()->where('restaurant_id', $restaurantId)->where('seller_status', '!=' , 'delivered')->orderBy('created_at')->get();
+            $query = Order::where('restaurant_id', $restaurantId)->where('seller_status', '!=', 'delivered');
+
             if ($request->has('seller_status')){
-                $orders = $orders->filter(function ($order){
-                   return $order->seller_status === \request()->get('seller_status');
-                });
+                $query = $query->where('seller_status', $request->seller_status);
             }
 
+            $orders = $query->orderBy('created_at')->get();
+
             return view('Mail.order', ['orders' => $orders]);
-        } catch (QueryException|\Exception $e) {
+        } catch (QueryExceptionException $e) {
             return response(['Message' => $e->getMessage()], 500);
         }
     }
+
+
+
 
 
     public function update(Order $order, $newStatus)
@@ -44,11 +66,7 @@ class OrderController extends Controller
 //        dd('hi hi');
         $order->update(['seller_status' => $newStatus]);
         \Illuminate\Support\Facades\Notification::send($order->user, new OrderStatus($order, $newStatus));
-//        if ($newStatus == 'delivered'){
-//
-//        }
         return redirect()->route('orders.index')->with('success', "Order has been updated to new status: {$newStatus}");
-
     }
 
 

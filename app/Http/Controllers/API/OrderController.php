@@ -152,34 +152,19 @@ class OrderController
         ]);
 
         try {
-            // ایجاد یک کارت جدید
             $cart = Cart::create([
                 'user_id' => auth()->user()->id,
                 'food_id' => $request->food_id,
                 'count' => $request->count,
-                'payment_status' => 'unpaid', // مقدار پیش‌فرض برای وضعیت پرداخت
+                'payment_status' => 'unpaid',
             ]);
 
-            // ایجاد یک سفارش جدید
-            $order = Order::create([
-                'user_id' => auth()->user()->id,
-                'food_id' => $request->food_id,
-                'count' => $request->count,
-                'payment_status' => 'unpaid', // مقدار پیش‌فرض برای وضعیت پرداخت
-                'cart_id' => $cart->id, // ارتباط با کارت مرتبط
-            ]);
-
-            return response(['Message' => 'Order placed successfully', 'Order ID' => $order->id, 'Cart ID' => $cart->id]);
+            return response(['Message' => 'Order placed successfully', 'Cart ID' => $cart->id]);
         } catch (\Exception $e) {
             \Log::error('An unexpected error occurred: ' . $e->getMessage());
             return response(['Message' => 'An unexpected error occurred. Please try again later.'], 500);
         }
     }
-
-
-
-
-
 
 
 
@@ -191,7 +176,7 @@ class OrderController
         ]);
 
         $order = Order::query()->where(['restaurant_id' => Food::query()->find($request->food_id)->restaurant->id,
-            'user_id' => auth()->user()->id, 'customer_status' => 'unpaid'])->first();
+            'user_id' => auth()->user()->id, 'payment_status' => 'unpaid'])->first();
         if ($order == null) return \response(['Message' => "You don't have unpaid card"]);
 
         $foods = $order->foods->first()->pivot->pluck('food_id')->toArray();
@@ -255,44 +240,6 @@ class OrderController
 
 
 
-//    public function payCard($id)
-//    {
-//        try {
-//            $cartOrder = Cart::find($id);
-//
-//            if (!$cartOrder) {
-//                return response(['Message' => "This isn't a valid order."], 404);
-//            }
-//
-//            // اعمال هر چیزی که برای پرداخت لازم است
-//            // ...
-//
-//            // بعد از اعمال پرداخت، بررسی وضعیت پرداخت
-//            if ($cartOrder->payment_status === 'paid') {
-//                // ایجاد یک سفارش جدید در جدول orders
-//                $newOrder = Order::create([
-//                    'user_id' => $cartOrder->user_id,
-//                    'food_id' => $cartOrder->food_id,
-//                    'count' => $cartOrder->count,
-//                    'payment_status' => 'paid', // یا هر مقدار دلخواه دیگری
-//                ]);
-//
-//                // حذف سفارش از جدول carts
-//                $cartOrder->delete();
-//
-//                return response(['Message' => "Order number $id paid successfully"]);
-//            } else {
-//                return response(['Message' => "Payment for this order has not been completed."], 400);
-//            }
-//        } catch (\Exception $e) {
-//            \Log::error('An unexpected error occurred: ' . $e->getMessage());
-//            return response(['Message' => 'An unexpected error occurred. Please try again later.'], 500);
-//        }
-//    }
-
-
-
-
 // POST api/verify-payment/{id}
     public function payCard($id)
     {
@@ -307,21 +254,26 @@ class OrderController
 
 
 
-    // POST api/complete-order/{id}
+
     public function completeOrder($id)
     {
         DB::beginTransaction();
 
         try {
-            $cartOrder = Cart::where('id', $id)->where('payment_status', 'paid')->firstOrFail();
+            $cartOrder = Cart::with(['food.restaurant'])->where('id', $id)->where('payment_status', 'paid')->firstOrFail();
+            $totalPrice = $cartOrder->food ? $cartOrder->food->price * $cartOrder->count : 0;
+            $restaurantId = optional(optional($cartOrder->food)->restaurant)->id;
 
             $newOrder = Order::create([
                 'user_id'        => $cartOrder->user_id,
                 'food_id'        => $cartOrder->food_id,
                 'count'          => $cartOrder->count,
-                'payment_status' => $cartOrder->payment_status,
+                'restaurant_id'  => $restaurantId,
+                'payment_status' => 'paid',
+                'total_price'    => $totalPrice,
             ]);
 
+            // حذف کارت پس از انتقال موفق به اوردر
             $cartOrder->delete();
 
             DB::commit();
@@ -331,8 +283,9 @@ class OrderController
             DB::rollBack();
             \Log::error("Error completing order: " . $e->getMessage());
 
-            // اضافه کردن پیغام خطای استثنا به پاسخ - فقط برای مقاصد دیباگ
             return response(['Message' => 'An unexpected error occurred while transferring the order: ' . $e->getMessage()], 500);
         }
     }
+
+
 }
