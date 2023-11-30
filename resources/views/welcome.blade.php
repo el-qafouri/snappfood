@@ -69,104 +69,136 @@
 
 
 
-{{--    <div class="banner-section">--}}
-{{--        <div class="container">--}}
-{{--            <div class="row">--}}
-{{--                @foreach ($banners as $banner)--}}
-{{--                    <div class="col-md-12">--}}
-{{--                        <div class="banner">--}}
-{{--                            @if (is_object($banner) && $banner->image)--}}
-{{--                                <img src="{{ asset('storage/' . $banner->image->url) }}" alt="{{ $banner->title }}" class="img-fluid">--}}
-{{--                            @else--}}
-{{--                                <p>No Image Available</p>--}}
-{{--                            @endif--}}
-{{--                            <h2>{{ $banner->title ?? 'Default Title' }}</h2>--}}
-{{--                            <p>{{ $banner->text ?? 'Default Text' }}</p>--}}
-{{--                        </div>--}}
+
+
+
+
+
+{{--    <div id="bannerContainer" style="background-color: gainsboro ; padding-top: 50px; padding-bottom: 50px ; padding-left: 250px" >--}}
+{{--        <div id="bannerContainer">--}}
+{{--            @foreach ($banners as $banner)--}}
+{{--                <div class="card" style="display: inline-block;">--}}
+{{--                    <img src="{{ asset('storage/' . $banner->image->url) }}" alt="{{ $banner->title }}" class="card-img-top" width="200px" height="150px" style="border: 2px solid {{ $banner->border_color }}">--}}
+{{--                    <div class="card-body">--}}
+{{--                        <h2 class="card-title" style="color: {{ $banner->title_color }}">{{ $banner->title ?? 'Default Title' }}</h2>--}}
+{{--                        <p class="card-text" style="color: {{ $banner->text_color }}">{{ $banner->text ?? 'Default Text' }}</p>--}}
 {{--                    </div>--}}
-{{--                @endforeach--}}
-{{--            </div>--}}
+{{--                </div>--}}
+{{--            @endforeach--}}
 {{--        </div>--}}
-{{--    </div>--}}
+
+
+{{--    <style>--}}
+{{--        .card {--}}
+{{--            width: 200px;--}}
+{{--            height: 150px;--}}
+{{--            margin: 10px;--}}
+{{--        }--}}
+
+{{--        .card-img-top {--}}
+{{--            width: 100%;--}}
+{{--            height: 100%;--}}
+{{--        }--}}
+
+{{--        .card {--}}
+{{--            background-color: #ccc;--}}
+{{--        }--}}
+{{--    </style>--}}
 
 
 
-{{--    @foreach ($banners as $banner)--}}
-{{--<div class="banner">--}}
-{{--    @if (!empty($banner->image))--}}
-{{--        <img src="{{ asset('storage/' . $banner->image->url) }}" class="img-fluid">--}}
-{{--    @else--}}
-{{--        <p>No Image Available</p>--}}
-{{--    @endif--}}
-{{--    <h2>{{ $banner->title ?? 'Default Title' }}</h2>--}}
-{{--    <p>{{ $banner->text ?? 'Default Text' }}</p>--}}
-{{--</div>--}}
-{{--    @endforeach--}}
+
+
+{{--    <footer class="bg-gray-200">--}}
+{{--        <div class="container mx-auto px-6 py-3 flex justify-between items-center">--}}
+{{--            <a href="#" class="text-xl font-bold text-gray-500 hover:text-gray-400">Brand</a>--}}
+{{--            <p class="py-2 text-gray-500 sm:py-0">All rights reserved</p>--}}
+{{--        </div>--}}
+{{--    </footer>--}}
+</div>
 
 
 
 
 
-
-    <div id="bannerContainer">
-    @foreach ($banners as $banner)
-        <div class="banner" style="background-color: {{ $banner->background_color }}">
-            @if (!empty($banner->image))
-                <img src="{{ asset('storage/' . $banner->image->url) }}" alt="{{ $banner->title }}" class="img-fluid" width="100" height="50" style="border: 2px solid {{ $banner->border_color }}" >
-            @else
-                <p style="color: {{ $banner->text_color }}">No Image Available</p>
-            @endif
-            <h2 style="color: {{ $banner->title_color }}">{{ $banner->title ?? 'Default Title' }}</h2>
-            <p style="color: {{ $banner->text_color }}">{{ $banner->text ?? 'Default Text' }}</p>
+<div>
+    <div id="bannerContainer" style="background-color: gainsboro ; padding-top: 50px; padding-bottom: 50px ; padding-left: 250px" >
+        <div id="bannerContainer">
+            @foreach ($banners as $banner)
+                <div class="card" style="display: inline-block;">
+                    <img src="{{ asset('storage/' . $banner->image->url) }}" alt="{{ $banner->title }}" class="card-img-top" width="200px" height="150px" style="border: 2px solid {{ $banner->border_color }}">
+                    <div class="card-body">
+                        <h2 class="card-title" style="color: {{ $banner->title_color }}">{{ $banner->title ?? 'Default Title' }}</h2>
+                        <p class="card-text" style="color: {{ $banner->text_color }}">{{ $banner->text ?? 'Default Text' }}</p>
+                    </div>
+                </div>
+            @endforeach
         </div>
-    @endforeach
-        </div>
+    </div>
 
-    @push('scripts')
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                var banners = @json($banners); // تبدیل آرایه بنرها به JSON
-                var bannerContainer = $('#bannerContainer');
-                var currentBannerIndex = 0;
+        <style>
+            .card {
+                width: 200px;
+                height: 150px;
+                margin: 10px;
+            }
 
-                function displayBanner() {
-                    var banner = banners[currentBannerIndex];
+            .card-img-top {
+                width: 100%;
+                height: 100%;
+            }
 
-                    var bannerHtml = '<div class="banner">';
-                    if (banner.image) {
-                        bannerHtml += '<img src="' + banner.image.url + '" alt="' + banner.title + '" class="img-fluid">';
-                    } else {
-                        bannerHtml += '<p>No Image Available</p>';
-                    }
-                    bannerHtml += '<h2 style="color: ' + banner.title_color + '">' + (banner.title || 'Default Title') + '</h2>';
-                    bannerHtml += '<p style="color: ' + banner.text_color + '">' + (banner.text || 'Default Text') + '</p>';
-                    bannerHtml += '</div>';
+            .card {
+                display: none;
+                background-color: #ccc;
+            }
 
-                    bannerContainer.html(bannerHtml);
+            #bannerContainer {
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: center;
+                overflow-x: auto;
+                padding: 50px 0;
+                background-color: gainsboro;
+            }
 
-                    currentBannerIndex++;
-                    if (currentBannerIndex >= banners.length) {
-                        currentBannerIndex = 0;
-                    }
+        </style>
 
-                    setTimeout(displayBanner, 5000); // تاخیر برای نمایش بعدی
-                }
+{{--        <script>--}}
+{{--            const bannerContainer = document.getElementById('bannerContainer');--}}
+{{--            const cards = bannerContainer.querySelectorAll('.card');--}}
 
-                // اجرای اولیه
-                displayBanner();
-            });
-        </script>
-    @endpush
+{{--            let currentCardIndex = 0;--}}
+
+{{--            function showNextCard() {--}}
+{{--                cards[currentCardIndex].style.display = 'none';--}}
+{{--                currentCardIndex++;--}}
+{{--                if (currentCardIndex >= cards.length) {--}}
+{{--                    currentCardIndex = 0;--}}
+{{--                }--}}
+{{--                cards[currentCardIndex].style.display = 'block';--}}
+{{--            }--}}
+
+{{--            setInterval(showNextCard, 5000);--}}
+{{--        </script>--}}
 
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const bannerContainer = document.getElementById('bannerContainer');
+            const cards = bannerContainer.querySelectorAll('.card');
 
+            let currentCardIndex = 0;
+            cards[currentCardIndex].style.display = 'block';
 
+            function showNextCard() {
+                cards[currentCardIndex].style.display = 'none';
+                currentCardIndex = (currentCardIndex + 1) % cards.length;
+                cards[currentCardIndex].style.display = 'block';
+            }
 
-    <footer class="bg-gray-200">
-        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="#" class="text-xl font-bold text-gray-500 hover:text-gray-400">Brand</a>
-            <p class="py-2 text-gray-500 sm:py-0">All rights reserved</p>
-        </div>
-    </footer>
+            setInterval(showNextCard, 5000);
+        });
+    </script>
+
 </div>

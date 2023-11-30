@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 
+use App\Http\Controllers\ReportController;
 use App\Models\Banner;
 use Illuminate\Support\Facades\Route;
 
@@ -40,7 +41,7 @@ require __DIR__ . '/web/user.php';
 
 
 
-Route::get('/reports', [ReportController::class, 'index']);
+Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 Route::get('/reports/export', [ReportController::class, 'export']);
 
 //Route::get('test' , \App\Http\Controllers\TestController::class);

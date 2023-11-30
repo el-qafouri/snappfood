@@ -19,6 +19,11 @@ return new class extends Migration {
 
         Schema::table('discounts', function (Blueprint $table) {
 //            $table->foreign('food_id')->references('id')->on('foods')->cascadeOnDelete();
+            $table->foreign('user_id')->references('id')->on('restaurants');
+            $table->foreign('food_id')->references('id')->on('foods')->cascadeOnDelete();
+        });
+
+        Schema::table('carts', function (Blueprint $table) {
             $table->foreign('restaurant_id')->references('id')->on('restaurants');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });
