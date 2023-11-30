@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('carts/update', [OrderController::class, 'update']);
     Route::get('carts/{cartId}', [OrderController::class, 'getCard'])->whereNumber('cartId');
     Route::post('carts/{cartId}/pay', [OrderController::class, 'payCard'])->whereNumber('cartId');
+    Route::post('carts/{cartId}/completeOrder', [OrderController::class, 'completeOrder'])->whereNumber('cartId');
     Route::delete('carts/delete', [OrderController::class, 'destroy']);
 
     //comments

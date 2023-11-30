@@ -8,6 +8,7 @@ use App\Models\Discount;
 use App\Models\Food;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 
@@ -88,6 +89,61 @@ class OrderController
 
 
 
+//    public function add(Request $request)
+//    {
+//        $request->validate([
+//            'food_id' => 'required',
+//            'count' => 'required|integer|min:1',
+//        ]);
+//
+//        try {
+//            $food = Food::query()->find($request->food_id);
+//
+//            if (!$food) {
+//                return response(['Message' => 'Food not found.'], 404);
+//            }
+//
+//            $discounts = $food->discounts;
+//            $discountAmount = $discounts ? $discounts->sum('discountAmount') : 0;
+//            $foodPrice = $discountAmount * $request->count;
+//
+//            $order = Order::query()->where([
+//                'user_id' => auth()->user()->id,
+//                'restaurant_id' => $food->restaurant->id,
+//                'customer_status' => 'unpaid',
+//            ])->first();
+//
+//            if ($order) {
+//                $existingFood = $order->foods->find($request->food_id);
+//
+//                if ($existingFood) {
+//                    $existingFood->pivot->count += $request->count;
+//                    $existingFood->pivot->save();
+//                } else {
+//                    $order->foods()->attach($food, ['count' => $request->count]);
+//                }
+//
+//                $order->total_price += $foodPrice;
+//                $order->save();
+//            } else {
+//                $order = Order::create([
+//                    'user_id' => auth()->user()->id,
+//                    'restaurant_id' => $food->restaurant->id,
+//                    'total_price' => $foodPrice,
+//                    // سایر فیلدها...
+//                ]);
+//
+//                $order->foods()->attach($food, ['count' => $request->count]);
+//            }
+//
+//            return response(['Message' => 'Food added to cart successfully', 'Order ID' => $order->id]);
+//        } catch (\Exception $e) {
+//            \Log::error('An unexpected error occurred: ' . $e->getMessage());
+//            return response(['Message' => 'An unexpected error occurred. Please try again later.'], 500);
+//        }
+//    }
+
+
     public function add(Request $request)
     {
         $request->validate([
@@ -96,51 +152,34 @@ class OrderController
         ]);
 
         try {
-            $food = Food::query()->find($request->food_id);
-
-            if (!$food) {
-                return response(['Message' => 'Food not found.'], 404);
-            }
-
-            $discounts = $food->discounts;
-            $discountAmount = $discounts ? $discounts->sum('discountAmount') : 0;
-            $foodPrice = $discountAmount * $request->count;
-
-            $order = Order::query()->where([
+            // ایجاد یک کارت جدید
+            $cart = Cart::create([
                 'user_id' => auth()->user()->id,
-                'restaurant_id' => $food->restaurant->id,
-                'customer_status' => 'unpaid',
-            ])->first();
+                'food_id' => $request->food_id,
+                'count' => $request->count,
+                'payment_status' => 'unpaid', // مقدار پیش‌فرض برای وضعیت پرداخت
+            ]);
 
-            if ($order) {
-                $existingFood = $order->foods->find($request->food_id);
+            // ایجاد یک سفارش جدید
+            $order = Order::create([
+                'user_id' => auth()->user()->id,
+                'food_id' => $request->food_id,
+                'count' => $request->count,
+                'payment_status' => 'unpaid', // مقدار پیش‌فرض برای وضعیت پرداخت
+                'cart_id' => $cart->id, // ارتباط با کارت مرتبط
+            ]);
 
-                if ($existingFood) {
-                    $existingFood->pivot->count += $request->count;
-                    $existingFood->pivot->save();
-                } else {
-                    $order->foods()->attach($food, ['count' => $request->count]);
-                }
-
-                $order->total_price += $foodPrice;
-                $order->save();
-            } else {
-                $order = Order::create([
-                    'user_id' => auth()->user()->id,
-                    'restaurant_id' => $food->restaurant->id,
-                    'total_price' => $foodPrice,
-                    // سایر فیلدها...
-                ]);
-
-                $order->foods()->attach($food, ['count' => $request->count]);
-            }
-
-            return response(['Message' => 'Food added to cart successfully', 'Order ID' => $order->id]);
+            return response(['Message' => 'Order placed successfully', 'Order ID' => $order->id, 'Cart ID' => $cart->id]);
         } catch (\Exception $e) {
             \Log::error('An unexpected error occurred: ' . $e->getMessage());
             return response(['Message' => 'An unexpected error occurred. Please try again later.'], 500);
         }
     }
+
+
+
+
+
 
 
 
@@ -216,5 +255,84 @@ class OrderController
 
 
 
+//    public function payCard($id)
+//    {
+//        try {
+//            $cartOrder = Cart::find($id);
+//
+//            if (!$cartOrder) {
+//                return response(['Message' => "This isn't a valid order."], 404);
+//            }
+//
+//            // اعمال هر چیزی که برای پرداخت لازم است
+//            // ...
+//
+//            // بعد از اعمال پرداخت، بررسی وضعیت پرداخت
+//            if ($cartOrder->payment_status === 'paid') {
+//                // ایجاد یک سفارش جدید در جدول orders
+//                $newOrder = Order::create([
+//                    'user_id' => $cartOrder->user_id,
+//                    'food_id' => $cartOrder->food_id,
+//                    'count' => $cartOrder->count,
+//                    'payment_status' => 'paid', // یا هر مقدار دلخواه دیگری
+//                ]);
+//
+//                // حذف سفارش از جدول carts
+//                $cartOrder->delete();
+//
+//                return response(['Message' => "Order number $id paid successfully"]);
+//            } else {
+//                return response(['Message' => "Payment for this order has not been completed."], 400);
+//            }
+//        } catch (\Exception $e) {
+//            \Log::error('An unexpected error occurred: ' . $e->getMessage());
+//            return response(['Message' => 'An unexpected error occurred. Please try again later.'], 500);
+//        }
+//    }
 
+
+
+
+// POST api/verify-payment/{id}
+    public function payCard($id)
+    {
+        $cart = Cart::query()->find($id);
+        if ($cart == null)
+            return response(['Message' => "this isn't your cart"]);
+
+        $cart->payment_status = 'paid';
+        $cart->save();
+        return response(['Message' => "cart number $id paid successfully"]);
+    }
+
+
+
+    // POST api/complete-order/{id}
+    public function completeOrder($id)
+    {
+        DB::beginTransaction();
+
+        try {
+            $cartOrder = Cart::where('id', $id)->where('payment_status', 'paid')->firstOrFail();
+
+            $newOrder = Order::create([
+                'user_id'        => $cartOrder->user_id,
+                'food_id'        => $cartOrder->food_id,
+                'count'          => $cartOrder->count,
+                'payment_status' => $cartOrder->payment_status,
+            ]);
+
+            $cartOrder->delete();
+
+            DB::commit();
+
+            return response(['Message' => "Order number $id transferred to orders successfully."]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error("Error completing order: " . $e->getMessage());
+
+            // اضافه کردن پیغام خطای استثنا به پاسخ - فقط برای مقاصد دیباگ
+            return response(['Message' => 'An unexpected error occurred while transferring the order: ' . $e->getMessage()], 500);
+        }
+    }
 }
