@@ -66,9 +66,9 @@
     <div class="btn-group d-flex justify-content-center mb-4" role="group" aria-label="Basic example">
         <a href="{{ route('reports.index', ['filter' => 'today']) }}" class="btn btn-outline-primary mx-1">امروز</a>
         <a href="{{ route('reports.index', ['filter' => 'this_week']) }}" class="btn btn-outline-primary mx-1">این هفته</a>
-{{--        <a href="{{ route('reports.index', ['filter' => 'this_month']) }}" class="btn btn-outline-primary mx-1">این ماه</a>--}}
+        <a href="{{ route('reports.index', ['filter' => 'this_month']) }}" class="btn btn-outline-primary mx-1">این ماه</a>
 
-        <a href="{{ route('reports.index') }}" class="btn btn-outline-primary mx-1">همه سفارش‌ها</a>
+        <a href="{{ route('reports.index', ['filter' => 'all']) }}" class="btn btn-outline-primary mx-1">همه سفارش‌ها</a>
 
 
     </div>
@@ -104,5 +104,8 @@
 </div>
 
 
+<hr>
+
+<a href="{{ route('reports.export') }}" class="btn btn-success">دانلود اکسل</a>
 
 @endsection

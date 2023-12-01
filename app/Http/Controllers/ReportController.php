@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
@@ -30,9 +31,16 @@ class ReportController extends Controller
             case 'this_week':
                 $ordersQuery->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
                 break;
+//            case 'this_month':
+//            default:
+//                $ordersQuery->whereMonth('created_at', now()->month);
+//                break;
             case 'this_month':
-            default:
-                $ordersQuery->whereMonth('created_at', now()->month);
+                $ordersQuery->whereMonth('created_at', '=', Carbon::now()->month);
+                $ordersQuery->whereYear('created_at', '=', Carbon::now()->year);
+
+                break;
+                case 'all':
                 break;
         }
 
@@ -54,6 +62,9 @@ class ReportController extends Controller
     }
 
 
-
+    public function export(Request $request)
+    {
+        return Excel::download(new OrdersExport, 'orders.xlsx');
+    }
 
 }
