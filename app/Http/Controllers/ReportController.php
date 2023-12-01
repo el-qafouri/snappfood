@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\OrdersExport;
 use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
@@ -14,11 +16,11 @@ class ReportController extends Controller
     public function index(Request $request)
     {
         $filter = $request->get('filter', 'this_month');
-        // حصول اطمینان از شناسه رستوران
+
         $restaurantId = auth()->user()->restaurant->id ?? null;
 
         if (!$restaurantId) {
-            // اطلاعاتی یافت نشده یا کاربر مجوز لازم را ندارد.
+
             abort(403, 'Access denied or no restaurant associated with the user.');
         }
 
@@ -31,16 +33,12 @@ class ReportController extends Controller
             case 'this_week':
                 $ordersQuery->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
                 break;
-//            case 'this_month':
-//            default:
-//                $ordersQuery->whereMonth('created_at', now()->month);
-//                break;
             case 'this_month':
                 $ordersQuery->whereMonth('created_at', '=', Carbon::now()->month);
                 $ordersQuery->whereYear('created_at', '=', Carbon::now()->year);
 
                 break;
-                case 'all':
+            case 'all':
                 break;
         }
 
@@ -48,7 +46,7 @@ class ReportController extends Controller
         $totalSales = $ordersQuery->sum('total_price');
 
         // تغییر 'with('orderDetails') به 'with('foods')'
-        $orders = $ordersQuery->with(['foods' => function($query) {
+        $orders = $ordersQuery->with(['foods' => function ($query) {
             $query->select('foods.id', 'name')->withPivot('count');
         }])->get();
 
@@ -62,9 +60,27 @@ class ReportController extends Controller
     }
 
 
-    public function export(Request $request)
+    public function export()
     {
         return Excel::download(new OrdersExport, 'orders.xlsx');
+    }
+
+
+    public function showSalesReport()
+    {
+        // استخراج داده‌ها از پایگاه داده - تغییر دهید بر اساس ساختار داده‌های خود
+        $salesData = Order::select(
+            DB::raw('date(created_at) as date'),
+            DB::raw('sum(total_price) as total_sales')
+        )
+            ->groupBy('date')
+            ->orderBy('date', 'asc')
+            ->get();
+
+        $salesLabels = $salesData->pluck('date')->all(); // تاریخ‌ها به عنوان برچسب
+        $salesAmounts = $salesData->pluck('total_sales')->all(); // مجموع فروش به عنوان داده‌ها
+
+        return view('your.blade.view', compact('salesLabels', 'salesAmounts'));
     }
 
 }

@@ -22,6 +22,11 @@
     />
     <link rel="stylesheet" href="../../css/app.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
     <title>@yield('title')</title>
 </head>
 <body>
@@ -40,5 +45,7 @@
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"
 ></script>
+
+<script src="https://cdn.jsdelivr.net/npm/[email protected]/dist/chart.min.js"></script>
 </body>
 </html>

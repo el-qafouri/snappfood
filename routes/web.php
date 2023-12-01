@@ -44,11 +44,9 @@ require __DIR__ . '/web/user.php';
 
 Route::prefix('reports')->middleware('auth')->group(function () {
     Route::get('/', [ReportController::class, 'index'])->name('reports.index');
-//    Route::post('login', [AuthController::class, 'login'])->middleware('web')->name('login');
-//    Route::get('register', [AuthController::class, 'showRegister'])->name('register.show');
-//    Route::post('register', [AuthController::class, 'register'])->name('register');
-//    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-//    Route::get('sellerRegister', [AuthController::class, 'showSellerRegister'])->name('register.seller');
+
+    Route::get('/export-orders', [ReportController::class , 'export'])->name('reports.export-orders');
+
 });
 
 
