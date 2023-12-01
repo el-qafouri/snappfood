@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReportController;
 use App\Models\Banner;
 use Illuminate\Support\Facades\Route;
@@ -41,8 +42,21 @@ require __DIR__ . '/web/user.php';
 
 
 
-Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
-Route::get('/reports/export', [ReportController::class, 'export']);
+Route::prefix('reports')->middleware('auth')->group(function () {
+    Route::get('/', [ReportController::class, 'index'])->name('reports.index');
+//    Route::post('login', [AuthController::class, 'login'])->middleware('web')->name('login');
+//    Route::get('register', [AuthController::class, 'showRegister'])->name('register.show');
+//    Route::post('register', [AuthController::class, 'register'])->name('register');
+//    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+//    Route::get('sellerRegister', [AuthController::class, 'showSellerRegister'])->name('register.seller');
+});
+
+
+
+
+//Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+//Route::get('/reports/export', [ReportController::class, 'export']);
+
 
 //Route::get('test' , \App\Http\Controllers\TestController::class);
 

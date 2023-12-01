@@ -66,11 +66,18 @@
             </tr>
 
 
+            <tr>
+                <td>Reports</td>
+                <td>
+                    <a href="{{ route('reports.index') }}" class="btn btn-primary"><i class="fas fa-edit"></i>show</a>
+                </td>
+            </tr>
+
 
             <tr>
                 <td>Comments</td>
                 <td>
-                    <a href="{{ route('salam') }}" class="btn btn-primary"><i class="fas fa-edit"></i>show</a>
+                    <a href="" class="btn btn-primary"><i class="fas fa-edit"></i>show</a>
                 </td>
             </tr>
 

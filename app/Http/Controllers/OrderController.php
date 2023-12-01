@@ -44,7 +44,7 @@ class OrderController extends Controller
 
             $query = Order::where('restaurant_id', $restaurantId)->where('seller_status', '!=', 'delivered');
 
-            if ($request->has('seller_status')){
+            if ($request->has('seller_status')) {
                 $query = $query->where('seller_status', $request->seller_status);
             }
 
@@ -55,9 +55,6 @@ class OrderController extends Controller
             return response(['Message' => $e->getMessage()], 500);
         }
     }
-
-
-
 
 
     public function update(Order $order, $newStatus)
@@ -75,10 +72,8 @@ class OrderController extends Controller
         $user = auth()->user();
         $restaurantId = $user->restaurant->id;
         $deliverOrders = Order::query()->where('seller_status', 'delivered')->where('restaurant_id', $restaurantId)->get();
-        return view('panel.seller.panel.archive' , compact('deliverOrders'));
+        return view('panel.seller.panel.archive', compact('deliverOrders'));
     }
-
-
 
 
 }
