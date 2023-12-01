@@ -24,23 +24,27 @@ class ReportController extends Controller
             abort(403, 'Access denied or no restaurant associated with the user.');
         }
 
-        $ordersQuery = Order::where('restaurant_id', $restaurantId);
-        // ...
-        switch ($filter) {
-            case 'today':
-                $ordersQuery->whereDate('created_at', today());
-                break;
-            case 'this_week':
-                $ordersQuery->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
-                break;
-            case 'this_month':
-                $ordersQuery->whereMonth('created_at', '=', Carbon::now()->month);
-                $ordersQuery->whereYear('created_at', '=', Carbon::now()->year);
 
-                break;
-            case 'all':
-                break;
-        }
+
+
+
+            $ordersQuery = Order::where('restaurant_id', $restaurantId);
+            // ...
+            switch ($filter) {
+                case 'today':
+                    $ordersQuery->whereDate('created_at', today());
+                    break;
+                case 'this_week':
+                    $ordersQuery->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+                    break;
+                case 'this_month':
+                    $ordersQuery->whereMonth('created_at', '=', Carbon::now()->month);
+                    $ordersQuery->whereYear('created_at', '=', Carbon::now()->year);
+
+                    break;
+                case 'all':
+                    break;
+            }
 
         $totalOrders = $ordersQuery->count();
         $totalSales = $ordersQuery->sum('total_price');
@@ -68,7 +72,6 @@ class ReportController extends Controller
 
     public function showSalesReport()
     {
-        // استخراج داده‌ها از پایگاه داده - تغییر دهید بر اساس ساختار داده‌های خود
         $salesData = Order::select(
             DB::raw('date(created_at) as date'),
             DB::raw('sum(total_price) as total_sales')
@@ -77,10 +80,11 @@ class ReportController extends Controller
             ->orderBy('date', 'asc')
             ->get();
 
-        $salesLabels = $salesData->pluck('date')->all(); // تاریخ‌ها به عنوان برچسب
-        $salesAmounts = $salesData->pluck('total_sales')->all(); // مجموع فروش به عنوان داده‌ها
+        $salesLabels = $salesData->pluck('date')->all();
+        $salesAmounts = $salesData->pluck('total_sales')->all();
 
         return view('your.blade.view', compact('salesLabels', 'salesAmounts'));
     }
+
 
 }

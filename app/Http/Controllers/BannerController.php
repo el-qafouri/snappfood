@@ -89,24 +89,20 @@ class BannerController extends Controller
         $banner = Banner::query()->findOrFail($id);
 
         if ($request->hasFile('image')) {
-            // If a new image is uploaded, update it
             $request->validate([
                 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
 
-            // Delete the old image
             if ($banner->image) {
                 Storage::disk('public')->delete($banner->image->url);
             }
 
-            // Store the new image
             $imagePath = $request->file('image')->store('banner', 'public');
             $banner->image()->update([
                 'url' => $imagePath,
             ]);
         }
 
-        // Update the banner details
         $banner->update([
             'title' => $request->input('title'),
             'text' => $request->input('text'),

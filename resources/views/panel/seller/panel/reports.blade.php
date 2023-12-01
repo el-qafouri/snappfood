@@ -5,7 +5,7 @@
     <div class="container my-5">
         <h1 class="text-center mb-3">گزارش فروش</h1>
 
-        {{-- لینک‌های فیلترهای زمانی --}}
+
         <div class="btn-group d-flex justify-content-center mb-4" role="group" aria-label="Basic example">
             <a href="{{ route('reports.index', ['filter' => 'today']) }}" class="btn btn-outline-primary mx-1">امروز</a>
             <a href="{{ route('reports.index', ['filter' => 'this_week']) }}" class="btn btn-outline-primary mx-1">این
@@ -15,11 +15,10 @@
 
             <a href="{{ route('reports.index', ['filter' => 'all']) }}" class="btn btn-outline-primary mx-1">همه
                 سفارش‌ها</a>
-
-
         </div>
 
-        {{-- استخراج آمار کلی --}}
+
+
         <p class="text-center">تعداد کل سفارشات: {{ $totalOrders }}</p>
         <p class="text-center">مجموع فروش: {{ $totalSales }}</p>
 
@@ -52,16 +51,10 @@
 
 
     <hr>
-    {{--<div style="padding-left: 100px">--}}
-    {{--<a href="{{ route('reports.export-orders') }}" class="btn btn-success">دانلود اکسل</a>--}}
-    {{--</div>--}}
+
 
     <h3 class="text-center">بررسی نمودار فروش</h3>
     <br>
-
-
-
-
 
     @php
         $orders = \App\models\Order::orderBy('created_at', 'asc')->get();

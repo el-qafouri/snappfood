@@ -50,52 +50,7 @@ class RestaurantController extends Controller
             'restaurants' => $restaurants
         ], 200);
     }
-
-
-
-
-//    public function index()
-//    {
-//        $user = auth()->user();
-//
-//        // اگر کاربر لاگین نکرده باشد
-//        if (!$user) {
-//            return response(['Message' => 'User not authenticated.'], 401);
-//        }
-//
-//        $userCoordinates = DB::table('addresses')
-//            ->where('addressable_type', 'App\Models\User')
-//            ->where('addressable_id', $user->id)
-//            ->where('active' , '==' , true)
-//            ->select('latitude', 'longitude')
-//            ->first();
-//
-//        // اگر اطلاعات موقعیت جغرافیایی برای کاربر موجود نبود یا غیرفعال بود
-//        if (!$userCoordinates) {
-//            return response(['Message' => 'User coordinates not found or inactive.'], 404);
-//        }
-//        // محاسبه فاصله با رستوران‌ها
-//        $restaurants = DB::table('restaurants')
-//            ->join('addresses', 'restaurants.id', '=', 'addresses.addressable_id')
-//            ->where('addresses.addressable_type', 'App\Models\Restaurant')
-//            ->where('addresses.active', 1)
-//            ->select(
-//                'restaurants.id',
-//                'restaurants.restaurant_name',
-//                'restaurants.phone',
-//                'addresses.address',
-//                DB::raw('(6371 * acos(
-//                cos(radians(' . $userCoordinates->latitude . ')) *
-//                cos(radians(addresses.latitude)) *
-//                cos(radians(addresses.longitude) - radians(' . $userCoordinates->longitude . ')) +
-//                sin(radians(' . $userCoordinates->latitude . ')) * sin(radians(addresses.latitude))
-//            )) AS distance')
-//            )
-//            ->orderBy('distance', 'asc')
-//            ->get();
-//
-//        return response(['Nearby Restaurants' => $restaurants]);
-//    }
+    
 
 
 
