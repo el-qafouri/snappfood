@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,21 +28,10 @@ class Restaurant extends Model
         'deleted_at',
     ];
 
-//    public function restaurantCategories()
-//    {
-//        return $this->belongsTo('restaurantCategories', 'restaurant_category_id', 'id');
-//    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
-
-//    public function restaurantCategory()
-//    {
-//        return $this->belongsTo(RestaurantCategory::class, 'restaurant_category_id');
-//    }
 
     public function restaurantCategories()
     {
@@ -66,6 +56,23 @@ class Restaurant extends Model
     public function discounts()
     {
         return $this->hasMany(Discount::class, 'restaurant_id');
+    }
+
+
+
+    public static function booted()
+    {
+        static::retrieved(function ($restaurant) {
+            $restaurant->is_open = $restaurant->checkIfOpen();
+        });
+    }
+    public function checkIfOpen()
+    {
+        $now = Carbon::now();
+        $openTime = Carbon::createFromTimeString($this->open_time);
+        $closeTime = Carbon::createFromTimeString($this->close_time);
+
+        return $now->between($openTime, $closeTime, true);
     }
 
 

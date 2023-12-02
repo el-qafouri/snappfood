@@ -49,12 +49,12 @@ class ReportController extends Controller
         $totalOrders = $ordersQuery->count();
         $totalSales = $ordersQuery->sum('total_price');
 
-        // تغییر 'with('orderDetails') به 'with('foods')'
+
         $orders = $ordersQuery->with(['foods' => function ($query) {
             $query->select('foods.id', 'name')->withPivot('count');
         }])->get();
 
-        // ارسال داده‌ها به ویو
+
         return view('panel.seller.panel.reports', [
             'filter' => $filter,
             'totalOrders' => $totalOrders,

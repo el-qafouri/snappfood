@@ -50,7 +50,7 @@ class RestaurantController extends Controller
             'restaurants' => $restaurants
         ], 200);
     }
-    
+
 
 
 

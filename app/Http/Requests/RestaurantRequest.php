@@ -24,16 +24,10 @@ class RestaurantRequest extends FormRequest
         return [
             'restaurant_name' => 'required',
             'phone' => 'required',
-//            'phone' => 'required|regex:/^09[0-9]{9}$/',
-            'address' => 'required',
+//            'address' => 'required',
             'credit_card_number' => 'bail|required|numeric|min:10',
-//            'restaurant_category_id' => 'required',
             'restaurant_category_ids' => ['required' , 'array' , 'min:1'],
-//            'credit_card_number' => 'bail|required|numeric|size:10',
             'send_cost' => 'bail|required|numeric',
-//            'open_time' => 'bail|required|before:close_time',
-//            'close_time' => 'bail|required|after:open_time'
-
             'open_time' => [
                 'bail',
                 'required',
@@ -59,9 +53,8 @@ class RestaurantRequest extends FormRequest
     {
         return [
             'phone.required' => 'شماره تلفن را وارد کنید',
-//            'phone.regex' => 'شماره تلفن معتبر نیست',
             'restaurant_name.required' => 'نام رستوران را وارد کنید',
-            'address.required' => 'آدرس را وارد کنید',
+//            'address.required' => 'آدرس را وارد کنید',
             'restaurant_category_id.required' => 'نوع رستوران را انتخاب کنید',
             'credit_card_number.required' => 'شماره حساب را وارد کنید',
             'credit_card_number.numeric' => 'شماره حساب باید یک عدد باشد',

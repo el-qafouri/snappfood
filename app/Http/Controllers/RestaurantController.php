@@ -46,6 +46,11 @@ class RestaurantController extends Controller
             $restaurant = new Restaurant();
             $restaurant->fill($request->validated());
             $restaurant->user_id = $user->id;
+            $address = $user->address()->firstOrFail();
+            $restaurant->user_id = $user->id;
+            $restaurant->address = $address->address;
+
+//            dd($address);
             $restaurant->save();
             $restaurant->restaurantCategories()->attach($request->input('restaurant_category_ids'));
 
@@ -55,6 +60,26 @@ class RestaurantController extends Controller
             return redirect()->route('restaurant.create')->with('fail', 'رستوران افزوده نشد');
         }
     }
+
+//  public function store(RestaurantRequest $request)
+//    {
+////        dd($request);
+//        try {
+//            $user = $request->user();
+//            $restaurant = new Restaurant();
+//            $restaurant->fill($request->validated());
+//            $restaurant->user_id = $user->id;
+//            $restaurant->address();
+//            $restaurant->save();
+//            $restaurant->restaurantCategories()->attach($request->input('restaurant_category_ids'));
+//
+//            return redirect()->route('seller.dashboard')->with('success', $request->restaurant_name . ' رستوران با موفقیت افزوده شد');
+//        } catch (Exception $e) {
+//            Log::error($e->getMessage());
+//            return redirect()->route('restaurant.create')->with('fail', 'رستوران افزوده نشد');
+//        }
+//    }
+//
 
 
     /**
