@@ -72,6 +72,12 @@ return new class extends Migration {
                 ->on('foods')->cascadeOnDelete();
             $table->foreign('food_category_id')->references('id')->on('food_categories')->cascadeOnDelete();
         });
+
+        Schema::table('schedules', function (Blueprint $table) {
+            $table->foreign('restaurant_id')->references('id')
+                ->on('restaurants')->cascadeOnDelete();
+        });
+
     }
 
     /**
