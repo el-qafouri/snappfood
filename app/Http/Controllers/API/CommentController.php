@@ -6,6 +6,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\CommentRequest;
 use App\Http\Requests\api\ShowCommentRequest;
+use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\Reply;
 use App\Models\Restaurant;
@@ -15,44 +16,6 @@ use App\Models\Food;
 
 class CommentController extends Controller
 {
-
-
-
-
-
-
-
-
-
-    private function transformComment($comment)
-    {
-        $transformedComment = [
-            'author' => [
-                'name' => $comment->user->name,
-            ],
-            'food' => $comment->order->food->name,
-            'created_at' => $comment->created_at->toDateTimeString(),
-            'score' => $comment->score,
-            'content' => $comment->message,
-        ];
-
-        if ($comment->replies->count() > 0) {
-            $transformedComment['replies'] = [];
-
-            foreach ($comment->replies as $reply) {
-                $transformedComment['replies'][] = [
-                    'author' => [
-                        'name' => $reply->user->name,
-                    ],
-                    'content' => $reply->message,
-                    'created_at' => $reply->created_at->toDateTimeString(),
-                ];
-            }
-        }
-
-        return $transformedComment;
-    }
-
 
 
     public function store(Request $request)
@@ -92,56 +55,30 @@ class CommentController extends Controller
     }
 
 
-
-
     public function index(Request $request)
     {
         $user = auth()->user();
 
         if (!is_null($request->food_id)) {
-            $comments = Comment::where(['food_id' => $request->food_id, 'user_id' => $user->id])
-                ->with(['user', 'order.food'])
-                ->orderByDesc('created_at')
-                ->get();
 
-            $transformedComments = $comments->map(function ($comment) {
-                return $this->transformComment($comment);
-            });
-
-            return response(['comments' => $transformedComments->toArray()]);
+            $food = Food::query()->findOrFail($request->food_id);
+            $orders = $food->orders->filter(fn($order) => $order->comments->first() !== null);
+            $comments = $orders->map(fn($order) => $order->comments)->map(fn($comment) => $comment->first())->filter(fn($comment)=>$comment->status=='accepted');
+            return response()->json(['comments' => CommentResource::collection($comments)]);
         }
 
         if (!is_null($request->restaurant_id)) {
-            $orders = Order::where(['restaurant_id' => $request->restaurant_id, 'user_id' => $user->id])
-                ->with(['food', 'comments.user'])
-                ->get();
+            $restaurant = Restaurant::query()->find($request->restaurant_id);
+            $comments = $restaurant->comments->filter(fn($comment) => $comment->parent_id == null and $comment->status == 'accepted');
+            return response()->json(['comments' => CommentResource::collection($comments)]);
 
-            $comments = collect([]);
-            foreach ($orders as $order) {
-                $orderComments = $order->comments->map(function ($comment) use ($order) {
-                    return [
-                        'author' => [
-                            'name' => $comment->user->name,
-                        ],
-                        'food' => $order->food->name,
-                        'created_at' => $comment->created_at->toDateTimeString(),
-                        'score' => $comment->score,
-                        'content' => $comment->message,
-
-                    ];
-                });
-                $comments = $comments->concat($orderComments);
-            }
-
-            $transformedComments = $comments->sortBy('created_at')->values()->toArray();
-
-            return response(['comments' => $transformedComments]);
         }
+
     }
 
 
-
-    public function answerComment(Request $request, $id)
+    public
+    function answerComment(Request $request, $id)
     {
         $comment = Comment::find($id);
 
@@ -167,38 +104,15 @@ class CommentController extends Controller
     }
 
 
-    public function acceptComment($commentId)
+    public
+    function acceptComment($commentId)
     {
         // متد مربوط به تأیید کامنت
     }
 
 
-
-
-
-
-
-
-
-
-//    public function deleteComment($id)
-//    {
-//        $comment = Comment::find($id);
-//
-//        if (!$comment) {
-//            return redirect()->route('food.index')->with('error', 'Comment not found.');
-//        }
-//
-//        $foodId = $comment->food->id;
-//
-//        $comment->delete();
-//
-//        return redirect()->route('food.show', ['id' => $foodId])->with('success', 'Comment deleted successfully.');
-//    }
-
-
-
-    public function deleteComment($id)
+    public
+    function deleteComment($id)
     {
         $comment = Comment::find($id);
 

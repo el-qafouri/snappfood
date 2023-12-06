@@ -9,8 +9,9 @@
         </a>
         <div
             class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <form class=" space-y-4 md:space-y-6" action="{{ route('restaurant.store') }}" method="post">
+
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8 form-container">
+                <form class="space-y-4 ... ... md:space-y-6" action="{{ route('restaurant.store') }}" method="post">
                     @csrf
                     <div>
                         <label for="restaurant_name"
@@ -58,19 +59,6 @@
                         <p class="text-red-800 text-xl">{{ $message }}</p>
                         @enderror
                     </div>
-
-                    {{--                    <div>--}}
-                    {{--                        <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">آدرس--}}
-                    {{--                            رستوران</label>--}}
-                    {{--                        <input type="text" name="address" id="address" placeholder="آدرس رستوران"--}}
-                    {{--                               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"--}}
-                    {{--                        >--}}
-                    {{--                        @error('address')--}}
-                    {{--                        <p class="text-red-800 text-xl">{{ $message }}</p>--}}
-                    {{--                        @enderror--}}
-                    {{--                    </div>--}}
-
-
                     <div>
                         <label for="send_cost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             هزینه ارسال</label>
@@ -102,59 +90,60 @@
                     </div>
 
 
-                    <div class="form-group flex flex-col">
-                        <label for="open_time" class="mb-2 text-sm font-medium text-gray-900 dark:text-white">زمان شروع
-                            کار رستوران</label>
-                        <input
-                            value="{{ old('open_time-at') }}"
-                            type="time"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            id="open_time"
-                            name="open_time"
-                            placeholder="Enter open time"
-                        />
-                        @error('open_time')
-                        <p class="text-red-800 text-xl">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div class="form-group flex flex-col">
-                        <label for="close_time" class="mb-2 text-sm font-medium text-gray-900 dark:text-white">زمان
-                            پایان کار رستوران</label>
-                        <input
-                            value="{{ old('close_time') }}"
-                            type="time"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            id="close_time"
-                            name="close_time"
-                            placeholder="Enter close time"
-                        />
-                        @error('close_time')
-                        <p class="text-red-800 text-xl">{{ $message }}</p>
-                        @enderror
-                    </div>
+                    <div class="flex space-x-4">
+                        <div class="flex flex-col">
 
 
-                    {{--        <input type="submit" name="select_location" value=" انتخاب لوکیشن"--}}
-                    {{--                class="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">--}}
+                            <div class="form-group">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">انتخاب
+                                    روزها</label>
+                                @foreach (App\Enums\Day::getValues() as $key => $day)
+                                    <div class="flex items-center mb-2">
+                                        <input type="checkbox" id="day_{{ $key }}" name="selected_days[]"
+                                               value="{{ $key }}" class="mr-2">
+                                        <label for="day_{{ $key }}">
+                                            {{ $day }}
+                                        </label>
+                                        <div class="flex space-x-4">
+                                            <div class="flex flex-col">
+                                                <label for="open_time_{{ $key }}"
+                                                       class="mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                    زمان شروع کار
+                                                </label>
+                                                <input type="time" id="open_time_{{ $key }}"
+                                                       name="open_time[{{ $key }}]"
+                                                       class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg
+                                                focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5
+                                                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                                                dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                />
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <label for="close_time_{{ $key }}"
+                                                       class="mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                    زمان پایان کار
+                                                </label>
+                                                <input type="time" id="close_time_{{ $key }}"
+                                                       name="close_time[{{ $key }}]"
+                                                       class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg
+                                                focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5
+                                                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                                                dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                                @error('selected_days')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-
-
-                    {{--        <iframe src="[your unique google URL] " width="400" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>--}}
-
-
-                    {{--        <form action="{{ route('restaurant.location') }}" method="post">--}}
-                    {{--            @csrf--}}
-                    {{--            <button type="submit">انتخاب موقعیت مکانی از روی نقشه</button>--}}
-                    {{--        </form>--}}
-
-
-                    <button type="submit"
-                            class="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                        ایجاد حساب
-                    </button>
-
-
+                            <button type="submit"
+                                    class="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                ایجاد حساب
+                            </button>
+                        </div>
                 </form>
             </div>
         </div>

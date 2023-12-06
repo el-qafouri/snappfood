@@ -14,7 +14,7 @@ class Cart extends Model
         'user_id',
         'payment_status	',
         'food_id',
-        'count',
+        'restaurant_id'
     ];
 
 
@@ -27,4 +27,10 @@ class Cart extends Model
     {
         return $this->belongsTo(Food::class, 'food_id');
     }
+
+    public function foods()
+    {
+        return $this->belongsToMany(Food::class)->withPivot('count');
+    }
+
 }

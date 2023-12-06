@@ -35,16 +35,16 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('addresses/{address}', [AddressController::class, 'setActiveAddress']);
 
     //restaurant
-    Route::apiResource('apiRestaurant', RestaurantController::class);
-    Route::get('apiRestaurant/{id}/foods', [RestaurantController::class, 'food']);
+    Route::apiResource('restaurant', RestaurantController::class);
+    Route::get('restaurant/{id}/foods', [RestaurantController::class, 'food']);
 
     //orders
     Route::get('carts', [OrderController::class, 'getCards']);
     Route::post('carts/add', [OrderController::class, 'add']);
-    Route::put('carts/update', [OrderController::class, 'update']);
+    Route::put('carts/{cart}', [OrderController::class, 'update']);
     Route::get('carts/{cartId}', [OrderController::class, 'getCard'])->whereNumber('cartId');
     Route::post('carts/{cartId}/pay', [OrderController::class, 'payCard'])->whereNumber('cartId');
-    Route::post('carts/{cartId}/completeOrder', [OrderController::class, 'completeOrder'])->whereNumber('cartId');
+//    Route::post('carts/{cartId}/completeOrder', [OrderController::class, 'completeOrder'])->whereNumber('cartId');
     Route::delete('carts/delete', [OrderController::class, 'destroy']);
 
     //comments

@@ -15,10 +15,9 @@ return new class extends Migration {
             $table->string('restaurant_name');
             $table->string('phone');
             $table->string('credit_card_number');
-            $table->string('address');
+            $table->string('address')->nullable();
             $table->boolean('profile_status')->default(false);
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('restaurant_category_id')->nullable();
             $table->decimal('send_cost')->default('15000');
             $table->time('open_time')->default('09:00:00')->nullable();
             $table->time('close_time')->default('21:00:00')->nullable();

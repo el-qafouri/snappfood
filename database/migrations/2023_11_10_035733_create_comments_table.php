@@ -14,10 +14,13 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('order_id');
-            $table->unsignedBigInteger('food_id')->nullable();
+//            $table->unsignedBigInteger('food_id')->nullable();
             $table->text('message');
-            $table->text('answer')->nullable();
+//            $table->text('answer')->nullable();
             $table->enum('score' , ['1' , '2' , '3' , '4' , '5']);
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->foreign('parent_id')->references('id')->on('comments')->onDelete('cascade');
+            $table->enum('status', ['pending', 'delete_request', 'accept'])->nullable()->default('pending');
             $table->softDeletes();
             $table->timestamps();
         });

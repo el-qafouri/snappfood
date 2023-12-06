@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->integer('count');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('food_id');
+            $table->unsignedBigInteger('restaurant_id');
+            $table->enum('payment_status', ['canceled', 'paid', 'unpaid'])->default('unpaid');
+
             $table->timestamps();
         });
     }

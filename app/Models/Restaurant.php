@@ -20,6 +20,7 @@ class Restaurant extends Model
         'profile_status',
         'open_time',
         'close_time',
+        'day'
 
     ];
     protected $guarded = [
@@ -48,6 +49,11 @@ class Restaurant extends Model
         return $this->morphOne(Address::class, 'addressable');
     }
 
+    public function addresses()
+    {
+        return $this->morphMany(Address::class, 'addressable');
+    }
+
     public function orders()
     {
         return $this->hasMany(Order::class);
@@ -59,20 +65,30 @@ class Restaurant extends Model
     }
 
 
+//    public static function booted()
+//    {
+//        static::retrieved(function ($restaurant) {
+//            $restaurant->is_open = $restaurant->checkIfOpen();
+//        });
+//    }
 
-    public static function booted()
+//    public function checkIfOpen()
+//    {
+//        $now = Carbon::now();
+//        $openTime = Carbon::createFromTimeString($this->open_time);
+//        $closeTime = Carbon::createFromTimeString($this->close_time);
+//
+//        return $now->between($openTime, $closeTime, true);
+//    }
+
+    public function schedules()
     {
-        static::retrieved(function ($restaurant) {
-            $restaurant->is_open = $restaurant->checkIfOpen();
-        });
+        return $this->hasMany(Schedule::class);
     }
-    public function checkIfOpen()
-    {
-        $now = Carbon::now();
-        $openTime = Carbon::createFromTimeString($this->open_time);
-        $closeTime = Carbon::createFromTimeString($this->close_time);
 
-        return $now->between($openTime, $closeTime, true);
+    public function comments()
+    {
+        return $this->hasManyThrough(Comment::class , Order::class , 'restaurant_id' , 'order_id');
     }
 
 

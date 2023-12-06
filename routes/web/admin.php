@@ -1,13 +1,11 @@
 <?php
 
-use App\Http\Controllers\BannerController;
-use App\Http\Controllers\FoodCategoryController;
-use App\Http\Controllers\FoodPartyController;
-use App\Http\Controllers\RestaurantCategoryController;
-use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\admin\BannerController;
+use App\Http\Controllers\admin\FoodCategoryController;
+use App\Http\Controllers\admin\FoodPartyController;
+use App\Http\Controllers\admin\RestaurantCategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
 
 
 //Route::middleware(['auth'])->group(function () {

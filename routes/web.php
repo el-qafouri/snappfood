@@ -1,9 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ReportController;
+use App\Http\Controllers\seller\ReportController;
 use App\Models\Banner;
 use Illuminate\Support\Facades\Route;
 
@@ -48,6 +46,9 @@ Route::prefix('reports')->middleware('auth')->group(function () {
     Route::get('/export-orders', [ReportController::class , 'export'])->name('reports.export-orders');
 
 });
+
+
+
 
 
 

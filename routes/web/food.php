@@ -2,8 +2,8 @@
 
 
 use App\Http\Controllers\API\CommentController;
-use App\Http\Controllers\DiscountController;
-use App\Http\Controllers\FoodController;
+use App\Http\Controllers\seller\DiscountController;
+use App\Http\Controllers\seller\FoodController;
 use Illuminate\Support\Facades\Route;
 
 

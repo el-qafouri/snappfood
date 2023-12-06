@@ -33,9 +33,6 @@
                 </div>
 
 
-
-
-
                 <div id="header-buttons" class="d-flex align-items-center">
                     <a href="{{ route('admin.dashboard') }}" class="btn btn-light"><i class="fas fa-home"></i>
                         Dashboard</a>

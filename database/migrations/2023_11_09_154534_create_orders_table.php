@@ -17,7 +17,7 @@ return new class extends Migration {
 //            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('restaurant_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->enum('payment_status', ['canceled', 'paid', 'unpaid']);
+//            $table->enum('payment_status', ['canceled', 'paid', 'unpaid']);
             $table->enum('seller_status', ['pending', 'preparing', 'send', 'delivered'])->default('pending');
             $table->decimal('total_price', '10', '2');
             $table->timestamps();

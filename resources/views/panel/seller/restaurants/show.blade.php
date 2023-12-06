@@ -25,14 +25,45 @@
                         @endif
                     </ul>
 
-
-                    <p>open time: {{ $restaurant->open_time }}</p>
-                    <p>close time: {{ $restaurant->close_time }}</p>
                     <p>join at: {{ $restaurant->created_at }}</p>
+{{--                    <p>open time: {{ $restaurant->open_time }}</p>--}}
+{{--                    <p>close time: {{ $restaurant->close_time }}</p>--}}
+
+
+
+                    @if ($restaurant->schedules->count() > 0)
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">روز</th>
+                                <th scope="col">زمان شروع</th>
+                                <th scope="col">زمان پایان</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- In your Blade template -->
+                            @foreach($restaurant->schedules as $schedule)
+                                <tr>
+                                    <td>{{ $schedule->day }}</td>
+                                    <td>{{ date('H:i', strtotime($schedule->open_time)) }}</td>
+                                    <td>{{ date('H:i', strtotime($schedule->close_time)) }}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @else
+                        <p>برنامه زمانی برای نمایش وجود ندارد.</p>
+                    @endif
+
+
+
+
+
+
 
                     <div class="container">
                         <h4 style="color: blue">Restaurant Profile Status</h4>
-                        <form action="#" method="post">
+{{--                        <form action="#" method="post">--}}
                             <form action="{{ route('restaurant.updateProfileStatus', $restaurant->id) }}" method="post">
                                 @csrf
                                 @method('PATCH')

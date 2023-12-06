@@ -13,14 +13,12 @@ return new class extends Migration {
         Schema::table('comments', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-            $table->foreign('food_id')->references('id')->on('foods')->onDelete('cascade');
+//            $table->foreign('food_id')->references('id')->on('foods')->onDelete('cascade');
 
         });
 
         Schema::table('discounts', function (Blueprint $table) {
-//            $table->foreign('food_id')->references('id')->on('foods')->cascadeOnDelete();
             $table->foreign('user_id')->references('id')->on('restaurants');
-            $table->foreign('food_id')->references('id')->on('foods')->cascadeOnDelete();
         });
 
         Schema::table('carts', function (Blueprint $table) {
@@ -36,7 +34,7 @@ return new class extends Migration {
 
         Schema::table('restaurants', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreign('restaurant_category_id')->references('id')->on('restaurant_categories')->cascadeOnDelete();
+//            $table->foreign('restaurant_category_id')->references('id')->on('restaurant_categories')->cascadeOnDelete();
         });
 
         Schema::table('user_restaurant_category', function (Blueprint $table) {

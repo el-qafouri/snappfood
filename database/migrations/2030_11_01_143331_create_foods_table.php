@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->decimal('price', '10', '3');
-            $table->decimal('food_discount', '5', '2')->default('0');
+//            $table->decimal('food_discount', '5', '2')->default('0');
             $table->decimal('final_price');
             $table->string('material');
             $table->string('image_path')->nullable();

@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.form-container {
+    height: 800px; /* یا هر ارتفاع دلخواه دیگری که مد نظر شماست */
+    overflow-y: auto; /* اضافه کردن اسکرول برای مواردی که از ارتفاع مشخص شده بیشتر هستند */
+}

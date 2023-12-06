@@ -25,4 +25,27 @@ enum Day
         ];
     }
 
+
+    public static function getDescription($value): string
+    {
+        switch ($value) {
+            case self::MONDAY:
+                return 'دوشنبه';
+            case self::TUESDAY:
+                return 'سه‌شنبه';
+            case self::WEDNESDAY:
+                return 'چهار‌شنبه';
+            case self::THURSDAY:
+                return 'پنجشنبه';
+            case self::FRIDAY:
+                return 'جمعه';
+            case self::SATURDAY:
+                return '‌شنبه';
+            case self::SUNDAY:
+                return '‌یکشنبه';
+            default:
+                return self::getKey($value);
+        }
+    }
+
 }

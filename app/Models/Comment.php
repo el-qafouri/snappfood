@@ -24,6 +24,15 @@ class Comment extends Model
         'is_deleted'
 
     ];
+
+
+    protected $enumStatus = [
+        'pending' => 'Pending',
+        'delete_question' => 'Delete Question',
+        'accept' => 'Accept',
+    ];
+
+
     protected $attributes = [
         'message'=>'',
     ];
@@ -33,7 +42,7 @@ class Comment extends Model
 //        return $this->belongsTo(User::class);
 //    }
 
-    public function orders()
+    public function order()
     {
         return $this->belongsTo(Order::class, 'order_id');
     }
@@ -53,9 +62,6 @@ class Comment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getIsOwnerAttribute() {
-        return auth()->check() && auth()->user()->id == $this->user_id;
-    }
 
 
     public function replies()
