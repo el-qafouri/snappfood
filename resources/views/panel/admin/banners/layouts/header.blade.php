@@ -38,7 +38,8 @@
                 <div id="header-buttons" class="d-flex align-items-center">
                     <!-- دکمه‌های دیگر -->
                     <a href="{{ route('admin.dashboard') }}" class="btn btn-light"><i class="fas fa-home"></i> Dashboard</a>
-                    <a href="{{ url()->previous() }}" class="btn btn-light"><i class="fa-solid fa-arrow-left"></i>Back</a>
+
+{{--                    <a href="{{ url()->previous() }}" class="btn btn-light"><i class="fa-solid fa-arrow-left"></i>Back</a>--}}
 
                     <!-- دکمه لاگ‌اوت -->
                     <form action="{{ route('logout') }}" method="POST">

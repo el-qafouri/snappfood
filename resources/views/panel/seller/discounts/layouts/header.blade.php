@@ -36,8 +36,8 @@
                 <div id="header-buttons" class="d-flex align-items-center">
                     <a href="{{ route('seller.dashboard') }}" class="btn btn-light"><i class="fas fa-home"></i>
                         Dashboard</a>
-                    <a href="{{ url()->previous() }}" class="btn btn-light"><i
-                            class="fa-solid fa-arrow-left"></i>Back</a>
+{{--                    <a href="{{ url()->previous() }}" class="btn btn-light"><i--}}
+{{--                            class="fa-solid fa-arrow-left"></i>Back</a>--}}
 
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf

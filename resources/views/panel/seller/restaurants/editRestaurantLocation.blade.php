@@ -10,7 +10,7 @@
 </head>
 <body>
 <div>
-<h2>Select Restaurant Location</h2>
+<h2>Edit Restaurant Location</h2>
 {{--<form id="locationForm" action="{{ route('restaurant.updateLocation' , $address->id) }}" method="post">--}}
         <form id="locationForm" action="{{ route('restaurant.updateLocation') }}" method="post">
 

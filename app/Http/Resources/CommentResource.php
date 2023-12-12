@@ -14,12 +14,11 @@ class CommentResource extends JsonResource
      */
     public function toArray(Request $request)
     {
-//        dd($this->order->foods);
         return [
             'author' => [
                 'name' => $this->user->name,
             ],
-            'food' => $this->order->foods->map(fn($food)=>$food->name),
+            'food' => $this->order->foods->map(fn($food) => $food->name),
             'created_at' => $this->created_at->toDateTimeString(),
             'score' => $this->score,
             'content' => $this->message,

@@ -22,7 +22,9 @@ class RestaurantPolicy
 
     public function update(User $user, Restaurant $restaurant): bool
     {
-        return ($user->hasRole('seller') && $user->restaurant->is($restaurant)) || ($user->hasRole('admin')) ;
+//        return ($user->hasRole('seller') && $user->restaurant->is($restaurant)) || ($user->hasRole('admin')) ;
+        return true;
+
     }
 
     public function delete(User $user, Restaurant $restaurant): bool

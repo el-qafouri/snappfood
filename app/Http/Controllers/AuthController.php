@@ -22,7 +22,6 @@ class AuthController extends Controller
                 return redirect()->route($redirectRoute);
             }
         }
-//        return back()->withErrors('ایمیل یا پسوورد اشتباه است!');
         return back()->with('error', 'ایمیل یا پسوورد اشتباه است!');
     }
 
@@ -50,14 +49,12 @@ class AuthController extends Controller
             'password' => $request->post('password')
         ]);
         $user->assignRole('seller');
-//        $user->update(['role_id' => 2]);
         return view('auth.login');
     }
 
     public function showRegister()
     {
 //        dd('hi');
-//        return redirect()->route('register.show');
         return view('auth.register');
 
     }

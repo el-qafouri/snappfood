@@ -39,13 +39,4 @@ class UserPolicy
         return $user->can('delete-user');
     }
 
-//    public function view(User $user)
-//    {
-//           return $user->can('view-user');
-//    }
-//
-//    public function create(User $user)
-//    {
-//        return $user->can('create-user');
-//    }
 }

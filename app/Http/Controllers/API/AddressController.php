@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\AddressRequest;
 use App\Http\Requests\api\UpdateAddressRequest;
+use App\Http\Resources\AddressResource;
 use App\Models\Address;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -21,7 +22,8 @@ class AddressController extends Controller
     public function index()
     {
         $addresses = User::query()->find(auth()->user()->id)->addresses;
-        return response(['All Addresses' => $addresses]);
+
+        return response(['All Addresses' =>  AddressResource::collection($addresses)]);
     }
 
     /**
@@ -35,7 +37,8 @@ class AddressController extends Controller
     {
         $address = User::query()->find(auth()->user()->id)->addresses()->create($request->validated());
 
-        return response(['Message' => 'Address submitted successfully', 'Address details' => $address]);
+//        return response(['Message' => 'Address submitted successfully', 'Address details' => $address]);
+        return response(['Message' => 'Address added successfully']);
     }
 
 

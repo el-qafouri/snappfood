@@ -17,7 +17,7 @@ return new class extends Migration {
 //            $table->unsignedBigInteger('food_id')->nullable();
             $table->text('message');
 //            $table->text('answer')->nullable();
-            $table->enum('score' , ['1' , '2' , '3' , '4' , '5']);
+            $table->enum('score' , ['1' , '2' , '3' , '4' , '5'])->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('comments')->onDelete('cascade');
             $table->enum('status', ['pending', 'delete_request', 'accept'])->nullable()->default('pending');

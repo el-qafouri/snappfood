@@ -35,8 +35,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('addresses/{address}', [AddressController::class, 'setActiveAddress']);
 
     //restaurant
-    Route::apiResource('restaurant', RestaurantController::class);
-    Route::get('restaurant/{id}/foods', [RestaurantController::class, 'food']);
+    Route::apiResource('restaurants', RestaurantController::class);
+    Route::get('restaurants/{id}/foods', [RestaurantController::class, 'food']);
 
     //orders
     Route::get('carts', [OrderController::class, 'getCards']);

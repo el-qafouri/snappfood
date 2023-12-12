@@ -25,23 +25,22 @@ class ReportController extends Controller
             abort(403, 'Access denied or no restaurant associated with the user.');
         }
 
-            $ordersQuery = Order::where('restaurant_id', $restaurantId);
-            // ...
-            switch ($filter) {
-                case 'today':
-                    $ordersQuery->whereDate('created_at', today());
-                    break;
-                case 'this_week':
-                    $ordersQuery->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
-                    break;
-                case 'this_month':
-                    $ordersQuery->whereMonth('created_at', '=', Carbon::now()->month);
-                    $ordersQuery->whereYear('created_at', '=', Carbon::now()->year);
+        $ordersQuery = Order::query()->where('restaurant_id', $restaurantId)->where('seller_status' , 'delivered');
 
-                    break;
-                case 'all':
-                    break;
-            }
+        switch ($filter) {
+            case 'today':
+                $ordersQuery->whereDate('created_at', today());
+                break;
+            case 'this_week':
+                $ordersQuery->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+                break;
+            case 'this_month':
+                $ordersQuery->whereMonth('created_at', '=', Carbon::now()->month);
+                $ordersQuery->whereYear('created_at', '=', Carbon::now()->year);
+                break;
+            case 'all':
+                break;
+        }
 
         $totalOrders = $ordersQuery->count();
         $totalSales = $ordersQuery->sum('total_price');
@@ -83,5 +82,35 @@ class ReportController extends Controller
         return view('your.blade.view', compact('salesLabels', 'salesAmounts'));
     }
 
+    public function reports(Request $request)
+    {
+        $orders = Order::query()->where('seller_status' , 'delivered');
+        $filter = $request->get('filter', 'this_month');
 
+        switch ($filter) {
+            case 'today':
+                $orders->whereDate('created_at', today());
+                break;
+            case 'this_week':
+                $orders->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+                break;
+            case 'this_month':
+                $orders->whereMonth('created_at', '=', Carbon::now()->month);
+                $orders->whereYear('created_at', '=', Carbon::now()->year);
+                break;
+            case 'all':
+                break;
+        }
+
+        $totalOrders = $orders->count();
+        $totalSales = $orders->sum('total_price');
+
+        return view('panel.admin.panel.reports', [
+            'filter' => $filter,
+            'totalOrders' => $totalOrders,
+            'totalSales' => $totalSales,
+            'orders' => $orders->get(),
+        ]);
+
+    }
 }

@@ -23,7 +23,6 @@ class FoodOrderResource extends JsonResource
             'Id' => $this->id,
             'Title' => $this->name,
             'Price' => $this->final_price,
-//            'Count' => $this->getOriginal()['pivot_count']
             'Count' => $this->pivot->count,
         ];
     }

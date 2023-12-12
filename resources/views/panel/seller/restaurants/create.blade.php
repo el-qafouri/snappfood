@@ -1,6 +1,20 @@
 @extends('layouts.auth')
 <section class="bg-gray-50 dark:bg-gray-900 text-end">
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+
+
+        @if(session('success'))
+            <div class="bg-green-200 text-green-800 px-4 py-2 rounded auto-dismiss">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if(session('error'))
+            <div class="text-end mt-2 alert alert-danger auto-dismiss">
+                {{ session('error') }}
+            </div>
+        @endif
+
+
         <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
             <img class="w-8 h-8 mr-2"
                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-TZASdttiWEg6PCoxneJY8hxYljizD-8qIB0mfzwG0ENFn2yBpurecB5UARNog3mdCl0&usqp=CAU"

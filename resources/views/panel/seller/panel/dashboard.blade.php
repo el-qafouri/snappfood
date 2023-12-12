@@ -52,7 +52,7 @@
  <tr>
                 <td>Comments</td>
                 <td>
-                    <a href="" class="btn btn-primary"><i
+                    <a href="{{ route('comments.index') }}" class="btn btn-primary"><i
                             class="fas fa-edit"></i>show</a>
                 </td>
             </tr>

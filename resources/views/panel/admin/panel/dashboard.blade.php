@@ -69,7 +69,7 @@
             <tr>
                 <td>Reports</td>
                 <td>
-                    <a href="{{ route('reports.index') }}" class="btn btn-primary"><i class="fas fa-edit"></i>show</a>
+                    <a href="{{ route('reports.all') }}" class="btn btn-primary"><i class="fas fa-edit"></i>show</a>
                 </td>
             </tr>
 
@@ -77,7 +77,7 @@
             <tr>
                 <td>Comments</td>
                 <td>
-                    <a href="" class="btn btn-primary"><i class="fas fa-edit"></i>show</a>
+                    <a href="{{ route('comments.all') }}" class="btn btn-primary"><i class="fas fa-edit"></i>show</a>
                 </td>
             </tr>
 
@@ -86,38 +86,21 @@
 
 
 
-{{--            @foreach($foods as $food)--}}
-{{--                <tr>--}}
-{{--                    <td>{{ $food->name }}</td>--}}
-{{--                    <td>--}}
-{{--                        <a href="{{ route('food.show', ['id' => $food->id]) }}" class="btn btn-primary">--}}
-{{--                            <i class="fas fa-edit"></i> show--}}
-{{--                        </a>--}}
-{{--                    </td>--}}
-{{--                </tr>--}}
-{{--            @endforeach--}}
+{{--            <tr>--}}
+{{--                <td>users</td>--}}
+{{--                <td>--}}
+{{--                    <a href="#" class="btn btn-primary"><i--}}
+{{--                            class="fas fa-edit"></i>show</a>--}}
+{{--                </td>--}}
+{{--            </tr>--}}
 
-
-
-
-
-
-
-            <tr>
-                <td>users</td>
-                <td>
-                    <a href="#" class="btn btn-primary"><i
-                            class="fas fa-edit"></i>show</a>
-                </td>
-            </tr>
-
-            <tr>
-                <td>sellers</td>
-                <td>
-                    <a href="#" class="btn btn-primary"><i
-                            class="fas fa-edit"></i>show</a>
-                </td>
-            </tr>
+{{--            <tr>--}}
+{{--                <td>sellers</td>--}}
+{{--                <td>--}}
+{{--                    <a href="#" class="btn btn-primary"><i--}}
+{{--                            class="fas fa-edit"></i>show</a>--}}
+{{--                </td>--}}
+{{--            </tr>--}}
 
 
 

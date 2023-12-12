@@ -21,8 +21,6 @@ Route::prefix('foods')->middleware(['auth'])->group(function () {
 
 });
 
-Route::get('foods/comments', [FoodController::class, 'showFoodWithComment'])->name('salam');
-
 
 //Route::middleware('role:admin|seller')->resource('discount', DiscountController::class)->except(['create', 'store']);
 //Route::get('discount/create', [DiscountController::class, 'create'])->name('discount.create');

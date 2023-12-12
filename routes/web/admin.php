@@ -4,6 +4,8 @@ use App\Http\Controllers\admin\BannerController;
 use App\Http\Controllers\admin\FoodCategoryController;
 use App\Http\Controllers\admin\FoodPartyController;
 use App\Http\Controllers\admin\RestaurantCategoryController;
+use App\Http\Controllers\seller\CommentController;
+use App\Http\Controllers\seller\ReportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::get('dashboard' , [UserController::class , 'adminIndex'])->middleware(['role:admin'])->name('admin.dashboard');
-
 
 
 //restaurantCategory
@@ -69,6 +70,14 @@ Route::prefix('foodParty')->middleware(['auth' , 'role:admin'])->group(function 
 
     Route::get('{id}/edit', [FoodPartyController::class, 'edit'])->name('foodParty.edit');
     Route::put('update/{id}', [FoodPartyController::class, 'update'])->name('foodParty.update');
+});
+
+//comments
+Route::prefix('comments')->middleware(['auth' , 'role:admin'])->group(function () {
+    Route::get('/all', [CommentController::class, 'viewComments'])->name('comments.all');
+    Route::delete('/{comment}' , [CommentController::class , 'destroy'])->name('comments.destroy');
+
+
 });
 
 

@@ -14,7 +14,7 @@ class Discount extends Model
         'discount',
         'user_id',
         'restaurant_id',
-        'food_id'
+//        'food_id'
     ];
 
     protected $guarded = [
@@ -34,22 +34,26 @@ class Discount extends Model
 //        return $this->belongsTo(Restaurant::class , 'discount_id');
 //    }
 
-    public function restaurant()
-    {
-        return $this->belongsTo(Restaurant::class);
-    }
+//    public function restaurant()
+//    {
+//        return $this->belongsTo(Restaurant::class);
+//    }
+
+//    public function user()
+//    {
+//        return $this->belongsTo(User::class);
+//    }
+
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-
-//    public function scopeForRestaurant($query)
-//    {
-//        return $query->where('restaurant_id', auth()->user()->restaurant->id);
-//    }
-
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class, 'restaurant_id');
+    }
 
 
 }

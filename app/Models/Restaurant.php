@@ -39,6 +39,11 @@ class Restaurant extends Model
         return $this->belongsToMany(RestaurantCategory::class, 'restaurant_restaurant_category', 'restaurant_id', 'restaurant_category_id');
     }
 
+    public function categories()
+    {
+        return $this->belongsToMany(RestaurantCategory::class, 'restaurant_restaurant_category', 'restaurant_id', 'restaurant_category_id');
+    }
+
     public function foods()
     {
         return $this->hasMany(Food::class, 'restaurant_id');
@@ -64,22 +69,6 @@ class Restaurant extends Model
         return $this->hasMany(Discount::class, 'restaurant_id');
     }
 
-
-//    public static function booted()
-//    {
-//        static::retrieved(function ($restaurant) {
-//            $restaurant->is_open = $restaurant->checkIfOpen();
-//        });
-//    }
-
-//    public function checkIfOpen()
-//    {
-//        $now = Carbon::now();
-//        $openTime = Carbon::createFromTimeString($this->open_time);
-//        $closeTime = Carbon::createFromTimeString($this->close_time);
-//
-//        return $now->between($openTime, $closeTime, true);
-//    }
 
     public function schedules()
     {

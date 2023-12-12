@@ -18,7 +18,8 @@ return new class extends Migration {
         });
 
         Schema::table('discounts', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('restaurants');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('restaurant_id')->references('id')->on('restaurants');
         });
 
         Schema::table('carts', function (Blueprint $table) {

@@ -30,17 +30,20 @@ class DiscountController extends Controller
         return view('panel.seller.discounts.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
 
-////یوزرآیدی رو سیو میکنه
 //    public function store(DiscountRequest $request)
 //    {
 //        try {
 //            $user = auth()->user();
+//            $restaurant = $user->restaurant;
+//            if (!$restaurant) {
+//                abort(404, 'رستوران یافت نشد');
+//            }
 //            $discountData = $request->validated();
-//            $discount = $user->discounts()->create($discountData);
+//            $discountData['user_id'] = $user->id;
+//            $discountData['restaurant_id'] = $restaurant->id;
+//
+//            $discount = Discount::create($discountData);
 //            return redirect()->route('discount.index')->with('success', $discount->discount . " discount added successfully");
 //        } catch (Exception $e) {
 //            Log::error($e->getMessage());
@@ -48,26 +51,34 @@ class DiscountController extends Controller
 //        }
 //    }
 
+
+
+
     public function store(DiscountRequest $request)
     {
         try {
             $user = auth()->user();
             $restaurant = $user->restaurant;
+
             if (!$restaurant) {
                 abort(404, 'رستوران یافت نشد');
             }
+
             $discountData = $request->validated();
             $discountData['user_id'] = $user->id;
             $discountData['restaurant_id'] = $restaurant->id;
-//            $foodId = $request->input('food_id');
-//            $discountData['food_id'] = $foodId;
+
+            // اضافه کردن تخفیف
             $discount = Discount::create($discountData);
-            return redirect()->route('discount.index')->with('success', $discount->discount . " discount added successfully");
+
+            return redirect()->route('discount.index')->with('success', $discount->discount . " تخفیف با موفقیت اضافه شد");
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            return redirect(status: 500)->route('discount.create')->with('fail', 'discount didnt add');
+            return redirect(status: 500)->route('discount.create')->with('fail', 'تخفیف اضافه نشد');
         }
     }
+
+
 
 
     /**

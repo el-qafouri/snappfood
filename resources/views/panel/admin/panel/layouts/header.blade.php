@@ -35,9 +35,9 @@
 
                 <div id="header-buttons" class="d-flex align-items-center">
                     <!-- دکمه‌های دیگر -->
-                    <a href="" class="btn btn-light"><i class="fas fa-home"></i> Dashboard</a>
-                    <a href="{{ url()->previous() }}" class="btn btn-light"><i
-                            class="fa-solid fa-arrow-left"></i>Back</a>
+                    <a href="{{ route('admin.dashboard') }}" class="btn btn-light"><i class="fas fa-home"></i> Dashboard</a>
+{{--                    <a href="{{ url()->previous() }}" class="btn btn-light"><i--}}
+{{--                            class="fa-solid fa-arrow-left"></i>Back</a>--}}
 
                     <!-- دکمه لاگ‌اوت -->
                     <form action="{{ route('logout') }}" method="POST">
@@ -52,18 +52,18 @@
                         class="navbar-nav ms-auto mb-2 mb-lg-0"
                         style="font-size: 20px;"
                     >
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('category.index') }}"
-                            ><i class="fas fa-home"></i> lllll </a>
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                class="nav-link active"
-                                aria-current="page"
-                                href="{{ route('category.create') }}"
-                            ><i class="fas fa-plus"></i>فعلا همینطوری باشن</a
-                            >
-                        </li>
+{{--                        <li class="nav-item">--}}
+{{--                            <a class="nav-link" href="{{ route('category.index') }}"--}}
+{{--                            ><i class="fas fa-home"></i> lllll </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="nav-item">--}}
+{{--                            <a--}}
+{{--                                class="nav-link active"--}}
+{{--                                aria-current="page"--}}
+{{--                                href="{{ route('category.create') }}"--}}
+{{--                            ><i class="fas fa-plus"></i>فعلا همینطوری باشن</a--}}
+{{--                            >--}}
+{{--                        </li>--}}
                     </ul>
                 </div>
             </div>

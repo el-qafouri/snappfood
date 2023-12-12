@@ -58,18 +58,18 @@ class CommentController extends Controller
     public function index(Request $request)
     {
         $user = auth()->user();
-
+//dd($user);
         if (!is_null($request->food_id)) {
 
             $food = Food::query()->findOrFail($request->food_id);
             $orders = $food->orders->filter(fn($order) => $order->comments->first() !== null);
-            $comments = $orders->map(fn($order) => $order->comments)->map(fn($comment) => $comment->first())->filter(fn($comment)=>$comment->status=='accepted');
+            $comments = $orders->map(fn($order) => $order->comments)->map(fn($comment) => $comment->first())->filter(fn($comment)=>$comment->status=='accept');
             return response()->json(['comments' => CommentResource::collection($comments)]);
         }
 
         if (!is_null($request->restaurant_id)) {
             $restaurant = Restaurant::query()->find($request->restaurant_id);
-            $comments = $restaurant->comments->filter(fn($comment) => $comment->parent_id == null and $comment->status == 'accepted');
+            $comments = $restaurant->comments->filter(fn($comment) => $comment->parent_id == null and $comment->status == 'accept');
             return response()->json(['comments' => CommentResource::collection($comments)]);
 
         }
@@ -104,15 +104,7 @@ class CommentController extends Controller
     }
 
 
-    public
-    function acceptComment($commentId)
-    {
-        // متد مربوط به تأیید کامنت
-    }
-
-
-    public
-    function deleteComment($id)
+    public function deleteComment($id)
     {
         $comment = Comment::find($id);
 

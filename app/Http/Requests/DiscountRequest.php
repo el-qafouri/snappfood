@@ -23,6 +23,7 @@ class DiscountRequest extends FormRequest
     {
         return [
             'discount' => 'bail|required|numeric|between:0,100',
+
         ];
     }
 }

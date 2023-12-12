@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\seller\ReportController;
+use App\Http\Controllers\seller\RestaurantController;
 use App\Models\Banner;
 use Illuminate\Support\Facades\Route;
 
@@ -48,14 +49,11 @@ Route::prefix('reports')->middleware('auth')->group(function () {
 });
 
 
+Route::get('reports/all' , [ReportController::class , 'reports'])->middleware(['role:admin'])->name('reports.all');
 
 
 
+Route::put('restaurants/{restaurant}', [RestaurantController::class, 'update'])->middleware('auth')->name('restaurant.update');
 
 
-//Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
-//Route::get('/reports/export', [ReportController::class, 'export']);
-
-
-//Route::get('test' , \App\Http\Controllers\TestController::class);
 

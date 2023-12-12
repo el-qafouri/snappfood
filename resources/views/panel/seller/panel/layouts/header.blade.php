@@ -34,8 +34,11 @@
 
 
                 <div id="header-buttons" class="d-flex align-items-center">
-                    <a href="" class="btn btn-light"><i class="fas fa-home"></i>Dashboard</a>
-                    <a href="{{ url()->previous() }}" class="btn btn-light"><i class="fa-solid fa-arrow-left"></i>Back</a>
+                    <a href="{{ route('seller.dashboard') }}" class="btn btn-light"><i class="fas fa-home"></i>Dashboard</a>
+{{--                    <a href="{{ url()->previous() }}" class="btn btn-light"><i class="fa-solid fa-arrow-left"></i>Back</a>--}}
+
+
+
 
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
@@ -49,14 +52,15 @@
                         style="font-size: 20px;"
                     >
 
-                        <li class="nav-item">
-                            <a
-                                class="nav-link active"
-                                aria-current="page"
-                                href="{{ route('restaurant.index') }}"
-                            ><i class="fas fa-info-circle"></i>restaurant data</a
-                            >
-                        </li>
+
+                        @if(auth()->user()->restaurant && auth()->user()->restaurant->profile_status == 1)
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{{ route('restaurant.edit', auth()->user()->restaurant) }}"> رستوران</a>
+                            </li>
+                        @endif
+
+
+
                     </ul>
 
 

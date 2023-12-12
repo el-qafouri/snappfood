@@ -28,9 +28,16 @@ class Cart extends Model
         return $this->belongsTo(Food::class, 'food_id');
     }
 
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class, 'restaurant_id');
+    }
     public function foods()
     {
         return $this->belongsToMany(Food::class)->withPivot('count');
     }
+
+
+
 
 }

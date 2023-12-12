@@ -76,14 +76,12 @@ class User extends Authenticatable
         return $this->hasMany(Discount::class);
     }
 
+
+
+
     public function orders()
     {
         return $this->hasMany(Order::class);
-    }
-
-    public function isAdmin()
-    {
-        return $this->role === 'admin';
     }
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\seller;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ValidationException;
+use App\Http\Requests\RestaurantRequest;
 use App\Models\Address;
 use App\Models\Restaurant;
 use App\Models\RestaurantCategory;
@@ -19,7 +20,7 @@ class RestaurantController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Restaurant::class , 'restaurant');
+        $this->authorizeResource(Restaurant::class, 'restaurant');
     }
 
     /**
@@ -28,7 +29,7 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny' , Restaurant::class);
+        $this->authorize('viewAny', Restaurant::class);
         $restaurants = Restaurant::all();
         return view('panel.seller.restaurants.index', compact('restaurants'));
     }
@@ -48,44 +49,30 @@ class RestaurantController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(Request $request)
+
+
+    public function store(RestaurantRequest $request)
     {
-//        $this->authorize('create' , Restaurant::class);
-
-        $validatedData = $request->validate([
-            'restaurant_name' => 'required',
-            'phone' => 'required',
-            'credit_card_number' => 'required',
-            'send_cost' => 'required|numeric',
-            'restaurant_category_ids' => 'required',
-            'selected_days' => 'required',
-            'open_time' => 'required',
-            'close_time' => 'required',
-            'address' => 'nullable',
-            'day',
-
-        ]);
 
         try {
             $user = $request->user();
 
             $restaurant = new Restaurant();
-            $restaurant->restaurant_name = $validatedData['restaurant_name'];
-            $restaurant->phone = $validatedData['phone'];
-            $restaurant->credit_card_number = $validatedData['credit_card_number'];
-            $restaurant->send_cost = $validatedData['send_cost'];
-
-
+            $restaurant->restaurant_name = $request['restaurant_name'];
+            $restaurant->phone = $request['phone'];
+            $restaurant->credit_card_number = $request['credit_card_number'];
+            $restaurant->send_cost = $request['send_cost'];
             $address = $user->addresses()->first();
             $restaurant->user_id = $user->id;
             $restaurant->address = $address->title;
+
             $restaurant->save();
 
-            $restaurant->restaurantCategories()->sync($validatedData['restaurant_category_ids']);
+            $restaurant->restaurantCategories()->sync($request['restaurant_category_ids']);
 
-            foreach ($validatedData['selected_days'] as $index => $day) {
-                $openTime = $validatedData['open_time'][$index];
-                $closeTime = $validatedData['close_time'][$index];
+            foreach ($request['selected_days'] as $index => $day) {
+                $openTime = $request['open_time'][$index];
+                $closeTime = $request['close_time'][$index];
                 $schedule = new Schedule();
                 $schedule->day = $day;
                 $schedule->open_time = $openTime;
@@ -94,8 +81,8 @@ class RestaurantController extends Controller
                 $restaurant->schedules()->save($schedule);
             }
 
-            return redirect()->route('seller.dashboard')->with('success', $validatedData['restaurant_name'] . ' رستوران با موفقیت افزوده شد');
-        } catch (ValidationException $e) {
+            return redirect()->route('seller.dashboard')->with('success', $request['restaurant_name'] . ' رستوران با موفقیت افزوده شد');
+        } catch (Exception $e) {
             return redirect()->route('restaurant.create')->withErrors($e->errors())->withInput();
         } catch (Exception $e) {
             Log::error($e->getMessage());
@@ -124,34 +111,34 @@ class RestaurantController extends Controller
     }
 
 
-    public function update(Request $request, $restaurant)
+    public function update(Request $request , Restaurant $restaurant)
     {
+//        dd('ooo');
 //        $this->authorize('update' , $restaurant);
         $validatedData = $request->validate([
             'restaurant_name' => 'required',
-            'phone' => 'required',
-            'credit_card_number' => 'required',
-            'send_cost' => 'required|numeric',
-            'restaurant_category_ids' => 'required',
-            'selected_days' => 'required',
-            'open_time' => 'required',
-            'close_time' => 'required',
-            'address' => 'nullable',
-            'day'=>'required',
+//            'phone' => 'required',
+//            'credit_card_number' => 'required',
+//            'send_cost' => 'required|numeric',
+//            'restaurant_category_ids' => 'required',
+//            'selected_days' => 'required',
+//            'open_time' => 'required',
+//            'close_time' => 'required',
+//            'address' => 'nullable',
+//            'day' => 'required',
         ]);
 
         try {
 //            $restaurant = Restaurant::findOrFail($id);
             $restaurant->fill($validatedData);
-            $restaurant->address = $validatedData['address'] ?? $restaurant->address; // استفاده از address قبلی در صورت نیاز
+            $restaurant->address = $validatedData['address'] ?? $restaurant->address;
             $restaurant->save();
 
             $restaurant->restaurantCategories()->sync($validatedData['restaurant_category_ids']);
 
-            // حذف برنامه‌های زمانی که دیگر وجود ندارند
+
             $restaurant->schedules()->whereNotIn('day', $validatedData['selected_days'])->delete();
 
-            // بروزرسانی و ایجاد برنامه‌های زمانی جدید
             foreach ($validatedData['selected_days'] as $index => $day) {
                 $restaurant->schedules()->updateOrCreate(
                     ['day' => $day],
@@ -251,16 +238,14 @@ class RestaurantController extends Controller
     }
 
 
-
     public function editLocation()
     {
         return view('panel.seller.restaurants.editRestaurantLocation');
     }
 
 
-    public function updateLocation(Request $request )
+    public function updateLocation(Request $request)
     {
-
         $user = auth()->user();
         Log::info('Request data:', $request->toArray());
 
@@ -269,7 +254,7 @@ class RestaurantController extends Controller
         $latitude = $request->input('latitude');
         $longitude = $request->input('longitude');
 
-        $existingAddress = $user->addresses->first();
+        $existingAddress = $user->addresses()->first();
 
         if ($existingAddress) {
             $existingAddress->update([
@@ -293,8 +278,8 @@ class RestaurantController extends Controller
             $message = 'address save successfully';
         }
 
-        return redirect()->route('restaurant.edit')->with('success', $message);
+        return redirect()->route('restaurant.edit' , $user->restaurant)->with('success', $message);
 
     }
 
-    }
+}
