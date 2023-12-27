@@ -14,34 +14,34 @@
 ​
 <h3>Admin</h3>
 ​
-<p>Banner(delete, edit, create, set)
+<p>Banner(delete, edit, create, set)</p>
 ​
-Food categories(delete, edit, create)
+<p>Food categories(delete, edit, create)</p>
 ​
-Restaurant categories(delete, edit, create)
+<p>Restaurant categories(delete, edit, create)</p>
 ​
-Discount(delete, edit, create)</p>
+<p>Discount(delete, edit, create)</p>
 ​
 ​
 <h3>Seller</h3>
 ​
-<p>Restaurant(delete, edit, create)
+<p>Restaurant(delete, edit, create)</p>
 ​
-Food(delete, edit, create)
+<p>Food(delete, edit, create)</p>
 ​
 ​
 <h3>Installation</h3>
 ​
-composer update
+<p>composer update</p>
 ​
-npm install
+<p>npm install</p>
 ​
-npm run dev
+<p>npm run dev</p>
 ​​
-php artisan migrate:fresh --seed
+<p>php artisan migrate:fresh --seed</p>
 ​
-php artisan generate:key
+<p>php artisan generate:key</p>
 ​
-php artisan storage:link
+<p>php artisan storage:link</p>
 ​
-php artisan serve</p>
+<p>php artisan serve</p>
