@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard/seller', [UserController::class, 'dashboard'])->name('seller.dashboard');
-//    Route::get('/dashboard', [UserController::class, 'sellerIndex'])->name('admin.dashboard');
 });
 
 
@@ -43,13 +42,6 @@ Route::prefix('comments')->group(function () {
     Route::get('/create/{comment}', [CommentController::class, 'create'])->name('comments.create');
     Route::post('/{comment}', [CommentController::class, 'store'])->name('comments.store');
 });
-
-
-//Route::prefix('restaurant')->middleware(['auth', 'role:admin'])->group(function () {
-//    // Routes for sellers
-//    Route::get('{id}', [RestaurantController::class, 'show'])->name('restaurantSeller.show');
-//    // ...
-//});
 
 
 Route::prefix('restaurant')->middleware(['auth', 'role:admin'])->group(function () {

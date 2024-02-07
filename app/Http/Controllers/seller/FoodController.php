@@ -61,16 +61,12 @@ class FoodController extends Controller
         try {
             $foodData = $request->validated();
             $foodData['restaurant_id'] = $user->restaurant->id;
-
-
             if ($request->hasFile('imagePath')) {
                 $imagePath = $request->file('imagePath');
                 $fileName = 'food' . time() . '_' . $imagePath->hashName();
                 $imagePath->move(public_path('food'), $fileName);
                 $foodData['image_path'] = $fileName;
             }
-
-
             $discountId = $request->input('discount_id');
             $discount = Discount::query()->find($discountId);
 
@@ -207,13 +203,5 @@ class FoodController extends Controller
         }
     }
 
-
-    public function showFoodWithComment()
-    {
-        dd('lololo');
-        $foodsWithComments = Food::query()->has('comments')->get();
-        return view('seller.foods.foodComments', compact('foodsWithComments'));
-
-    }
 
 }

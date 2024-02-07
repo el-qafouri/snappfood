@@ -13,17 +13,11 @@ use App\Models\FoodCategory;
 class FoodCategoryController extends Controller
 {
 
-//    public function __construct()
-//    {
-//        $this->authorizeResource(FoodCategory::class , 'foodCategory');
-//    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-//        return view('panel.admin.foodCategories.index');
-//        $foodCategories = FoodCategory::all();
         $foodCategories = FoodCategory::paginate(3);
         return view("panel.admin.foodCategories.index", [
             "foodCategories" => $foodCategories,
@@ -48,7 +42,6 @@ class FoodCategoryController extends Controller
      */
     public function store(StoreFoodeCategoryRequest $request)
     {
-//        dd('ddddd');
         try {
             FoodCategory::query()->create($request->validated());
             return redirect()->route("category.index")->with('success', $request->foodCategories . "Category added successfully");
@@ -63,10 +56,8 @@ class FoodCategoryController extends Controller
      */
     public function show($id)
     {
-//        return view("panel.admin.foodCategories.show");
         $category = FoodCategory::find($id);
         return view('panel.admin.foodCategories.show')->with('category', $category);
-//        dd('show category');
     }
 
     /**

@@ -7,7 +7,6 @@ use App\Http\Controllers\seller\FoodController;
 use Illuminate\Support\Facades\Route;
 
 
-//Route::prefix('foods')->group(function () {
 Route::prefix('foods')->middleware(['auth'])->group(function () {
     Route::get('/', [FoodController::class, 'index'])->name('food.index');
     Route::get('{id}' , [FoodController::class , 'show'])->name('food.show');
@@ -20,11 +19,6 @@ Route::prefix('foods')->middleware(['auth'])->group(function () {
     Route::put('update/{id}', [FoodController::class, 'update'])->name('food.update');
 
 });
-
-
-//Route::middleware('role:admin|seller')->resource('discount', DiscountController::class)->except(['create', 'store']);
-//Route::get('discount/create', [DiscountController::class, 'create'])->name('discount.create');
-//Route::post('discount', [DiscountController::class, 'store'])->name('discount.store');
 
 
 Route::prefix('discount')->middleware('auth')->group(function () {

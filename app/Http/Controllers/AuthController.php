@@ -17,7 +17,6 @@ class AuthController extends Controller
         if ($result) {
             $user = Auth::user();
             $redirectRoute = $this->getRedirectRouteForUser($user);
-//
             if ($redirectRoute) {
                 return redirect()->route($redirectRoute);
             }
@@ -54,9 +53,7 @@ class AuthController extends Controller
 
     public function showRegister()
     {
-//        dd('hi');
         return view('auth.register');
-
     }
 
     public function logout()
@@ -64,10 +61,6 @@ class AuthController extends Controller
         Auth::logout();
         return redirect()->route('main');
     }
-
-    /**
-     * Display a listing of the resource.
-     */
 
     /**
      * Show the form for creating a new resource.

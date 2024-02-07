@@ -53,11 +53,6 @@ class FoodPartyController extends Controller
     public function edit(FoodParty $foodParty , $id)
     {
         $foodParty = FoodParty::find($id);
-
-//        return view('panel.admin.foodParties.edit', ['foodParty' => $foodParty , 'discount' => $discount]);
-
-
-//        $foodParty = FoodParty::find($id);
         return view('panel.admin.foodParties.edit', compact('foodParty'));
     }
 
